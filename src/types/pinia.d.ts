@@ -13,7 +13,7 @@ declare interface UserInfos<T = any> {
 }
 declare interface UserInfosState {
 	userInfos: UserInfos;
-	constList: T[],
+	constList: T[];
 	dictList: T;
 	dictListInt: T;
 }
@@ -92,4 +92,19 @@ declare interface ThemeConfigState {
 		globalI18n: string;
 		globalComponentSize: string;
 	};
+}
+
+declare interface RoutesListState<T = any> {
+	routesList: T[];
+	isColumnsMenuHover: Boolean;
+	isColumnsNavHover: Boolean;
+}
+declare interface WrokspaceState {
+	spaces: TypeWorkspace[];
+	mySpaces: TypeWorkspace[];
+}
+
+declare interface DeviceState {
+	dockOsds: Map<String, DockOsd>;
+	droneOsds: Map<String, DroneOsd>;
 }

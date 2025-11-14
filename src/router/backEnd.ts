@@ -11,6 +11,7 @@ import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 
 import { getAPI } from '/@/utils/axios-utils';
 import { SysMenuApi } from '/@/api-services/api';
+import { useStoreWorkspace } from '/@/stores/workSpaceStore';
 // import { ElMessage } from 'element-plus';
 
 // 后端控制路由
@@ -42,6 +43,7 @@ export async function initBackEndControlRoutes() {
 	await useUserInfo().setUserInfos();
 	await useUserInfo().setConstList();
 	await useUserInfo().setDictList();
+	await useStoreWorkspace().getMySpaces();
 	// 获取路由菜单数据
 	const res = await getBackEndControlRoutes();
 	// 无登录权限时，添加判断

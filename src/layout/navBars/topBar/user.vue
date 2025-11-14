@@ -1,5 +1,15 @@
 <template>
 	<div class="layout-navbars-breadcrumb-user pr15" :style="{ flex: layoutUserFlexNum }">
+		<el-dropdown @command="onSpaceChange">
+			<div class="layout-navbars-breadcrumb-user-icon">
+				{{ spaceStore.defSpace?.workspaceNickName }}
+			</div>
+			<template #dropdown>
+				<el-dropdown-menu>
+					<el-dropdown-item :command="s.workspaceId" v-for="s in spaces">{{ s.workspaceNickName }}</el-dropdown-item>
+				</el-dropdown-menu>
+			</template>
+		</el-dropdown>
 		<el-dropdown :show-timeout="70" :hide-timeout="50" trigger="click" @command="onComponentSizeChange">
 			<div class="layout-navbars-breadcrumb-user-icon">
 				<i class="iconfont icon-ziti" :title="$t('message.user.title0')"></i>
@@ -55,7 +65,7 @@
 		<el-dropdown :show-timeout="70" :hide-timeout="50" @command="onHandleCommandClick">
 			<span class="layout-navbars-breadcrumb-user-link">
 				<img :src="userInfos.avatar" class="layout-navbars-breadcrumb-user-link-photo mr5" />
-				{{ userInfos.realName == '' ? userInfos.account: userInfos.realName }}
+				{{ userInfos.realName == '' ? userInfos.account : userInfos.realName }}
 				<el-icon class="el-icon--right">
 					<ele-ArrowDown />
 				</el-icon>
@@ -90,6 +100,11 @@ import { clearAccessTokens, getAPI } from '/@/utils/axios-utils';
 import { SysAuthApi, SysNoticeApi } from '/@/api-services/api';
 
 import { signalR } from '/@/views/system/onlineUser/signalR';
+import { useStoreWorkspace } from '/@/stores/workSpaceStore';
+import { setDjiWorkspaceDefault } from '/@/api/main/djiWorkspaceUser';
+import { DockOsdHandler } from '/@/types/mqtt/osd/dockOsd';
+import { MessageDispatcher } from '/@/types/mqtt/msgDispatcher';
+import { Message } from '/@/types/mqtt/message';
 
 // 引入组件
 const UserNews = defineAsyncComponent(() => import('/@/layout/navBars/topBar/userNews.vue'));
@@ -100,6 +115,7 @@ const OnlineUser = defineAsyncComponent(() => import('/@/views/system/onlineUser
 const { locale, t } = useI18n();
 const router = useRouter();
 const stores = useUserInfo();
+const spaceStore = useStoreWorkspace();
 const storesThemeConfig = useThemeConfig();
 const { userInfos } = storeToRefs(stores);
 const { themeConfig } = storeToRefs(storesThemeConfig);
@@ -111,6 +127,7 @@ const state = reactive({
 	disabledSize: 'large',
 	noticeList: [] as any, // 站内信列表
 });
+const spaces = computed(() => spaceStore.mySpaces);
 // 设置分割样式
 const layoutUserFlexNum = computed(() => {
 	let num: string | number = '';
@@ -200,6 +217,12 @@ const onLanguageChange = (lang: string) => {
 	other.useTitle();
 	initI18nOrSize('globalI18n', 'disabledI18n');
 };
+
+const onSpaceChange = (spaceId: string) => {
+	setDjiWorkspaceDefault(spaceId).then(() => {
+		spaceStore.getMySpaces(true);
+	});
+};
 // 初始化组件大小/i18n
 const initI18nOrSize = (value: string, attr: string) => {
 	(<any>state)[attr] = Local.get('themeConfig')[value];
@@ -217,7 +240,15 @@ onMounted(async () => {
 
 	// 接收站内信
 	signalR.on('PublicNotice', receiveNotice);
+	const dispatcher = new MessageDispatcher();
 
+	// 注册所有处理器（可自动扫描或集中管理）
+	dispatcher.register('dockOsd', new DockOsdHandler());
+	signalR.on('publicclientmessage', (data) => {
+    console.log('publicclientmessage', data.data.rtcmInfo);
+		if (data.tid && data.bid) dispatcher.dispatch(data);
+		else console.log(data);
+	});
 	// // 处理消息已读
 	// mittBus.on('noticeRead', (id) => {
 	// 	const notice = state.noticeList.find((r: any) => r.id == id);
