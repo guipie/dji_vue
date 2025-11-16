@@ -33,7 +33,7 @@
 						<div class="label">飞行器是否在舱</div>
 					</div>
 					<div class="metric-item">
-						<div class="value">{{ item.networkState.rate }}KB/s</div>
+						<div class="value">{{ item.networkState?.rate }}KB/s</div>
 						<div class="label">网络</div>
 					</div>
 					<div class="metric-item">
@@ -42,13 +42,13 @@
 					</div>
 
 					<div class="metric-item">
-						<div class="value" v-html="renderAirConditionerStateTag(item.airConditioner.airConditionerState)"></div>
+						<div class="value" v-html="renderAirConditionerStateTag(item.airConditioner?.airConditionerState)"></div>
 						<div class="label">空调状态</div>
 					</div>
 					<div class="metric-item">
 						<div class="value">
-							<span>{{ item.droneChargeState.capacityPercent }}%</span>
-							(<span v-html="render01Tag(item.droneChargeState.state, '充电中', '空闲')"></span>)
+							<span>{{ item.droneChargeState?.capacityPercent }}%</span>
+							(<span v-html="render01Tag(item.droneChargeState?.state == 1, '充电中', '空闲', { val1Color: '#F7CB09FF', otherColor: '#52c41a' })"></span>)
 						</div>
 						<div class="label">飞行器充电状态</div>
 					</div>

@@ -134,21 +134,21 @@ export const renderRtkSourceTypeTag = (rtkSourceTypeValue?: RtkSourceTypeEnum): 
     white-space: nowrap;
   ">${config.label}</span>`;
 };
-export const render01Tag = (val: number | boolean, val1: any, val0: any): string => {
+export const render01Tag = (val: number | boolean | undefined, val1: any, valOther: any, options?: { val1Color: string; otherColor: string }): string => {
 	return `<span style="
-    color: ${val == 1 ? '#52c41a' : '#A30D0DFF'};
+    color: ${val == 1 ? options?.val1Color || '#52c41a' : options?.otherColor || '#A30D0DFF'};
     font-size: 16px;
     font-weight: bold;
     display: inline-block;
     white-space: nowrap;
-  ">${val == 1 ? val1 : val0}</span>`;
+  ">${val == 1 ? val1 : valOther}</span>`;
 };
 
 // AirConditionerStateEnum 映射配置
 const airConditionerStateEnumMapping: Record<AirConditionerStateEnum, EnumConfig> = {
 	[AirConditionerStateEnum.Idle]: {
 		label: '空闲',
-		color: '#A30D0DFF',
+		color: '#52c41a',
 	},
 	[AirConditionerStateEnum.Cooling]: {
 		label: '制冷中',
@@ -213,9 +213,9 @@ const airConditionerStateEnumMapping: Record<AirConditionerStateEnum, EnumConfig
 };
 
 // AirConditionerStateEnum 渲染函数
-export const renderAirConditionerStateTag = (airConditionerStateValue: AirConditionerStateEnum): string => {
+export const renderAirConditionerStateTag = (airConditionerStateValue?: AirConditionerStateEnum): string => {
 	// 处理未定义的枚举值
-	const config = airConditionerStateEnumMapping[airConditionerStateValue] || {
+	const config = airConditionerStateEnumMapping[airConditionerStateValue!] || {
 		label: '未知状态',
 		color: '#A30D0DFF',
 	};

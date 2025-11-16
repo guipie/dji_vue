@@ -4,7 +4,7 @@ import { useStoreDevice } from '/@/stores/device';
 
 export class DockOsdHandler implements MessageHandler<DockOsd, 'dockOsd'> {
 	handle(message: Message<DockOsd, 'dockOsd'>): void {
-		useStoreDevice().addDockOsd(message.gateway, { ...message.data, ...{ nick: message.ext } });
+		if (message.topic.includes(message.gateway)) useStoreDevice().addDockOsd(message.gateway, { ...message.data, ...{ nick: message.ext } });
 	}
 }
 /**
@@ -36,7 +36,7 @@ export interface DockOsd extends BaseModel {
 	/**
 	 * 机场空调工作状态信息
 	 */
-	airConditioner: AirConditioner;
+	airConditioner?: AirConditioner;
 
 	/**
 	 * 用户在指令飞行过程中拍照的照片快速回传至云端
@@ -84,7 +84,7 @@ export interface DockOsd extends BaseModel {
 	/**
 	 * 飞行器充电状态
 	 */
-	droneChargeState: DroneChargeState;
+	droneChargeState?: DroneChargeState;
 
 	/**
 	 * 机场备用电池信息
@@ -209,7 +209,7 @@ export interface DockOsd extends BaseModel {
 	/**
 	 * 网络状态
 	 */
-	networkState: NetworkState;
+	networkState?: NetworkState;
 
 	/**
 	 * 补光灯状态

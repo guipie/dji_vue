@@ -14,7 +14,7 @@ export class MessageDispatcher {
 			// 类型断言 + 安全调用
 			(handler as MessageHandler<any, any>).handle(message as any);
 		} else {
-			console.warn(`No handler for message type: ${(message.method, message.topic)}`);
+			console.warn(`No handler for message type: ${message.method},topic:${message.topic},data:`, message.data);
 		}
 	}
 }

@@ -86,7 +86,7 @@
 <script setup lang="ts" name="layoutBreadcrumbUser">
 import { defineAsyncComponent, ref, computed, reactive, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { ElMessageBox, ElMessage, ElNotification } from 'element-plus';
+import { ElMessageBox, ElMessage, ElNotification, ElDialog, ElLoading } from 'element-plus';
 import screenfull from 'screenfull';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
@@ -219,9 +219,16 @@ const onLanguageChange = (lang: string) => {
 };
 
 const onSpaceChange = (spaceId: string) => {
-	setDjiWorkspaceDefault(spaceId).then(() => {
-		spaceStore.getMySpaces(true);
+	const loading = ElLoading.service({
+		lock: true,
+		text: 'Loading',
+		background: 'rgba(0, 0, 0, 0.7)',
 	});
+	setDjiWorkspaceDefault(spaceId)
+		.then((res) => {
+			if (res.data.code == 200) window.location.reload();
+		})
+		.finally(() => loading.close());
 };
 // 初始化组件大小/i18n
 const initI18nOrSize = (value: string, attr: string) => {
@@ -244,8 +251,7 @@ onMounted(async () => {
 
 	// 注册所有处理器（可自动扫描或集中管理）
 	dispatcher.register('dockOsd', new DockOsdHandler());
-	signalR.on('publicclientmessage', (data) => {
-    console.log('publicclientmessage', data.data.rtcmInfo);
+	signalR.on('publicclientmessage', (data) => { 
 		if (data.tid && data.bid) dispatcher.dispatch(data);
 		else console.log(data);
 	});
