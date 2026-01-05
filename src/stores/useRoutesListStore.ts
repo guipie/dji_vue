@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { RoutesListState } from '../types/pinia';
 
 /**
  * 路由列表
@@ -6,7 +7,7 @@ import { defineStore } from 'pinia';
  * @methods setColumnsMenuHover 设置分栏布局菜单鼠标移入 boolean
  * @methods setColumnsNavHover 设置分栏布局最左侧导航鼠标移入 boolean
  */
-export const useRoutesList = defineStore('routesList', {
+export const useRoutesListStore = defineStore('routesList', {
 	state: (): RoutesListState => ({
 		routesList: [],
 		isColumnsMenuHover: false,

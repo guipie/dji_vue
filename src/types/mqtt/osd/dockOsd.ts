@@ -1,10 +1,10 @@
 import { Message } from '../message';
 import { MessageHandler } from '../msgHandle';
-import { useStoreDevice } from '/@/stores/device';
+import { useDeviceStore } from '../../../stores/useDeviceStore';
 
 export class DockOsdHandler implements MessageHandler<DockOsd, 'dockOsd'> {
 	handle(message: Message<DockOsd, 'dockOsd'>): void {
-		if (message.topic.includes(message.gateway)) useStoreDevice().addDockOsd(message.gateway, { ...message.data, ...{ nick: message.ext } });
+		if (message.topic.includes(message.gateway)) useDeviceStore().addDockOsd(message.gateway, { ...message.data, ...{ nick: message.ext } });
 	}
 }
 /**

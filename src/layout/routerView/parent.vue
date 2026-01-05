@@ -17,8 +17,8 @@
 import { defineAsyncComponent, computed, reactive, onBeforeMount, onUnmounted, nextTick, watch, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { useKeepALiveNames } from '/@/stores/keepAliveNames';
-import { useThemeConfig } from '/@/stores/themeConfig';
+import { useKeepALiveNames } from '../../stores/useKeepALiveNames';
+import { useThemeConfigStore } from '../../stores/useThemeConfigStore';
 import { Session } from '/@/utils/storage';
 import mittBus from '/@/utils/mitt';
 
@@ -29,7 +29,7 @@ const Iframes = defineAsyncComponent(() => import('/@/layout/routerView/iframes.
 const route = useRoute();
 const router = useRouter();
 const storesKeepAliveNames = useKeepALiveNames();
-const storesThemeConfig = useThemeConfig();
+const storesThemeConfig = useThemeConfigStore();
 const { keepAliveNames, cachedViews } = storeToRefs(storesKeepAliveNames);
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const state = reactive<ParentViewState>({

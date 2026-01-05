@@ -10,13 +10,7 @@
 				<div class="workflow-content">
 					<div class="workflow-left">
 						<el-scrollbar>
-							<div
-								ref="leftNavRefs"
-								v-for="val in state.leftNavList"
-								:key="val.id"
-								:style="{ height: val.isOpen ? 'auto' : '50px', overflow: 'hidden' }"
-								class="workflow-left-id"
-							>
+							<div ref="leftNavRefs" v-for="val in state.leftNavList" :key="val.id" :style="{ height: val.isOpen ? 'auto' : '50px', overflow: 'hidden' }" class="workflow-left-id">
 								<div class="workflow-left-title" @click="onTitleClick(val)">
 									<span>{{ val.title }}</span>
 									<SvgIcon :name="val.isOpen ? 'ele-ArrowDown' : 'ele-ArrowRight'" />
@@ -73,8 +67,8 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 import { jsPlumb } from 'jsplumb';
 import Sortable from 'sortablejs';
 import { storeToRefs } from 'pinia';
-import { useThemeConfig } from '/@/stores/themeConfig';
-import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
+import { useThemeConfigStore } from '../../../stores/useThemeConfigStore';
+import { useTagsViewRoutes } from '../../../stores/useTagsViewRoutes';
 import commonFunction from '/@/utils/commonFunction';
 import { leftNavList } from './js/mock';
 import { jsplumbDefaults, jsplumbMakeSource, jsplumbMakeTarget, jsplumbConnect } from './js/config';
@@ -93,7 +87,7 @@ const contextmenuLineRef = ref();
 const drawerRef = ref();
 const helpRef = ref();
 const stores = useTagsViewRoutes();
-const storesThemeConfig = useThemeConfig();
+const storesThemeConfig = useThemeConfigStore();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const { copyText } = commonFunction();
 const state = reactive<WorkflowState>({
@@ -555,8 +549,7 @@ onUnmounted(() => {
 				position: relative;
 				overflow: hidden;
 				height: 100%;
-				background-image: linear-gradient(90deg, rgb(156 214 255 / 15%) 10%, rgba(0, 0, 0, 0) 10%),
-					linear-gradient(rgb(156 214 255 / 15%) 10%, rgba(0, 0, 0, 0) 10%);
+				background-image: linear-gradient(90deg, rgb(156 214 255 / 15%) 10%, rgba(0, 0, 0, 0) 10%), linear-gradient(rgb(156 214 255 / 15%) 10%, rgba(0, 0, 0, 0) 10%);
 				background-size: 10px 10px;
 				.workflow-right-clone {
 					position: absolute;

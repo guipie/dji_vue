@@ -15,7 +15,7 @@
 import { defineAsyncComponent, watch, onMounted, nextTick, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { useThemeConfig } from '/@/stores/themeConfig';
+import { useThemeConfigStore } from '../../stores/useThemeConfigStore';
 
 // 引入组件
 const LayoutAside = defineAsyncComponent(() => import('/@/layout/component/aside.vue'));
@@ -27,7 +27,7 @@ const ColumnsAside = defineAsyncComponent(() => import('/@/layout/component/colu
 const layoutScrollbarRef = ref<RefType>('');
 const layoutMainRef = ref<InstanceType<typeof LayoutMain>>();
 const route = useRoute();
-const storesThemeConfig = useThemeConfig();
+const storesThemeConfig = useThemeConfigStore();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 
 // 重置滚动条高度

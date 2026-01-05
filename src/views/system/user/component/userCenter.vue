@@ -164,7 +164,7 @@ import { onMounted, watch, reactive, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { ElForm, ElMessageBox, genFileId } from 'element-plus';
 import type { UploadInstance, UploadProps, UploadRawFile } from 'element-plus';
-import { useUserInfo } from '/@/stores/userInfo';
+import { useUserInfoStore } from '../../../../stores/useUserInfoStore';
 import { base64ToFile } from '/@/utils/base64Conver';
 import OrgTree from '/@/views/system/user/component/orgTree.vue';
 import CropperDialog from '/@/components/cropper/index.vue';
@@ -174,7 +174,7 @@ import { clearAccessTokens, getAPI } from '/@/utils/axios-utils';
 import { SysFileApi, SysUserApi } from '/@/api-services/api';
 import { ChangePwdInput, SysUser } from '/@/api-services/models';
 
-const stores = useUserInfo();
+const stores = useUserInfoStore();
 const { userInfos } = storeToRefs(stores);
 const uploadSignRef = ref<UploadInstance>();
 //const uploadAvatarRef = ref<UploadInstance>();

@@ -12,13 +12,13 @@
 <script setup lang="ts" name="pagesWorkflowTool">
 import { computed, reactive } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useThemeConfig } from '/@/stores/themeConfig';
+import { useThemeConfigStore } from '../../../../../stores/useThemeConfigStore';
 
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['tool']);
 
 // 定义变量内容
-const storesThemeConfig = useThemeConfig();
+const storesThemeConfig = useThemeConfigStore();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const state = reactive({
 	toolList: [

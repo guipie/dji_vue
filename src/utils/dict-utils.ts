@@ -1,6 +1,6 @@
-import { useUserInfo } from '/@/stores/userInfo';
+import { useUserInfoStore } from '../stores/useUserInfoStore';
 
-const stores = useUserInfo();
+const stores = useUserInfoStore();
 
 // 用于在 Table 中把字段的代码转换为名称，示例如下：
 /*
@@ -39,7 +39,6 @@ export function getDictType(dicName: string): any {
 }
 
 export function getDictDataList(dicName: string): any {
-
 	return stores.getDictDatasByCode(dicName);
 }
 

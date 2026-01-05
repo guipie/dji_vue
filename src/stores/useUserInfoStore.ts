@@ -1,16 +1,17 @@
 import { defineStore } from 'pinia';
 import { Local, Session } from '/@/utils/storage';
 import Watermark from '/@/utils/watermark';
-import { useThemeConfig } from '/@/stores/themeConfig';
+import { useThemeConfigStore } from './useThemeConfigStore';
 
 import { getAPI } from '/@/utils/axios-utils';
 import { SysAuthApi, SysConstApi, SysDictTypeApi } from '/@/api-services/api';
+import { UserInfos, UserInfosState } from '../types/pinia';
 
 /**
  * 用户信息
  * @methods setUserInfos 设置用户信息
  */
-export const useUserInfo = defineStore('userInfo', {
+export const useUserInfoStore = defineStore('userInfo', {
 	state: (): UserInfosState => ({ userInfos: {} as any, constList: [] as any, dictList: {} as any, dictListInt: {} as any }),
 	getters: {
 		// // 获取系统常量列表
@@ -86,7 +87,7 @@ export const useUserInfo = defineStore('userInfo', {
 						// Session.set('userInfo', userInfos);
 
 						// 用户水印
-						const storesThemeConfig = useThemeConfig();
+						const storesThemeConfig = useThemeConfigStore();
 						storesThemeConfig.themeConfig.watermarkText = d.watermarkText ?? 'Dji';
 						if (storesThemeConfig.themeConfig.isWatermark) Watermark.set(storesThemeConfig.themeConfig.watermarkText);
 						else Watermark.del();

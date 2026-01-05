@@ -1,17 +1,17 @@
 import { RouteRecordRaw } from 'vue-router';
 import pinia from '/@/stores/index';
-import { useUserInfo } from '/@/stores/userInfo';
-import { useRequestOldRoutes } from '/@/stores/requestOldRoutes';
+import { useUserInfoStore } from '../stores/useUserInfoStore';
+import { useRequestOldRoutes } from '../stores/useRequestOldRoutes';
 import { Session } from '/@/utils/storage';
 import { NextLoading } from '/@/utils/loading';
 import { dynamicRoutes, notFoundAndNoPower } from '/@/router/route';
 import { formatTwoStageRoutes, formatFlatteningRoutes, router } from '/@/router/index';
-import { useRoutesList } from '/@/stores/routesList';
-import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
+import { useRoutesListStore } from '../stores/useRoutesListStore';
+import { useTagsViewRoutes } from '../stores/useTagsViewRoutes';
 
 import { getAPI } from '/@/utils/axios-utils';
 import { SysMenuApi } from '/@/api-services/api';
-import { useStoreWorkspace } from '/@/stores/workSpaceStore';
+import { useWorkspaceStore } from '../stores/useWorkspaceStore';
 // import { ElMessage } from 'element-plus';
 
 // 后端控制路由
@@ -40,10 +40,10 @@ export async function initBackEndControlRoutes() {
 	if (!Session.get('token')) return false;
 	// 触发初始化用户信息 pinia
 	// https://gitee.com/lyt-top/vue-next-admin/issues/I5F1HP
-	await useUserInfo().setUserInfos();
-	await useUserInfo().setConstList();
-	await useUserInfo().setDictList();
-	await useStoreWorkspace().getMySpaces();
+	await useUserInfoStore().setUserInfos();
+	await useUserInfoStore().setConstList();
+	await useUserInfoStore().setDictList();
+	await useWorkspaceStore().getMySpaces();
 	// 获取路由菜单数据
 	const res = await getBackEndControlRoutes();
 	// 无登录权限时，添加判断
@@ -65,7 +65,7 @@ export async function initBackEndControlRoutes() {
  * @description 用于 tagsView、菜单搜索中：未过滤隐藏的(isHide)
  */
 export async function setFilterMenuAndCacheTagsViewRoutes() {
-	const storesRoutesList = useRoutesList(pinia);
+	const storesRoutesList = useRoutesListStore(pinia);
 	storesRoutesList.setRoutesList(dynamicRoutes[0].children as any);
 	setCacheTagsViewRoutes();
 }

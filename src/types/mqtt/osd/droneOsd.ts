@@ -1,10 +1,10 @@
 import { Message } from '../message';
 import { MessageHandler } from '../msgHandle';
-import { useStoreDevice } from '/@/stores/device';
+import { useDeviceStore } from '../../../stores/useDeviceStore';
 
 export class DroneOsdHandler implements MessageHandler<DroneOsd, 'droneOsd'> {
 	handle(message: Message<DroneOsd, 'droneOsd'>): void {
-		useStoreDevice().addDroneOsd(message.gateway, message.data);
+		useDeviceStore().addDroneOsd(message.gateway, message.data);
 	}
 }
 

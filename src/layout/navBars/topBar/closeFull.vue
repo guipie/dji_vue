@@ -8,7 +8,7 @@
 
 <script setup lang="ts" name="layoutCloseFull">
 import { storeToRefs } from 'pinia';
-import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
+import { useTagsViewRoutes } from '../../../stores/useTagsViewRoutes';
 
 // 定义变量内容
 const stores = useTagsViewRoutes();

@@ -26,11 +26,11 @@
 import { reactive, computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
-import { useThemeConfig } from '/@/stores/themeConfig';
+import { useThemeConfigStore } from '../../stores/useThemeConfigStore';
 
 // 定义变量内容
 const { t } = useI18n();
-const storesThemeConfig = useThemeConfig();
+const storesThemeConfig = useThemeConfigStore();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const state = reactive({
 	isUpgrade: false,

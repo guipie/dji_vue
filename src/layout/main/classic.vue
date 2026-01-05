@@ -15,7 +15,7 @@
 import { defineAsyncComponent, computed, ref, watch, nextTick, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { useThemeConfig } from '/@/stores/themeConfig';
+import { useThemeConfigStore } from '../../stores/useThemeConfigStore';
 
 // 引入组件
 const LayoutAside = defineAsyncComponent(() => import('/@/layout/component/aside.vue'));
@@ -26,7 +26,7 @@ const LayoutTagsView = defineAsyncComponent(() => import('/@/layout/navBars/tags
 // 定义变量内容
 const layoutMainRef = ref<InstanceType<typeof LayoutMain>>();
 const route = useRoute();
-const storesThemeConfig = useThemeConfig();
+const storesThemeConfig = useThemeConfigStore();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 
 // 判断是否显示 tasgview

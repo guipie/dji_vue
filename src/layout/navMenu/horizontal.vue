@@ -32,8 +32,8 @@
 import { defineAsyncComponent, reactive, computed, onBeforeMount } from 'vue';
 import { useRoute, onBeforeRouteUpdate, RouteRecordRaw } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { useRoutesList } from '/@/stores/routesList';
-import { useThemeConfig } from '/@/stores/themeConfig';
+import { useRoutesListStore } from '../../stores/useRoutesListStore';
+import { useThemeConfigStore } from '../../stores/useThemeConfigStore';
 import other from '/@/utils/other';
 import mittBus from '/@/utils/mitt';
 
@@ -50,8 +50,8 @@ const props = defineProps({
 });
 
 // 定义变量内容
-const stores = useRoutesList();
-const storesThemeConfig = useThemeConfig();
+const stores = useRoutesListStore();
+const storesThemeConfig = useThemeConfigStore();
 const { routesList } = storeToRefs(stores);
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const route = useRoute();

@@ -41,7 +41,7 @@
 <script setup lang="ts" name="loginIndex">
 import { defineAsyncComponent, onMounted, reactive, computed } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useThemeConfig } from '/@/stores/themeConfig';
+import { useThemeConfigStore } from '../../stores/useThemeConfigStore';
 import { NextLoading } from '/@/utils/loading';
 import logoMini from '/@/assets/logo-mini.svg';
 import loginIconTwo from '/@/assets/login-icon-1.svg';
@@ -53,7 +53,7 @@ const Account = defineAsyncComponent(() => import('/@/views/login/component/acco
 const Mobile = defineAsyncComponent(() => import('/@/views/login/component/mobile.vue'));
 const Scan = defineAsyncComponent(() => import('/@/views/login/component/scan.vue'));
 
-const storesThemeConfig = useThemeConfig();
+const storesThemeConfig = useThemeConfigStore();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const state = reactive({ tabsActiveName: 'account', isScan: false });
 // 获取布局配置信息

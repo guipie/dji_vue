@@ -7,12 +7,7 @@
 			type="warning"
 			:closable="false"
 		></el-alert>
-		<el-alert
-			:title="`当前用户页面权限：[${userInfos.roles}]，当前用户按钮权限：[${userInfos.authBtnList}]`"
-			type="success"
-			:closable="false"
-			class="mt15"
-		></el-alert>
+		<el-alert :title="`当前用户页面权限：[${userInfos.roles}]，当前用户按钮权限：[${userInfos.authBtnList}]`" type="success" :closable="false" class="mt15"></el-alert>
 		<el-card shadow="hover" header="切换用户演示，前端控制不同用户显示不同页面、按钮权限" class="mt15">
 			<el-radio-group v-model="userAuth" size="default" @change="onRadioChange">
 				<el-radio-button label="admin"></el-radio-button>
@@ -26,12 +21,12 @@
 import { onMounted, ref } from 'vue';
 import Cookies from 'js-cookie';
 import { storeToRefs } from 'pinia';
-import { useUserInfo } from '/@/stores/userInfo';
+import { useUserInfoStore } from '../../../../stores/useUserInfoStore';
 import { Session } from '/@/utils/storage';
 import { frontEndsResetRoute, setAddRoute, setFilterMenuAndCacheTagsViewRoutes } from '/@/router/frontEnd';
 
 // 定义变量内容
-const storesUserInfo = useUserInfo();
+const storesUserInfo = useUserInfoStore();
 const { userInfos } = storeToRefs(storesUserInfo);
 const userAuth = ref('');
 

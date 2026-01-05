@@ -4,9 +4,9 @@ import { formatTwoStageRoutes, formatFlatteningRoutes, router } from '/@/router/
 import { dynamicRoutes, notFoundAndNoPower } from '/@/router/route';
 import pinia from '/@/stores/index';
 import { Session } from '/@/utils/storage';
-import { useUserInfo } from '/@/stores/userInfo';
-import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
-import { useRoutesList } from '/@/stores/routesList';
+import { useUserInfoStore } from '../stores/useUserInfoStore';
+import { useTagsViewRoutes } from '../stores/useTagsViewRoutes';
+import { useRoutesListStore } from '../stores/useRoutesListStore';
 import { NextLoading } from '/@/utils/loading';
 
 // 前端控制路由
@@ -25,7 +25,7 @@ export async function initFrontEndControlRoutes() {
 	if (!Session.get('token')) return false;
 	// 触发初始化用户信息 pinia
 	// https://gitee.com/lyt-top/vue-next-admin/issues/I5F1HP
-	await useUserInfo(pinia).setUserInfos();
+	await useUserInfoStore(pinia).setUserInfos();
 	// 添加动态路由
 	await setAddRoute();
 	// 设置递归过滤有权限的路由到 pinia routesList 中（已处理成多级嵌套路由）及缓存多级嵌套数组处理后的一维数组
@@ -78,7 +78,7 @@ export function setFilterRouteEnd() {
  * @returns 返回有当前用户权限标识的路由数组
  */
 export function setFilterRoute(chil: any) {
-	const stores = useUserInfo(pinia);
+	const stores = useUserInfoStore(pinia);
 	const { userInfos } = storeToRefs(stores);
 	let filterRoute: any = [];
 	chil.forEach((route: any) => {
@@ -99,7 +99,7 @@ export function setFilterRoute(chil: any) {
  */
 export function setCacheTagsViewRoutes() {
 	// 获取有权限的路由，否则 tagsView、菜单搜索中无权限的路由也将显示
-	const stores = useUserInfo(pinia);
+	const stores = useUserInfoStore(pinia);
 	const storesTagsView = useTagsViewRoutes(pinia);
 	const { userInfos } = storeToRefs(stores);
 	let rolesRoutes = setFilterHasRolesMenu(dynamicRoutes, userInfos.value.roles);
@@ -113,8 +113,8 @@ export function setCacheTagsViewRoutes() {
  * @description 用于 tagsView、菜单搜索中：未过滤隐藏的(isHide)
  */
 export function setFilterMenuAndCacheTagsViewRoutes() {
-	const stores = useUserInfo(pinia);
-	const storesRoutesList = useRoutesList(pinia);
+	const stores = useUserInfoStore(pinia);
+	const storesRoutesList = useRoutesListStore(pinia);
 	const { userInfos } = storeToRefs(stores);
 	storesRoutesList.setRoutesList(setFilterHasRolesMenu(dynamicRoutes[0].children, userInfos.value.roles));
 	setCacheTagsViewRoutes();

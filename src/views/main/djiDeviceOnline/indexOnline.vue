@@ -1,5 +1,6 @@
 <template>
 	<div style="display: block">
+		<el-empty description="暂无在线机场." v-if="!allDockOsds || allDockOsds.length == 0" />
 		<!-- 第一个设备 -->
 		<el-card class="device-card" shadow="never" v-for="(item, index) in allDockOsds" :key="index">
 			<div class="card-header">
@@ -80,11 +81,11 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useStoreDevice } from '/@/stores/device';
+import { useDeviceStore } from '../../../stores/useDeviceStore';
 import { render01Tag, renderAirConditionerStateTag, renderFlighttaskStepCodeTag, renderModeCodeTag, renderRainfallTag, renderRtkSourceTypeTag } from '/@/types/mqtt/osd/dockOsdMapping';
 import { DockOsd } from '/@/types/mqtt/osd/dockOsd';
 import dockImg from '/@/assets/dock.png';
-var deviceStore = useStoreDevice();
+var deviceStore = useDeviceStore();
 const allDockOsds = computed((): DockOsd[] => {
 	return Array.from(deviceStore.$state.dockOsds.values());
 });

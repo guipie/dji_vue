@@ -5,7 +5,7 @@
 <script setup lang="ts" name="layout">
 import { onBeforeMount, onUnmounted, defineAsyncComponent } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useThemeConfig } from '/@/stores/themeConfig';
+import { useThemeConfigStore } from '../stores/useThemeConfigStore';
 import { Local } from '/@/utils/storage';
 import mittBus from '/@/utils/mitt';
 
@@ -18,7 +18,7 @@ const layouts: any = {
 };
 
 // 定义变量内容
-const storesThemeConfig = useThemeConfig();
+const storesThemeConfig = useThemeConfigStore();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 
 // 窗口大小改变时(适配移动端)

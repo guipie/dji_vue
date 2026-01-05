@@ -32,7 +32,7 @@ import { reactive, ref, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
-import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
+import { useTagsViewRoutes } from '../../../stores/useTagsViewRoutes';
 
 // 定义变量内容
 const storesTagsViewRoutes = useTagsViewRoutes();

@@ -32,12 +32,7 @@
 						</div>
 						<div class="layout-lock-screen-login-box-name">Administrator</div>
 						<div class="layout-lock-screen-login-box-value">
-							<el-input
-								placeholder="请输入密码"
-								ref="layoutLockScreenInputRef"
-								v-model="state.lockScreenPassword"
-								@keyup.enter.native.stop="onLockScreenSubmit()"
-							>
+							<el-input placeholder="请输入密码" ref="layoutLockScreenInputRef" v-model="state.lockScreenPassword" @keyup.enter.native.stop="onLockScreenSubmit()">
 								<template #append>
 									<el-button @click="onLockScreenSubmit">
 										<el-icon class="el-input__icon">
@@ -64,12 +59,12 @@ import { nextTick, onMounted, reactive, ref, onUnmounted } from 'vue';
 import { formatDate } from '/@/utils/formatTime';
 import { Local } from '/@/utils/storage';
 import { storeToRefs } from 'pinia';
-import { useThemeConfig } from '/@/stores/themeConfig';
+import { useThemeConfigStore } from '../../stores/useThemeConfigStore';
 
 // 定义变量内容
 const layoutLockScreenDateRef = ref<HtmlType>();
 const layoutLockScreenInputRef = ref();
-const storesThemeConfig = useThemeConfig();
+const storesThemeConfig = useThemeConfigStore();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const state = reactive({
 	transparency: 1,

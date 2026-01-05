@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { ThemeConfigState } from '../types/pinia';
 
 /**
  * 布局配置
@@ -8,7 +9,7 @@ import { defineStore } from 'pinia';
  * 1、需要每次都清理 `window.localStorage` 浏览器永久缓存
  * 2、或者点击布局配置最底部 `一键恢复默认` 按钮即可看到效果
  */
-export const useThemeConfig = defineStore('themeConfig', {
+export const useThemeConfigStore = defineStore('themeConfig', {
 	state: (): ThemeConfigState => ({
 		themeConfig: {
 			// 是否开启布局配置抽屉
@@ -60,7 +61,7 @@ export const useThemeConfig = defineStore('themeConfig', {
 			 * 界面设置
 			 */
 			// 是否开启菜单水平折叠效果
-			isCollapse: false,
+			isCollapse: true,
 			// 是否开启菜单手风琴效果
 			isUniqueOpened: true,
 			// 是否开启固定 Header
@@ -86,7 +87,7 @@ export const useThemeConfig = defineStore('themeConfig', {
 			// 是否开启 Tagsview
 			isTagsview: true,
 			// 是否开启 Breadcrumb 图标
-			isBreadcrumbIcon: false,
+			isBreadcrumbIcon: true,
 			// 是否开启 Tagsview 图标
 			isTagsviewIcon: false,
 			// 是否开启 TagsView 缓存

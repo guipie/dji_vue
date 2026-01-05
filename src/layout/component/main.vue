@@ -12,8 +12,8 @@
 import { defineAsyncComponent, onMounted, computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
-import { useThemeConfig } from '/@/stores/themeConfig';
+import { useTagsViewRoutes } from '../../stores/useTagsViewRoutes';
+import { useThemeConfigStore } from '../../stores/useThemeConfigStore';
 import { NextLoading } from '/@/utils/loading';
 
 // 引入组件
@@ -24,7 +24,7 @@ const LayoutFooter = defineAsyncComponent(() => import('/@/layout/footer/index.v
 const layoutMainScrollbarRef = ref();
 const route = useRoute();
 const storesTagsViewRoutes = useTagsViewRoutes();
-const storesThemeConfig = useThemeConfig();
+const storesThemeConfig = useThemeConfigStore();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const { isTagsViewCurrenFull } = storeToRefs(storesTagsViewRoutes);
 

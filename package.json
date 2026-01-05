@@ -12,11 +12,12 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",
     "@microsoft/signalr": "^9.0.6",
+    "@turf/turf": "^7.3.1",
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-vue": "^5.1.12",
     "animate.css": "^4.1.1",
     "axios": "^1.13.1",
-    "cesium": "1.99",
+    "cesium": "1.136.0",
     "countup.js": "^2.9.0",
     "cropperjs": "^2.1.0",
     "crypto-js": "^4.2.0",
@@ -33,6 +34,7 @@
     "nprogress": "^0.2.0",
     "pdfjs-dist": "^5.4.296",
     "pinia": "^3.0.3",
+    "pinia-plugin-persistedstate": "^4.7.1",
     "print-js": "^1.6.0",
     "qrcodejs2-fixes": "^0.0.2",
     "qs": "^6.14.0",
@@ -57,6 +59,7 @@
     "xlsx-js-style": "^1.2.0"
   },
   "devDependencies": {
+    "@iconify/json": "^2.2.414",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^24.9.2",
     "@types/nprogress": "^0.2.3",
@@ -72,9 +75,11 @@
     "prettier": "^3.6.2",
     "sass": "1.93.2",
     "typescript": "^5.9.3",
+    "unocss": "^66.5.10",
     "vite": "^7.1.12",
     "vite-plugin-cdn-import": "^1.0.1",
     "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-vue-devtools": "^8.0.5",
     "vite-plugin-vue-setup-extend-plus": "^0.1.0",
     "vue-eslint-parser": "^10.2.0"
   },

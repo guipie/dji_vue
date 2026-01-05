@@ -11,8 +11,8 @@
 import { defineAsyncComponent, computed, reactive, onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { useRoutesList } from '/@/stores/routesList';
-import { useThemeConfig } from '/@/stores/themeConfig';
+import { useRoutesListStore } from '../../../stores/useRoutesListStore';
+import { useThemeConfigStore } from '../../../stores/useThemeConfigStore';
 import mittBus from '/@/utils/mitt';
 
 // 引入组件
@@ -22,8 +22,8 @@ const Logo = defineAsyncComponent(() => import('/@/layout/logo/index.vue'));
 const Horizontal = defineAsyncComponent(() => import('/@/layout/navMenu/horizontal.vue'));
 
 // 定义变量内容
-const stores = useRoutesList();
-const storesThemeConfig = useThemeConfig();
+const stores = useRoutesListStore();
+const storesThemeConfig = useThemeConfigStore();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const { routesList } = storeToRefs(stores);
 const route = useRoute();

@@ -1,5 +1,5 @@
 import type { App } from 'vue';
-import { useUserInfo } from '/@/stores/userInfo';
+import { useUserInfoStore } from '../stores/useUserInfoStore';
 import request from '/@/utils/request';
 
 export function setupConstFilter(app: App) {
@@ -13,7 +13,7 @@ export function setupConstFilter(app: App) {
 
 // 常量值转换
 export function codeToName(code: any, type: any) {
-	const userStore = useUserInfo();
+	const userStore = useUserInfoStore();
 	try {
 		const name = userStore.constList
 			.filter((x: any) => x.code === type)
@@ -27,7 +27,7 @@ export function codeToName(code: any, type: any) {
 }
 
 export function getConstType(type: any) {
-	const userStore = useUserInfo();
+	const userStore = useUserInfoStore();
 	const constType = userStore.constList.filter((x: any) => x.code === type)[0].data;
 	return constType;
 }

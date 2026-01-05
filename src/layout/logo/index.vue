@@ -11,11 +11,11 @@
 <script setup lang="ts" name="layoutLogo">
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useThemeConfig } from '/@/stores/themeConfig';
+import { useThemeConfigStore } from '../../stores/useThemeConfigStore';
 import logoMini from '/@/assets/logo-mini.svg';
 
 // 定义变量内容
-const storesThemeConfig = useThemeConfig();
+const storesThemeConfig = useThemeConfigStore();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 
 // 设置 logo 的显示。classic 经典布局默认显示 logo

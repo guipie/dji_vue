@@ -393,7 +393,7 @@ import { nextTick, onUnmounted, onMounted, computed, reactive } from 'vue';
 import { ElMessage } from 'element-plus';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
-import { useThemeConfig } from '/@/stores/themeConfig';
+import { useThemeConfigStore } from '../../../stores/useThemeConfigStore';
 import { useChangeColor } from '/@/utils/theme';
 import { verifyAndSpace } from '/@/utils/toolsValidate';
 import { Local } from '/@/utils/storage';
@@ -404,7 +404,7 @@ import mittBus from '/@/utils/mitt';
 
 // 定义变量内容
 const { locale } = useI18n();
-const storesThemeConfig = useThemeConfig();
+const storesThemeConfig = useThemeConfigStore();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const { copyText } = commonFunction();
 const { getLightColor, getDarkColor } = useChangeColor();
@@ -430,7 +430,7 @@ const onColorPickerChange = () => {
 };
 // 2、菜单 / 顶栏
 const onBgColorPickerChange = (bg: string) => {
-// @ts-ignore
+	// @ts-ignore
 	document.documentElement.style.setProperty(`--next-bg-${bg}`, themeConfig.value[bg]);
 	if (bg === 'menuBar') {
 		document.documentElement.style.setProperty(`--next-bg-menuBar-light-1`, getLightColor(getThemeConfig.value.menuBar, 0.05));

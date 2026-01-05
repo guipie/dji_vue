@@ -41,16 +41,16 @@
 import { reactive, ref, onMounted, nextTick, watch, onUnmounted } from 'vue';
 import { useRoute, useRouter, onBeforeRouteUpdate, RouteRecordRaw } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { useRoutesList } from '/@/stores/routesList';
-import { useThemeConfig } from '/@/stores/themeConfig';
+import { useRoutesListStore } from '../../stores/useRoutesListStore';
+import { useThemeConfigStore } from '../../stores/useThemeConfigStore';
 import mittBus from '/@/utils/mitt';
 import logoMini from '/@/assets/logo-mini.svg';
 
 // 定义变量内容
 const columnsAsideOffsetTopRefs = ref<RefType>([]);
 const columnsAsideActiveRef = ref();
-const stores = useRoutesList();
-const storesThemeConfig = useThemeConfig();
+const stores = useRoutesListStore();
+const storesThemeConfig = useThemeConfigStore();
 const { routesList, isColumnsMenuHover, isColumnsNavHover } = storeToRefs(stores);
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const route = useRoute();

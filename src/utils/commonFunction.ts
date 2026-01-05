@@ -65,7 +65,7 @@ export default function () {
 		return value.replace(/<[^>]+>/g, '');
 	};
 	const getEnumDesc = (value: string, enumList: any) => {
-		if (!value || !enumList) return '';
+		if (!enumList) return '';
 		const enumItem = enumList.find((item: any) => item.name.toLowerCase() === value.toString().toLowerCase() || item.value === value);
 		return enumItem ? enumItem.describe : '';
 	};

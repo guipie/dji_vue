@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { KeepAliveNamesState } from '../types/pinia';
 
 /**
  * 路由缓存列表

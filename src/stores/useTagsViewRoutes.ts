@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { Session } from '/@/utils/storage';
+import { TagsViewRoutesState } from '../types/pinia';
 
 /**
  * TagsView 路由列表

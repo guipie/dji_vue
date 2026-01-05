@@ -206,7 +206,7 @@ import { defineAsyncComponent, reactive, onMounted, watch, nextTick, onActivated
 import * as echarts from 'echarts';
 import 'echarts-wordcloud';
 import { storeToRefs } from 'pinia';
-import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
+import { useTagsViewRoutes } from '../../stores/useTagsViewRoutes';
 import { skyList, dBtnList, chartData4List } from '/@/views/chart/chart';
 
 // 引入组件

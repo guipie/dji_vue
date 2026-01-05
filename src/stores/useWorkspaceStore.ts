@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia';
 import { pageDjiWorkspace } from '../api/main/djiWorkspace';
 import { myDjiWorkspaces } from '../api/main/djiWorkspaceUser';
+import { WrokspaceState } from '../types/pinia';
 
-export const useStoreWorkspace = defineStore('workspace', {
+export const useWorkspaceStore = defineStore('workspace', {
 	state: (): WrokspaceState => ({ spaces: [], mySpaces: [] }),
 	getters: {
 		// // 获取系统常量列表

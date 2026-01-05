@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { useStoreWorkspace } from '/@/stores/workSpaceStore';
+import { useWorkspaceStore } from '../../stores/useWorkspaceStore';
 
 const props = defineProps({
 	options: {
@@ -23,7 +23,7 @@ const props = defineProps({
 	},
 });
 const emit = defineEmits(['update:value']);
-const useWorkspace = useStoreWorkspace();
+const useWorkspace = useWorkspaceStore();
 const data = computed(() => useWorkspace.spaces);
 const dataVal = ref({});
 onMounted(() => {

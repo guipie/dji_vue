@@ -12,9 +12,9 @@
 <script setup lang="ts" name="layoutAside">
 import { defineAsyncComponent, reactive, computed, watch, onBeforeMount, ref } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useRoutesList } from '/@/stores/routesList';
-import { useThemeConfig } from '/@/stores/themeConfig';
-import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
+import { useRoutesListStore } from '../../stores/useRoutesListStore';
+import { useThemeConfigStore } from '../../stores/useThemeConfigStore';
+import { useTagsViewRoutes } from '../../stores/useTagsViewRoutes';
 import mittBus from '/@/utils/mitt';
 
 // 引入组件
@@ -23,8 +23,8 @@ const Vertical = defineAsyncComponent(() => import('/@/layout/navMenu/vertical.v
 
 // 定义变量内容
 const layoutAsideScrollbarRef = ref();
-const stores = useRoutesList();
-const storesThemeConfig = useThemeConfig();
+const stores = useRoutesListStore();
+const storesThemeConfig = useThemeConfigStore();
 const storesTagsViewRoutes = useTagsViewRoutes();
 const { routesList } = storeToRefs(stores);
 const { themeConfig } = storeToRefs(storesThemeConfig);

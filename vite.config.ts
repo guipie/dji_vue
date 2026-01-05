@@ -6,7 +6,8 @@ import viteCompression from 'vite-plugin-compression';
 import { buildConfig } from './src/utils/build';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import cesium from 'vite-plugin-cesium';
-
+import UnoCss from 'unocss/vite';
+import vueDevTools from 'vite-plugin-vue-devtools';
 const pathResolve = (dir: string) => {
 	return resolve(__dirname, '.', dir);
 };
@@ -19,7 +20,7 @@ const alias: Record<string, string> = {
 const viteConfig = defineConfig((mode: ConfigEnv) => {
 	const env = loadEnv(mode.mode, process.cwd());
 	return {
-		plugins: [vue(), cesium(), vueJsx(), vueSetupExtend(), viteCompression(), JSON.parse(env.VITE_OPEN_CDN) ? buildConfig.cdn() : null],
+		plugins: [vue(), UnoCss(), cesium(), vueJsx(), vueSetupExtend(), viteCompression(), JSON.parse(env.VITE_OPEN_CDN) ? buildConfig.cdn() : null, vueDevTools()],
 		root: process.cwd(),
 		resolve: { alias },
 		base: mode.command === 'serve' ? './' : env.VITE_PUBLIC_PATH,
@@ -63,7 +64,7 @@ const viteConfig = defineConfig((mode: ConfigEnv) => {
 			preprocessorOptions: {
 				css: { charset: false },
 				scss: {
-					api: 'modern-compiler' as const, // or 'modern'
+					// api: 'modern-compiler' as const, // or 'modern'
 				},
 			},
 		},

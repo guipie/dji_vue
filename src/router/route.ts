@@ -108,6 +108,15 @@ export const staticRoutes: Array<RouteRecordRaw> = [
 	 * 提示：写在这里的为全屏界面，不建议写在这里
 	 * 请写在 `dynamicRoutes` 路由数组中
 	 */
+
+	{
+		path: '/wayline/create',
+		name: 'waylineCreate',
+		component: () => import('/@/views/main/djiWayline/create.vue'),
+		meta: {
+			title: '航线创建和编辑',
+		},
+	},
 	{
 		path: '/visualizingDemo1',
 		name: 'visualizingDemo1',

@@ -14,12 +14,12 @@ import { defineAsyncComponent, computed, ref, onBeforeMount, onMounted, onUnmoun
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
-import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
-import { useThemeConfig } from '/@/stores/themeConfig';
+import { useTagsViewRoutes } from './stores/useTagsViewRoutes';
+import { useThemeConfigStore } from './stores/useThemeConfigStore';
 import other from '/@/utils/other';
 import { Local, Session } from '/@/utils/storage';
 import mittBus from '/@/utils/mitt';
-import setIntroduction from '/@/utils/setIconfont'; 
+import setIntroduction from '/@/utils/setIconfont';
 // import checkUpdate from '/@/utils/auto-update';
 
 // 引入组件
@@ -34,9 +34,9 @@ const { messages, locale } = useI18n();
 const setingsRef = ref();
 const route = useRoute();
 const stores = useTagsViewRoutes();
-const storesThemeConfig = useThemeConfig();
+const storesThemeConfig = useThemeConfigStore();
 const { themeConfig } = storeToRefs(storesThemeConfig);
-const needUpdate = ref(false); 
+const needUpdate = ref(false);
 
 // 设置锁屏时组件显示隐藏
 const setLockScreen = computed(() => {

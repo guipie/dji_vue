@@ -2,6 +2,8 @@
  * pinia 类型定义
  */
 
+import { WaylineCreateExt, WaylineCreateParams } from './wayline/waylineCreate';
+
 // 用户信息
 declare interface UserInfos<T = any> {
 	authBtnList: string[];
@@ -103,8 +105,15 @@ declare interface WrokspaceState {
 	spaces: TypeWorkspace[];
 	mySpaces: TypeWorkspace[];
 }
-
+declare interface WaylineState {
+	curCreateWayline: WaylineCreateParams;
+	curCreateWaylineExt: WaylineCreateExt;
+	setHome: boolean;
+	selectedPointIndex?: number | null;
+	selectedActionIndex?: number | null;
+}
 declare interface DeviceState {
 	dockOsds: Map<String, DockOsd>;
 	droneOsds: Map<String, DroneOsd>;
+	droneModels: Map<String, String>;
 }

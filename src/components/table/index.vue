@@ -105,7 +105,7 @@ import { reactive, computed, nextTick, ref, onMounted } from 'vue';
 import { ElMessage } from 'element-plus';
 import Sortable from 'sortablejs';
 import { storeToRefs } from 'pinia';
-import { useThemeConfig } from '/@/stores/themeConfig';
+import { useThemeConfigStore } from '../../stores/useThemeConfigStore';
 import { exportExcel } from '/@/utils/exportExcel';
 // import '/@/theme/tableTool.scss';
 import printJs from 'print-js';
@@ -154,7 +154,7 @@ const emit = defineEmits(['pageChange', 'selectionChange', 'sortHeader']);
 // 定义变量内容
 const toolSetRef = ref();
 const tableRef = ref();
-const storesThemeConfig = useThemeConfig();
+const storesThemeConfig = useThemeConfigStore();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const state = reactive({
 	data: [] as Array<EmptyObjectType>,
@@ -190,7 +190,7 @@ const setHeader = computed(() => {
 	return props.columns.filter((v) => v.isCheck);
 });
 // tool 列显示全选改变时
-const onCheckAllChange = <T>(val: T) => {
+const onCheckAllChange = <T,>(val: T) => {
 	if (val) props.columns.forEach((v) => (v.isCheck = true));
 	else props.columns.forEach((v) => (v.isCheck = false));
 	state.checkListIndeterminate = false;

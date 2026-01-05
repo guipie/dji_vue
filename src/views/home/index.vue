@@ -60,15 +60,15 @@
 import { reactive, onMounted, ref, watch, nextTick, onActivated, markRaw } from 'vue';
 import * as echarts from 'echarts';
 import { storeToRefs } from 'pinia';
-import { useThemeConfig } from '/@/stores/themeConfig';
-import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
+import { useThemeConfigStore } from '../../stores/useThemeConfigStore';
+import { useTagsViewRoutes } from '../../stores/useTagsViewRoutes';
 
 // 定义变量内容
 const homeLineRef = ref();
 const homePieRef = ref();
 const homeBarRef = ref();
 const storesTagsViewRoutes = useTagsViewRoutes();
-const storesThemeConfig = useThemeConfig();
+const storesThemeConfig = useThemeConfigStore();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const { isTagsViewCurrenFull } = storeToRefs(storesTagsViewRoutes);
 const state = reactive({

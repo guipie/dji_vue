@@ -1,7 +1,7 @@
 import { createI18n } from 'vue-i18n';
 import pinia from '/@/stores/index';
 import { storeToRefs } from 'pinia';
-import { useThemeConfig } from '/@/stores/themeConfig';
+import { useThemeConfigStore } from '../stores/useThemeConfigStore';
 
 // 定义语言国际化内容
 
@@ -51,7 +51,7 @@ for (const key in itemize) {
 }
 
 // 读取 pinia 默认语言
-const stores = useThemeConfig(pinia);
+const stores = useThemeConfigStore(pinia);
 const { themeConfig } = storeToRefs(stores);
 
 // 导出语言国际化

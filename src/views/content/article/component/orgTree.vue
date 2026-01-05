@@ -33,12 +33,12 @@
 <script lang="ts" setup name="orgTree">
 import { onMounted, reactive } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useUserInfo } from '/@/stores/userInfo';
+import { useUserInfoStore } from '../../../../stores/useUserInfoStore';
 
 import { getAPI } from '/@/utils/axios-utils';
 import { SysOrgApi } from '/@/api-services/api';
 
-const stores = useUserInfo();
+const stores = useUserInfoStore();
 const { userInfos } = storeToRefs(stores);
 const currentNodeStyle = { color: '#FFFFFF', background: '#3B3B3B' };
 const state = reactive({

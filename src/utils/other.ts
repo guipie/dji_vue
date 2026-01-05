@@ -4,7 +4,7 @@ import * as svg from '@element-plus/icons-vue';
 import router from '/@/router/index';
 import pinia from '/@/stores/index';
 import { storeToRefs } from 'pinia';
-import { useThemeConfig } from '/@/stores/themeConfig';
+import { useThemeConfigStore } from '../stores/useThemeConfigStore';
 import { i18n } from '/@/i18n/index';
 import { Local } from '/@/utils/storage';
 import { verifyUrl } from '/@/utils/toolsValidate';
@@ -30,7 +30,7 @@ export function elSvg(app: App) {
  * @method const title = useTitle(); ==> title()
  */
 export function useTitle() {
-	const stores = useThemeConfig(pinia);
+	const stores = useThemeConfigStore(pinia);
 	const { themeConfig } = storeToRefs(stores);
 	nextTick(() => {
 		let webTitle = '';
@@ -100,7 +100,7 @@ export const lazyImg = (el: string, arr: EmptyArrayType) => {
  * @returns 返回 `window.localStorage` 中读取的缓存值 `globalComponentSize`
  */
 export const globalComponentSize = (): string => {
-	const stores = useThemeConfig(pinia);
+	const stores = useThemeConfigStore(pinia);
 	const { themeConfig } = storeToRefs(stores);
 	return Local.get('themeConfig')?.globalComponentSize || themeConfig.value?.globalComponentSize;
 };

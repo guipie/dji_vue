@@ -90,8 +90,8 @@ import { ElMessageBox, ElMessage, ElNotification, ElDialog, ElLoading } from 'el
 import screenfull from 'screenfull';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
-import { useUserInfo } from '/@/stores/userInfo';
-import { useThemeConfig } from '/@/stores/themeConfig';
+import { useUserInfoStore } from '../../../stores/useUserInfoStore';
+import { useThemeConfigStore } from '../../../stores/useThemeConfigStore';
 import other from '/@/utils/other';
 import mittBus from '/@/utils/mitt';
 import { Local } from '/@/utils/storage';
@@ -100,7 +100,7 @@ import { clearAccessTokens, getAPI } from '/@/utils/axios-utils';
 import { SysAuthApi, SysNoticeApi } from '/@/api-services/api';
 
 import { signalR } from '/@/views/system/onlineUser/signalR';
-import { useStoreWorkspace } from '/@/stores/workSpaceStore';
+import { useWorkspaceStore } from '../../../stores/useWorkspaceStore';
 import { setDjiWorkspaceDefault } from '/@/api/main/djiWorkspaceUser';
 import { DockOsdHandler } from '/@/types/mqtt/osd/dockOsd';
 import { MessageDispatcher } from '/@/types/mqtt/msgDispatcher';
@@ -114,9 +114,9 @@ const OnlineUser = defineAsyncComponent(() => import('/@/views/system/onlineUser
 // 定义变量内容
 const { locale, t } = useI18n();
 const router = useRouter();
-const stores = useUserInfo();
-const spaceStore = useStoreWorkspace();
-const storesThemeConfig = useThemeConfig();
+const stores = useUserInfoStore();
+const spaceStore = useWorkspaceStore();
+const storesThemeConfig = useThemeConfigStore();
 const { userInfos } = storeToRefs(stores);
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const searchRef = ref();
@@ -251,7 +251,7 @@ onMounted(async () => {
 
 	// 注册所有处理器（可自动扫描或集中管理）
 	dispatcher.register('dockOsd', new DockOsdHandler());
-	signalR.on('publicclientmessage', (data) => { 
+	signalR.on('publicclientmessage', (data) => {
 		if (data.tid && data.bid) dispatcher.dispatch(data);
 		else console.log(data);
 	});

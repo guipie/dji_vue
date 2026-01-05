@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="274px" height="74px" viewBox="0 0 274 74" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组</title>
+    <defs>
+        <path d="M10.8169014,27.0422533 C16.7909111,27.0422533 21.6338028,22.1993616 21.6338028,16.225352 C21.6338028,13.9432759 20.927106,11.8262578 19.7206188,10.081204 C18.4193853,8.19910988 15.4514795,4.83870856 10.8169014,0 C6.17470449,4.8430356 3.20338107,8.20838897 1.90293113,10.0960601 C0.702694067,11.838267 0,13.949748 0,16.225352 C0,22.1993616 4.84289172,27.0422533 10.8169014,27.0422533 Z" id="path-1"></path>
+        <filter x="-27.7%" y="-22.2%" width="155.5%" height="144.4%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <path d="M10.8169014,27.0422533 C16.7909111,27.0422533 21.6338028,22.1993616 21.6338028,16.225352 C21.6338028,13.9432759 20.927106,11.8262578 19.7206188,10.081204 C18.4193853,8.19910988 15.4514795,4.83870856 10.8169014,0 C6.17470449,4.8430356 3.20338107,8.20838897 1.90293113,10.0960601 C0.702694067,11.838267 0,13.949748 0,16.225352 C0,22.1993616 4.84289172,27.0422533 10.8169014,27.0422533 Z" id="path-3"></path>
+        <filter x="-27.7%" y="-22.2%" width="155.5%" height="144.4%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <path d="M10.8169014,27.0422533 C16.7909111,27.0422533 21.6338028,22.1993616 21.6338028,16.225352 C21.6338028,13.9432759 20.927106,11.8262578 19.7206188,10.081204 C18.4193853,8.19910988 15.4514795,4.83870856 10.8169014,0 C6.17470449,4.8430356 3.20338107,8.20838897 1.90293113,10.0960601 C0.702694067,11.838267 0,13.949748 0,16.225352 C0,22.1993616 4.84289172,27.0422533 10.8169014,27.0422533 Z" id="path-5"></path>
+        <filter x="-27.7%" y="-22.2%" width="155.5%" height="144.4%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <path d="M12,23.9999998 C18.62736,23.9999998 24,18.6273599 24,11.9999999 C24,5.37263996 18.62736,0 12,0 C5.37264,0 0,5.37263996 0,11.9999999 C0,18.6273599 5.37264,23.9999998 12,23.9999998 Z" id="path-7"></path>
+        <filter x="-25.0%" y="-25.0%" width="150.0%" height="150.0%" filterUnits="objectBoundingBox" id="filter-8">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.6 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="航线规划" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="航点航线绘制0723" transform="translate(-8970.000000, -3297.000000)">
+            <g id="3组件/Select/黑/6展开" transform="translate(8938.000000, 3199.000000)">
+                <g id="编组-2备份-12" transform="translate(8.000000, 49.000000)">
+                    <g id="编组-2" transform="translate(24.000000, 50.000000)">
+                        <path d="M18.9595202,14.3928035 L18.05997,59.595202 L155.748136,31.9232242 L250.533733,58.1658588 L249.634183,57.1214389" id="Line-Copy-2" stroke="#BEBEBE" stroke-width="4" stroke-linecap="square" stroke-dasharray="4,8"></path>
+                        <path d="M20.4111379,14.3928035 C19.1640878,22.114975 18.8301403,29.648708 19.4092954,36.9940027 C20.4111379,49.7001496 35.5849262,52.6196071 45.0666936,51.3670933 C54.5484611,50.1145795 58.880375,50.3817865 79,46.9999997 C92.4757945,44.7349344 143.837311,37.5151656 154.595507,38.3268363 C160.332649,38.7596848 193.467479,45.9840726 254,59.9999996" id="Line-Copy-2" stroke="#0AEE8B" stroke-width="4" stroke-linecap="square"></path>
+                        <g id="编组-12备份-3" transform="translate(238.000000, 34.380809)">
+                            <g id="椭圆形" transform="translate(18.478873, 22.985915) rotate(90.000000) translate(-18.478873, -22.985915) translate(7.661972, 9.464789)">
+                                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                            </g>
+                            <g id="编组-11">
+                                <path d="M15.2777406,3.39429954 L27.9249255,24.2628433 C28.2111687,24.7351602 28.0603262,25.3500947 27.5880093,25.6363379 C27.4317222,25.7310543 27.2524682,25.7811325 27.0697201,25.7811325 L1.77535032,25.7811325 C1.22306557,25.7811325 0.775350322,25.3334173 0.775350322,24.7811325 C0.775350322,24.5983845 0.825428566,24.4191304 0.920144909,24.2628433 L13.5673298,3.39429954 C13.853573,2.92198263 14.4685075,2.77114011 14.9408244,3.05738333 C15.0786354,3.14090237 15.1942216,3.25648858 15.2777406,3.39429954 Z" id="三角形" fill="#5CADFF" transform="translate(14.422535, 13.882148) scale(1, -1) translate(-14.422535, -13.882148) "></path>
+                                <text id="4" font-family="PingFangSC-Semibold, PingFang SC" font-size="16" font-weight="500" fill="#FFFFFF">
+                                    <tspan x="9.91549296" y="16.9074022">4</tspan>
+                                </text>
+                            </g>
+                        </g>
+                        <g id="编组-12备份-5" transform="translate(139.000000, 9.380810)">
+                            <g id="椭圆形" transform="translate(18.478873, 22.985915) rotate(90.000000) translate(-18.478873, -22.985915) translate(7.661972, 9.464789)">
+                                <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+                                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-3"></use>
+                            </g>
+                            <g id="编组-11">
+                                <path d="M15.2777406,3.39429954 L27.9249255,24.2628433 C28.2111687,24.7351602 28.0603262,25.3500947 27.5880093,25.6363379 C27.4317222,25.7310543 27.2524682,25.7811325 27.0697201,25.7811325 L1.77535032,25.7811325 C1.22306557,25.7811325 0.775350322,25.3334173 0.775350322,24.7811325 C0.775350322,24.5983845 0.825428566,24.4191304 0.920144909,24.2628433 L13.5673298,3.39429954 C13.853573,2.92198263 14.4685075,2.77114011 14.9408244,3.05738333 C15.0786354,3.14090237 15.1942216,3.25648858 15.2777406,3.39429954 Z" id="三角形" fill="#5CADFF" transform="translate(14.422535, 13.882148) scale(1, -1) translate(-14.422535, -13.882148) "></path>
+                                <text id="3" font-family="PingFangSC-Semibold, PingFang SC" font-size="16" font-weight="500" fill="#FFFFFF">
+                                    <tspan x="9.91549296" y="16.9074022">3</tspan>
+                                </text>
+                            </g>
+                        </g>
+                        <g id="编组-12备份-6" transform="translate(0.000000, 34.380809)">
+                            <g id="椭圆形" transform="translate(18.478873, 22.985915) rotate(90.000000) translate(-18.478873, -22.985915) translate(7.661972, 9.464789)">
+                                <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-5"></use>
+                            </g>
+                            <g id="编组-11">
+                                <path d="M15.2777406,3.39429954 L27.9249255,24.2628433 C28.2111687,24.7351602 28.0603262,25.3500947 27.5880093,25.6363379 C27.4317222,25.7310543 27.2524682,25.7811325 27.0697201,25.7811325 L1.77535032,25.7811325 C1.22306557,25.7811325 0.775350322,25.3334173 0.775350322,24.7811325 C0.775350322,24.5983845 0.825428566,24.4191304 0.920144909,24.2628433 L13.5673298,3.39429954 C13.853573,2.92198263 14.4685075,2.77114011 14.9408244,3.05738333 C15.0786354,3.14090237 15.1942216,3.25648858 15.2777406,3.39429954 Z" id="三角形" fill="#5CADFF" transform="translate(14.422535, 13.882148) scale(1, -1) translate(-14.422535, -13.882148) "></path>
+                                <text id="2" font-family="PingFangSC-Semibold, PingFang SC" font-size="16" font-weight="500" fill="#FFFFFF">
+                                    <tspan x="9.91549296" y="16.9074022">2</tspan>
+                                </text>
+                            </g>
+                        </g>
+                        <g id="编组" transform="translate(4.116942, 0.000000)">
+                            <g id="ic/waypoint_start_active" transform="translate(-1.000000, -1.000000)">
+                                <rect id="Rectangle-11" x="0" y="0" width="32" height="31.9999998"></rect>
+                                <g transform="translate(4.000000, 4.000000)">
+                                    <g id="end-point">
+                                        <use fill="black" fill-opacity="1" filter="url(#filter-8)" xlink:href="#path-7"></use>
+                                        <path stroke="#FFFFFF" stroke-width="3" d="M12,1.5 C14.89947,1.5 17.524468,2.67526835 19.4245998,4.57540015 C21.3247316,6.47553195 22.5,9.10052994 22.5,11.9999999 C22.5,14.8994699 21.3247316,17.5244679 19.4245998,19.4245997 C17.524468,21.3247315 14.89947,22.4999998 12,22.4999998 C9.10053,22.4999998 6.47553199,21.3247315 4.57540017,19.4245997 C2.67526835,17.5244679 1.5,14.8994699 1.5,11.9999999 C1.5,9.10052994 2.67526835,6.47553195 4.57540017,4.57540015 C6.47553199,2.67526835 9.10053,1.5 12,1.5 Z" stroke-linejoin="square" fill="#1FA3F6" fill-rule="evenodd"></path>
+                                    </g>
+                                    <text id="S" font-family="Helvetica" font-size="16" font-weight="normal" fill="#FFFFFF">
+                                        <tspan x="6.6640625" y="17">S</tspan>
+                                    </text>
+                                </g>
+                            </g>
+                        </g>
+                        <g id="编组-5" transform="translate(79.699426, 46.719761) rotate(-47.000000) translate(-79.699426, -46.719761) translate(65.806140, 33.746386)">
+                            <path d="M13.8932852,1.92814987 L22.7136912,24.0186013 C22.7136912,24.0186013 13.8932852,20.5536579 13.8932852,20.5536579 L5.07287926,24.0186013 L13.8932852,1.92814987 Z" id="Triangle-1" fill="#FC302D" transform="translate(13.893285, 12.973376) rotate(-242.000000) translate(-13.893285, -12.973376) "></path>
+                            <polygon id="Triangle-2" fill="#B50000" transform="translate(12.714122, 13.872581) rotate(-242.000000) translate(-12.714122, -13.872581) " points="11.3665867 2.20836744 14.061657 21.8799395 11.3665868 25.5367949"></polygon>
+                            <polygon id="Triangle-2" fill="#9A0000" transform="translate(14.009177, 11.500708) scale(-1, 1) rotate(242.000000) translate(-14.009177, -11.500708) " points="12.6616422 -0.193444548 15.3567123 19.5286196 12.6616421 23.1948613"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

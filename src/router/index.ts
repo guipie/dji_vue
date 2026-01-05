@@ -3,9 +3,9 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import pinia from '/@/stores/index';
 import { storeToRefs } from 'pinia';
-import { useKeepALiveNames } from '/@/stores/keepAliveNames';
-import { useRoutesList } from '/@/stores/routesList';
-import { useThemeConfig } from '/@/stores/themeConfig';
+import { useKeepALiveNames } from '../stores/useKeepALiveNames';
+import { useRoutesListStore } from '../stores/useRoutesListStore';
+import { useThemeConfigStore } from '../stores/useThemeConfigStore';
 import { Session } from '/@/utils/storage';
 import { staticRoutes, notFoundAndNoPower } from '/@/router/route';
 import { initFrontEndControlRoutes } from '/@/router/frontEnd';
@@ -21,7 +21,7 @@ import { initBackEndControlRoutes } from '/@/router/backEnd';
  */
 
 // 读取 `/src/stores/themeConfig.ts` 是否开启后端控制路由配置
-const storesThemeConfig = useThemeConfig(pinia);
+const storesThemeConfig = useThemeConfigStore(pinia);
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const { isRequestRoutes } = themeConfig.value;
 
@@ -109,7 +109,7 @@ router.beforeEach(async (to, from, next) => {
 			next('/dashboard/home');
 			NProgress.done();
 		} else {
-			const storesRoutesList = useRoutesList(pinia);
+			const storesRoutesList = useRoutesListStore(pinia);
 			const { routesList } = storeToRefs(storesRoutesList);
 			if (routesList.value.length === 0) {
 				if (isRequestRoutes) {
