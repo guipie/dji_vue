@@ -136,14 +136,13 @@ export class CesiumContextMenu {
 
 		// 鼠标移动：仅当 pick 到 entity 时显示 tooltip
 		canvas.addEventListener('mousemove', (e) => {
-			// console.log('mousemove', e);
 			const mousePosition = new Cesium.Cartesian2(e.clientX, e.clientY);
 			const pickedObject = this.viewer.scene.pick(mousePosition);
 			if (Cesium.defined(pickedObject) && Cesium.defined(pickedObject.id)) {
 				const entity = pickedObject.id;
 				if (entity !== this.hoveredEntity) {
 					this.hoveredEntity = entity;
-					this.showTooltip(e.clientX, e.clientY, entity);
+					this.showPointEntityTooltip(e.clientX, e.clientY, entity);
 					canvas.style.cursor = 'pointer';
 				}
 			} else {
@@ -192,7 +191,7 @@ export class CesiumContextMenu {
 		});
 	}
 
-	private showTooltip(x: number, y: number, entity: Cesium.Entity) {
+	private showPointEntityTooltip(x: number, y: number, entity: Cesium.Entity) {
 		if (!this.tooltipDiv) return;
 		this.tooltipDiv.style.left = `${x + 12}px`;
 		this.tooltipDiv.style.top = `${y + 12}px`;
@@ -202,8 +201,8 @@ export class CesiumContextMenu {
 			// const cartographic = Cesium.Cartographic.fromCartesian(entity.position!.getValue(Cesium.JulianDate.now())!);
 			// var heightDiv = `<div class="flex-center m-2"><div>高度:</div><div>${cartographic.height}</div></div>`;
 			this.tooltipDiv.innerHTML = `<div style="padding:4px;">${moveDiv + upDownDiv}</div>`;
+			this.tooltipDiv.classList.remove('hidden');
 		}
-		this.tooltipDiv.classList.remove('hidden');
 	}
 
 	private hideTooltip() {

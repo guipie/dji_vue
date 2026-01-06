@@ -156,7 +156,7 @@ export function drawSelectPointWedge() {
 }
 
 export function waylinePointClick(index: number, isFlyTo: boolean = true) {
-	alert('点击航点：' + index);
+	console.log('点击航点：' + index);
 	useWaylineStore().selectedPointIndex = index;
 	drawSelectPointWedge();
 	if (isFlyTo) {
@@ -166,5 +166,6 @@ export function waylinePointClick(index: number, isFlyTo: boolean = true) {
 
 export function waylineActionClick(index: number, actionIndex: number) {
 	console.log('点击航点动作：' + index + ' ' + actionIndex);
+	if (useWaylineStore().selectedPointIndex != index) waylinePointClick(index, true);
 	useWaylineStore().selectedActionIndex = actionIndex;
 }

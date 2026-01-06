@@ -32,21 +32,22 @@
 				</div>
 			</el-tooltip>
 		</div>
-		<div id="pointList" style="padding: 0px; padding-top: 10px" class="flex flex-col gap4">
+		<div id="pointList" style="padding: 0px; padding-top: 10px" class="flex flex-col">
 			<div
 				v-for="(item, index) in placemarks"
 				:key="index"
+				style="border-bottom: solid 0.2px gray"
 				:class="{ activeBg: selectedIndex == index }"
-				class="flex items-center m-1 cursor-pointer hover:op-50 sortable gap-2"
+				class="flex items-center cursor-pointer hover:bg-auto sortable gap-1"
 				@click="waylinePointClick(index)"
 			>
 				<div class="i-material-symbols:drag-pan text-xl cursor-move"></div>
 				<div class="text-lg fw100 w-6">{{ index + 1 }}</div>
-				<div class="flex-1 flex flex-wrap min-h-20px" style="border-bottom: solid 0.2px gray">
+				<div class="flex-1 flex flex-wrap min-h-20px m-2">
 					<div v-for="(action, actionIndex) in item.actionsGroup" v-on:click.stop="waylineActionClick(index, actionIndex)">
 						<div
-							class="border rounded-lg p-1"
-							:class="{ 'bg-blue': selectedActionIndex == actionIndex }"
+							class="border rounded-lg p-1 hover:bg-blue-5"
+							:class="{ 'bg-blue-6': selectedActionIndex == actionIndex && index == selectedIndex }"
 							v-html="waylineActionData.findLast((m) => m.value == action.actionActuatorFunc)!.svg({ color: '#F5FCF4', size: 20 })"
 						></div>
 					</div>
@@ -111,9 +112,10 @@ function pointHandleCommand(cmd: 'del' | 'clone' | 'setCoord', index: number) {
 #pointList {
 	overflow-y: auto;
 	height: calc(100% - 100px);
+	padding: 8px;
 }
 #pointList > div {
-	padding: 8px;
+	padding: 4px;
 	margin: 0px;
 }
 .move-bg-class {
