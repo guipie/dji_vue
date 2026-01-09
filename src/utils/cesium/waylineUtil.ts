@@ -8,6 +8,7 @@ import * as turf from '@turf/turf';
 export interface DrawWaylineOptions {
 	id?: string;
 	name?: string;
+	isForeRender?: boolean;
 }
 export function drawWayline(options?: DrawWaylineOptions) {
 	var prams = useWaylineStore().$state.curCreateWayline;

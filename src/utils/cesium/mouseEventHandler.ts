@@ -21,27 +21,27 @@ interface ContextMenuItem {
 }
 const items = (options: ContextOptions): ContextMenuItem[] => {
 	const data = [];
-	const index = options.num;
-	if (index && index > 0) {
+	const num = options.num;
+	if (num && num > 0) {
 		data.push({
-			label: `在 ${index} 号航点前插入航点`,
+			label: `在 ${num} 号航点前插入航点`,
 			action: () => {
 				if (options.num && options.num > 0) {
-					waylineStore.setWaylinePoint(options.longitude!, options.latitude!, options.num! - 1);
+					waylineStore.setWaylinePoint(options.longitude!, options.latitude!, num - 1);
 					drawWayline();
 				}
 			},
 		});
 		data.push({
-			label: `在 ${index} 号航点后插入航点`,
+			label: `在 ${num} 号航点后插入航点`,
 			action: () => {
 				if (options.num && options.num > 0) {
-					waylineStore.setWaylinePoint(options.longitude!, options.latitude!, options.num!);
+					waylineStore.setWaylinePoint(options.longitude!, options.latitude!, num);
 					drawWayline();
 				}
 			},
 		});
-		data.push({ label: `删除${index}号航点`, action: () => {} });
+		data.push({ label: `删除${num}号航点`, action: () => {} });
 	} else {
 		data.push({
 			label: '新增航点',

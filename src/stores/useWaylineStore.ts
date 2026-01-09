@@ -3,6 +3,7 @@ import { WaylineState } from '../types/pinia';
 import { TemplateTypeEnum } from '../types/wayline/waylineEnus';
 import { initWaylineState } from './shard/waylineSard';
 import { drawWayline } from '../utils/cesium/waylineUtil';
+import { ElMessageBox } from 'element-plus';
 
 export const useWaylineStore = defineStore('waylines', {
 	state: (): WaylineState => initWaylineState(),
@@ -36,7 +37,7 @@ export const useWaylineStore = defineStore('waylines', {
 					point: `${longitude},${latitude},${height}`,
 					executeHeight: height,
 				});
-				this.selectedPointIndex = this.curCreateWayline.folder.placemarks.length - 1;
+				this.selectedPointIndex = index;
 			} else {
 				this.curCreateWayline.folder.placemarks.push({
 					point: `${longitude},${latitude},${height}`,
@@ -46,11 +47,10 @@ export const useWaylineStore = defineStore('waylines', {
 			}
 		},
 		setPointAction(action: any) {
-			if (this.selectedPointIndex && this.selectedPointIndex >= 0) {
-				const point = this.curCreateWayline.folder.placemarks![this.selectedPointIndex];
-				if (!point.actionsGroup || point.actionsGroup.length === 0) {
-					point.actionsGroup = [];
-				}
+			console.log('航点动作配置:', action, this.selectedPointIndex);
+			if ((this.selectedPointIndex ?? -1) >= 0) {
+				const point = this.curCreateWayline.folder.placemarks![this.selectedPointIndex!];
+				point.actionsGroup = point.actionsGroup || [];
 				this.selectedActionIndex = point.actionsGroup.length;
 				point.actionsGroup.push({
 					actionTrigger: {
@@ -61,7 +61,7 @@ export const useWaylineStore = defineStore('waylines', {
 					actionActuatorFunc: action.value,
 					actionActuatorFuncParam: action.actionActuatorFuncParam,
 				});
-			}
+			} else ElMessageBox.alert('请先选择一个航点');
 		},
 		// setActionIndex(index: number) {
 		// 	this.selectedActionIndex = index;
@@ -71,6 +71,7 @@ export const useWaylineStore = defineStore('waylines', {
 			if (this.selectedPointIndex === index && this.curCreateWayline.folder.placemarks!.length > 0) {
 				this.selectedPointIndex = this.curCreateWayline.folder.placemarks!.length - 1;
 			}
+			window.viewer.entities.removeById(`waypoint_${index + 1}`);
 			drawWayline();
 		},
 	},

@@ -43,7 +43,7 @@
 			>
 				<div class="i-material-symbols:drag-pan text-xl cursor-move"></div>
 				<div class="text-lg fw100 w-6">{{ index + 1 }}</div>
-				<div class="flex-1 flex flex-wrap min-h-20px m-2">
+				<div class="flex-1 flex flex-wrap min-h-20px">
 					<div v-for="(action, actionIndex) in item.actionsGroup" v-on:click.stop="waylineActionClick(index, actionIndex)">
 						<div
 							class="border rounded-lg p-1 hover:bg-blue-5"

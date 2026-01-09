@@ -87,6 +87,7 @@ export interface DrawPolylineOptions {
 	polylineStyle?: Cesium.PolylineGraphics.ConstructorOptions;
 	id?: string;
 	name?: string;
+	isForeRender?: boolean;
 	properties?: { [key: string]: any };
 }
 
@@ -118,7 +119,10 @@ export function drawPolyline(options: DrawPolylineOptions): Cesium.Entity {
 	};
 	var entity = window.viewer.entities.getById(id);
 	console.log('是否存在航线', !!entity);
-
+	if (entity && options.isForeRender) {
+		window.viewer.entities.removeById(id);
+		entity = undefined;
+	}
 	if (entity) {
 		entity.polyline!.positions = new Cesium.CallbackProperty(() => cartesianPositions, false);
 	} else {
