@@ -235,7 +235,7 @@ import hbImage from '/@/assets/wayline/航点高度模式hb.svg';
 import xdqfdImage from '/@/assets/wayline/航点高度模式xdqfd.svg';
 import xddmImage from '/@/assets/wayline/航点高度模式xddm.svg';
 import { globalWaypointTurnModeOptions } from '/@/types/wayline/waylineCreateOptions';
-import { getHomeSvg } from '../../../../utils/data/svgDataHelper';
+import { getHomeSvg } from '/@/utils/data/svgDataHelper';
 import { drawWayline } from '/@/utils/cesium/waylineUtil';
 
 const imageMap = {

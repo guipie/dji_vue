@@ -96,7 +96,7 @@ export class CesiumContextMenu {
 		}
 		console.log('waylineStore.$state.selectedPointIndex', waylineStore.$state.selectedPointIndex);
 
-		options.num = (waylineStore.$state.selectedPointIndex ?? 0) > 0 ? waylineStore.$state.selectedPointIndex! + 1 : waylineStore.$state.curCreateWayline.folder.placemarks?.length;
+		options.num = (waylineStore.$state.selectedPointIndex ?? -1) >= 0 ? waylineStore.$state.selectedPointIndex! + 1 : waylineStore.$state.curCreateWayline.folder.placemarks?.length;
 		if (!options.longitude || !options.latitude) return;
 		items(options).forEach((item) => {
 			const btn = document.createElement('div');

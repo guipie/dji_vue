@@ -36,6 +36,7 @@ export const useWaylineStore = defineStore('waylines', {
 					point: `${longitude},${latitude},${height}`,
 					executeHeight: height,
 				});
+				this.selectedPointIndex = this.curCreateWayline.folder.placemarks.length - 1;
 			} else {
 				this.curCreateWayline.folder.placemarks.push({
 					point: `${longitude},${latitude},${height}`,
