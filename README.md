@@ -1,45 +1,69 @@
 <div align="center">
-	<img src="https://i.hd-r.cn/6ce52e5724fae609444b5b48bdc4accb.png">
-	<p align="center">
-		<a href="https://v3.vuejs.org/" target="_blank">
-			<img src="https://img.shields.io/badge/vue.js-vue3.x-green" alt="vue">
-		</a>
-		<a href="https://element-plus.gitee.io/#/zh-CN/component/changelog" target="_blank">
-			<img src="https://img.shields.io/badge/element--plus-%3E1.0.0-blue" alt="element plus">
-		</a>
-		<a href="https://www.tslang.cn/" target="_blank">
-	    <img src="https://img.shields.io/badge/typescript-%3E4.0.0-blue" alt="typescript">
-	  </a>
-		<a href="https://vitejs.dev/" target="_blank">
-		  <img src="https://img.shields.io/badge/vite-%3E2.0.0-yellow" alt="vite">
-		</a>
-		<a href="https://gitee.com/lyt-top/vue-next-admin/blob/master/LICENSE" target="_blank">
-		  <img src="https://img.shields.io/badge/license-MIT-success" alt="license">
-		</a>
-	</p>
-	<p>&nbsp;</p>
+ <img src="https://github.com/guipie/dji.vue/blob/main/src/assets/logo.png?raw=true" width="120" height="90">
+ <p align="center">
+  <a href="https://v3.vuejs.org/" target="_blank">
+   <img src="https://img.shields.io/badge/vue.js-vue3.x-green" alt="vue">
+  </a>
+  <a href="https://element-plus.org/" target="_blank">
+   <img src="https://img.shields.io/badge/element--plus-%3E1.0.0-blue" alt="element plus">
+  </a>
+  <a href="https://www.tslang.cn/" target="_blank">
+     <img src="https://img.shields.io/badge/typescript-%3E4.0.0-blue" alt="typescript">
+   </a>
+  <a href="https://vitejs.dev/" target="_blank">
+    <img src="https://img.shields.io/badge/vite-%3E2.0.0-yellow" alt="vite">
+  </a>
+  <a href="https://gitee.com/lyt-top/vue-next-admin/blob/master/LICENSE" target="_blank">
+    <img src="https://img.shields.io/badge/license-MIT-success" alt="license">
+  </a>
+ </p>
+ <p>&nbsp;</p>
 </div>
-
-#### 💝 长期赞助商
-
-<a href="http://www.ccflow.org/" target="_blank">
-	<img src="./src/assets/ccflowRightNextAdmin.png" width="50%" height="70px">
-</a>
 
 #### 🌈 介绍
 
-基于 vue3.x + CompositionAPI setup 语法糖 + typescript + vite + element plus + vue-router-next + pinia 技术，适配手机、平板、pc 的后台开源免费模板，希望减少工作量，帮助大家实现快速开发。
+目前对于 大疆-DJI 无人机接入第三方云平台官方只管亲儿子司空又闭源，开源的DJI Cloud API Demo 又终止维护了，所以对于我们开发者来说，对着官方文档也只能摸着过河，也有很多坑要踩，相信从事大疆上云的开发者应该有感概；
+
+鉴于自己一直从事大疆机场1,2,3和pilot的上云开发，所以就开发了此项目；大家踩过的坑，以及解决方法，欢迎提issue，欢迎提pr，欢迎star，欢迎fork。
+
+## 🍎效果截图
+
+<table>
+    <tr>
+        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/1.png"/></td>
+        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/2.png"/></td>
+        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/3.png"/></td>
+        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/4.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/5.png"/></td>
+        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/6.png"/></td>
+        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/7.png"/></td>
+        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/8.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/9.png"/></td>
+        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/10.png"/></td>
+        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/11.png"/></td>
+        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/12.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/13.png"/></td>
+        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/14.png"/></td>
+        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/15.png"/></td>
+        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/16.png"/></td>
+    </tr>
+</table>
 
 #### ⛱️ 线上预览
 
-- vue3.x 版本预览（vue-next-admin）<a href="https://lyt-top.gitee.io/vue-next-admin-preview/#/login" target="_blank">https://lyt-top.gitee.io/vue-next-admin-preview/#/login</a>
-- vue2.x 版本预览（vue-prev-admin）<a href="https://lyt-top.gitee.io/vue-prev-admin-preview/#/login" target="_blank">https://lyt-top.gitee.io/vue-prev-admin-preview/#/login</a>
-- vue3.x + uni-app 商城 H5（vue-next-admin-shop）<a href="https://lyt-top.gitee.io/vue-next-admin-shop-preview" target="_blank">https://lyt-top.gitee.io/vue-next-admin-shop-preview</a>
+- 暂无可用服务器和机场；
 
 #### 💒 代码仓库
 
-- vue3.x 版本 <a href="https://gitee.com/lyt-top/vue-next-admin" target="_blank">https://gitee.com/lyt-top/vue-next-admin</a>
-- vue2.x 版本 <a href="https://gitee.com/lyt-top/vue-next-admin/tree/vue-prev-admin" target="_blank">https://gitee.com/lyt-top/vue-next-admin/tree/vue-prev-admin</a>
+- 接口及云服务：<a href="https://github.com/guipie/dji_server" target="_blank">https://github.com/guipie/dji_server</a>
+- 后台运维管理： <a href="https://github.com/guipie/dji.vue" target="_blank">https://github.com/guipie/dji.vue</a>
+- 前端： 开发中...
 
 #### 🚧 安装 cnpm、yarn
 
@@ -56,16 +80,12 @@
 
 #### ⚡ 使用说明
 
-建议使用 cnpm，因为 yarn 有时会报错。<a href="http://nodejs.cn/" target="_blank">node 版本 > 14.18+/16+</a>
-
-> Vite 不再支持 Node 12 / 13 / 15，因为上述版本已经进入了 EOL 阶段。现在你必须使用 Node 14.18+ / 16+ 版本。
-
 ```bash
 # 克隆项目
-git clone https://gitee.com/lyt-top/vue-next-admin.git
+git clone https://github.com/guipie/dji.vue
 
 # 进入项目
-cd vue-next-admin
+cd dji.vue
 
 # 安装依赖
 cnpm install
@@ -76,31 +96,6 @@ cnpm run dev
 # 打包发布
 cnpm run build
 ```
-
-#### 📚 开发文档
-
-- 查看开发文档：<a href="https://lyt-top.gitee.io/vue-next-admin-doc-preview" target="_blank">vue-next-admin-doc</a>
-
-#### 💯 学习交流加 QQ 群
-
-> 1 - 4 交流群已满，请加 vue-next-admin 交流群 5
-
-群号：556254895
-
-其它交流群请查看文档首页 [vueNextAdmin 解疑问](https://lyt-top.gitee.io/vue-next-admin-doc-preview/)
-
-#### 💒 集成后端
-
-- <a target="_blank" href="https://github.com/guipie/dji_server">Dji.Server</a>
-- <a target="_blank" href="https://github.com/PandaGoAdmin/PandaX">@熊猫 PandaGoAdmin</a>
-- <a target="_blank" href="https://toscode.gitee.com/GionConnection/gopro_free">@甜蜜蜜 GoPro 平台</a>
-- <a target="_blank" href="https://gitee.com/GionConnection/niupi-free">@甜蜜蜜 NiuPi 平台</a>
-- <a target="_blank" href="https://gitee.com/tiger1103/gfast/tree/os-v3/">@游子 GFast-V3</a>
-- <a target="_blank" href="https://gitee.com/diygw/diygw-ui-php/">@diygw.com gw-ui-php</a>
-- <a target="_blank" href="https://gitee.com/zsvg/vboot-net">@zsvg vboot-net</a>
-- <a target="_blank" href="https://gitee.com/zsvg/vboot-java">@zsvg vboot-java</a>
-- <a target="_blank" href="https://gitee.com/wonderful-code/buildadmin">@青红造了个白 buildadmin</a>
-- <a target="_blank" href="https://github.com/xiaodingding/iotfast">@Goodwell iotfast(一个开源的物联网平台)</a>
 
 #### ❤️ 鸣谢列表
 
@@ -136,16 +131,11 @@ cnpm run build
 - <a href="https://github.com/vbenjs/vite-plugin-compression" target="_blank">vite-plugin-compression</a>
 - <a href="https://github.com/chenxch/vite-plugin-vue-setup-extend-plus" target="_blank">vite-plugin-vue-setup-extend-plus</a>
 
-#### 💕 特别感谢
+#### 💕 特别感谢 - <a href="https://gitee.com/zuohuaijun/Admin.NET">@zuohuaijun</a>
 
-特别感谢老哥们的建议、指导与帮忙。谢谢！
-
-- <a href="https://gitee.com/click33/sa-plus" target="_blank">@省长</a>
-- <a href="https://gitee.com/jskz/Jskz-SpringCloud" target="_blank">@唐参</a>
-- <a href="https://gitee.com/chuange" target="_blank">@川歌</a>
-- @华仔
+此项目基于此框架进行开发，在此表示感谢。
 
 #### 💌 支持作者
 
-如果觉得框架不错，或者已经在使用了，希望你可以去 <a target="_blank" href="https://github.com/lyt-Top/vue-next-admin">Github</a> 或者
-<a target="_blank" href="https://gitee.com/lyt-top/vue-next-admin">Gitee</a> 帮我点个 ⭐ Star，这将是对我极大的鼓励与支持。
+如果觉得此项目对您大疆上云有帮助，希望你可以去 <a target="_blank" href="https://github.com/guipie/dji.vue">Github</a> 或者
+<a target="_blank" href="https://gitee.com/chenwei_zq/projects">Gitee</a> 帮我点个 ⭐ Star，这将是对我极大的鼓励与支持。

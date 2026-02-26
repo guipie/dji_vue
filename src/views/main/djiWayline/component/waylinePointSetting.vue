@@ -10,32 +10,32 @@
 			<el-tooltip effect="dark" content="航线长度" placement="top-start">
 				<div class="flex-col-center-1">
 					<div class="i-line-md:check-list-3 w-36px"></div>
-					<div>22.5m</div>
+					<div>{{ distance }}m</div>
 				</div>
 			</el-tooltip>
 			<el-tooltip effect="dark" content="预计执行时间" placement="top-start">
 				<div class="flex-col-center-1">
 					<div class="i-material-symbols:av-timer w-36px"></div>
-					<div>22.5s</div>
+					<div>{{ timeSeconds }}s</div>
 				</div>
 			</el-tooltip>
 			<el-tooltip effect="dark" content="航点数量" placement="top-start">
 				<div class="flex-col-center-1">
 					<div class="i-material-symbols:edit-location-rounded"></div>
-					<div>0</div>
+					<div>{{ waylineStore.$state.curCreateWayline.folder.placemarks?.length || 0 }}</div>
 				</div>
 			</el-tooltip>
 			<el-tooltip effect="dark" content="照片" placement="top-start">
 				<div class="flex-col-center-1">
 					<div class="i-material-symbols:imagesmode-outline"></div>
-					<div>12</div>
+					<div>{{ photoNum }}</div>
 				</div>
 			</el-tooltip>
 		</div>
 		<div id="pointList" style="padding: 0px; padding-top: 10px" class="flex flex-col">
 			<div
 				v-for="(item, index) in placemarks"
-				:key="index"
+				:key="index + (item.guid || '')"
 				style="border-bottom: solid 0.2px gray"
 				:class="{ activeBg: selectedIndex == index }"
 				class="flex items-center cursor-pointer hover:bg-auto sortable gap-1"
@@ -48,7 +48,7 @@
 						<div
 							class="border rounded-lg p-1 hover:bg-blue-5"
 							:class="{ 'bg-blue-6': selectedActionIndex == actionIndex && index == selectedIndex }"
-							v-html="waylineActionData.findLast((m) => m.value == action.actionActuatorFunc)!.svg({ color: '#F5FCF4', size: 20 })"
+							v-html="waylineActionData.findLast((m) => m.actionFuncParam?.actionValue == action.actionValue)!.svg({ color: '#F5FCF4', size: 20 })"
 						></div>
 					</div>
 				</div>
@@ -60,7 +60,7 @@
 						<template #dropdown>
 							<el-dropdown-menu>
 								<el-dropdown-item command="del">删除此航点</el-dropdown-item>
-								<el-dropdown-item command="clone">复制此航点 </el-dropdown-item>
+								<!-- <el-dropdown-item command="clone">复制此航点 </el-dropdown-item> -->
 								<el-dropdown-item command="setCoord">设置精确坐标</el-dropdown-item>
 							</el-dropdown-menu>
 						</template>
@@ -74,17 +74,48 @@
 <script setup lang="ts">
 import { More, MoreFilled } from '@element-plus/icons-vue';
 import Sortable from 'sortablejs';
-import { computed, onMounted } from 'vue';
+import { computed, h, onMounted, ref } from 'vue';
 import { useWaylineStore } from '/@/stores/useWaylineStore';
 import { waylinePointClick, waylineActionClick } from '/@/utils/cesium/waylineUtil';
 import { waylineActionData, waylineSvgData } from '/@/utils/data/waylineSvgData';
 import { PointPlacemark } from '/@/types/wayline/waylineCreate';
+import * as turf from '@turf/turf'; // 添加这行导入
+import { ElButton, ElInput, ElMessageBox, ElNotification } from 'element-plus';
 
 const waylineStore = useWaylineStore();
-const placemarks = computed(() => waylineStore.$state.curCreateWayline.folder.placemarks ?? []);
+const placemarks = computed(() => waylineStore.placemarks);
 const selectedIndex = computed(() => waylineStore.$state.selectedPointIndex);
 const selectedActionIndex = computed(() => waylineStore.$state.selectedActionIndex);
+const distance = computed(() => {
+	if (placemarks.value.length < 2) return 0;
+	var dis = 0;
+	for (let index = 0; index < placemarks.value.length - 2; index++) {
+		const fromCoords = placemarks.value[index];
+		const toCoords = placemarks.value[index + 1];
+		if (fromCoords && toCoords) {
+			const fromLon = parseFloat(fromCoords.point.split(',')[0]);
+			const fromLat = parseFloat(fromCoords.point.split(',')[1]);
+			const toLon = parseFloat(toCoords.point.split(',')[0]);
+			const toLat = parseFloat(toCoords.point.split(',')[1]);
+			dis += turf.distance([fromLon, fromLat], [toLon, toLat], { units: 'kilometers' });
+		}
+	}
+	return (dis * 1000).toFixed(2);
+});
 
+//用时 分钟
+const timeSeconds = computed(() => {
+	var speed = waylineStore.$state.curCreateWayline.missionConfig.globalTransitionalSpeed;
+	if (speed > 0) return Math.ceil(Number(distance.value) / speed).toFixed(2);
+	else return 0;
+});
+
+const photoNum = computed(() =>
+	placemarks.value.reduce((total: number, point: PointPlacemark) => {
+		const photoActions = point.actionsGroup?.filter((action) => action.actionActuatorFunc === 'takePhoto') || [];
+		return total + photoActions.length;
+	}, 0)
+);
 onMounted(() => {
 	Sortable.create(document.getElementById('pointList'), {
 		// swap: true, // Enable swap plugin
@@ -94,16 +125,45 @@ onMounted(() => {
 		handle: '.sortable',
 		onEnd: function (evt: any) {
 			console.log(evt.newIndex, evt.oldIndex);
+			waylineStore.moveWaylinePoint(evt.oldIndex, evt.newIndex);
 		},
 	});
 });
+
 function pointHandleCommand(cmd: 'del' | 'clone' | 'setCoord', index: number) {
-	if (cmd == 'del') {
+	if (cmd === 'del') {
 		waylineStore.delWaylinePoint(index);
-	} else if (cmd == 'clone') {
+	} else if (cmd === 'clone') {
 		// waylineStore.cloneWaylinePoint(selectedIndex.value)
-	} else if (cmd == 'setCoord') {
+	} else if (cmd === 'setCoord') {
 		// waylineStore.setWaylinePointCoord(selectedIndex.value)
+		const coordinate = ref<string>(`${placemarks.value[index].point}`);
+		// 打开弹窗
+		ElMessageBox.confirm(
+			() => {
+				return h(ElInput, {
+					placeholder: '请输入经度,纬度',
+					modelValue: coordinate.value, // 绑定响应式值
+					'onUpdate:modelValue': (value: string) => {
+						coordinate.value = value; // 更新响应式值
+					},
+					style: 'min-width:300px;',
+				});
+			},
+			'重新设置精确坐标',
+			{
+				confirmButtonText: '确定设置',
+				cancelButtonText: '取消',
+			}
+		)
+			.then(() => {
+				// 确认后更新航点坐标
+				waylineStore.placemarks[index].point = coordinate.value;
+				ElNotification.success('坐标设置成功');
+			})
+			.catch(() => {
+				ElNotification.info('已取消操作');
+			});
 	}
 }
 </script>

@@ -15,6 +15,7 @@ export interface MouseClickHandleOptions {
 export function mouseClickHandle(options: MouseClickHandleOptions) {
 	if (options.entity) {
 		if (options.entity.properties && options.entity.properties.isWaylinePoint) {
+			useWaylineStore().selectedActionIndex = null;
 			waylinePointClick(options.entity.properties.pointIndex.getValue(), false);
 		}
 	} else if (useWaylineStore().$state.setHome) {

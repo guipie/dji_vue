@@ -113,7 +113,7 @@ declare interface WaylineState {
 	selectedActionIndex?: number | null;
 }
 declare interface DeviceState {
-	dockOsds: Map<String, DockOsd>;
-	droneOsds: Map<String, DroneOsd>;
-	droneModels: Map<String, String>;
+	dockOsds: Map<string, DockOsd>;
+	droneOsds: Map<string, DroneOsd>;
+	droneModels: Map<string, string>;
 }

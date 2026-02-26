@@ -1,7 +1,7 @@
 <template>
 	<div class="mt-2 p-2 flex flex-col gap-4">
-		<div class="flex justify-between gap-2">
-			<div class="break-all line-clamp-2">DJI_YYYYMMDDhhmm_XXX_{{ params.actionActuatorFuncParam.fileSuffix }}</div>
+		<div class="flex justify-between flex-wrap gap-2">
+			<div class="flex-1 w-80% overflow-unset">DJI_YYYYMMDDhhmm_XXX_{{ params.actionActuatorFuncParam.fileSuffix }}</div>
 			<div v-if="!isEdit" class="i-material-symbols:edit cursor-pointer" @click="isEdit = true"></div>
 		</div>
 		<div v-if="isEdit" class="flex justify-between">
@@ -47,7 +47,7 @@ import { ActionGroup } from '/@/types/wayline/waylineCreate';
 const props = defineProps<{
 	value: ActionGroup;
 }>();
-console.log('拍照：', props.value);
+console.log('开始录像：', props.value);
 const isEdit = ref(false);
 var photoTypes = ref(props.value.actionActuatorFuncParam.payloadLensIndex.split(','));
 const params = reactive(props.value);

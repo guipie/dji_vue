@@ -6,11 +6,12 @@ import { canvasPointWithText, flyToEntity } from '.';
 
 import * as turf from '@turf/turf';
 export interface DrawWaylineOptions {
+	isFlyto: boolean;
 	id?: string;
 	name?: string;
 	isForeRender?: boolean;
 }
-export function drawWayline(options?: DrawWaylineOptions) {
+export function drawWayline(options: DrawWaylineOptions = { isFlyto: true }) {
 	var prams = useWaylineStore().$state.curCreateWayline;
 	var ext = useWaylineStore().$state.curCreateWaylineExt;
 	var points = prams.folder.placemarks?.map((item) => item.point.split(',').map(Number)) || [];
@@ -36,11 +37,21 @@ export function drawWayline(options?: DrawWaylineOptions) {
 				},
 				// svgUrl: svgDataUrl,
 			});
-		points.unshift([
-			ext.homeCoordinate.longitude,
-			ext.homeCoordinate.latitude,
-			prams.missionConfig.flyToWaylineMode == 'safely' ? prams.missionConfig.takeOffRefPointAGLHeight : prams.missionConfig.takeOffSecurityHeight,
-		]);
+		const aglHeight = Number(prams.missionConfig.takeOffRefPointAGLHeight),
+			securityHeight = Number(prams.missionConfig.takeOffSecurityHeight);
+		if (prams.missionConfig.flyToWaylineMode == 'safely') {
+			if (securityHeight < aglHeight) points.unshift([ext.homeCoordinate.longitude, ext.homeCoordinate.latitude, aglHeight]);
+			else {
+				if (points.length > 0) points.unshift([points[0][0], points[0][1], securityHeight]);
+				points.unshift([ext.homeCoordinate.longitude, ext.homeCoordinate.latitude, securityHeight]);
+			}
+		} else {
+			if (securityHeight < aglHeight) points.unshift([ext.homeCoordinate.longitude, ext.homeCoordinate.latitude, securityHeight]);
+			else {
+				if (points.length > 0) points.unshift([points[0][0], points[0][1], securityHeight]);
+				points.unshift([ext.homeCoordinate.longitude, ext.homeCoordinate.latitude, securityHeight]);
+			}
+		}
 		const terrainHeight = window.viewer.scene.globe.getHeight(Cesium.Cartographic.fromDegrees(ext.homeCoordinate.longitude, ext.homeCoordinate.latitude)) || 0;
 		points.unshift([ext.homeCoordinate.longitude, ext.homeCoordinate.latitude, terrainHeight]);
 		console.log('aaaa', terrainHeight);
@@ -54,7 +65,9 @@ export function drawWayline(options?: DrawWaylineOptions) {
 				material: Cesium.Color.fromCssColorString('#6AFC0A'),
 			},
 		});
-		flyToEntity(waylineEntity);
+		if (options.isFlyto) {
+			flyToEntity(waylineEntity);
+		}
 	}
 	for (let index = 0; index < (prams.folder.placemarks?.length ?? 0); index++) {
 		const placemark = prams.folder.placemarks![index];
@@ -101,7 +114,7 @@ export function drawWayline(options?: DrawWaylineOptions) {
 	drawSelectPointWedge();
 }
 
-export function drawSelectPointWedge() {
+export function drawSelectPointWedge(options: { headingVal?: number; pitchVal?: number } = {}) {
 	var selectPointIndex: number = useWaylineStore().$state.selectedPointIndex ?? -1;
 	var points = useWaylineStore().$state.curCreateWayline.folder.placemarks?.map((item) => item.point.split(',').map(Number)) || [];
 	var homePoint = useWaylineStore().$state.curCreateWaylineExt.homeCoordinate;
@@ -118,14 +131,19 @@ export function drawSelectPointWedge() {
 		var endLongitude = points[selectPointIndex][0];
 		var endLatitude = points[selectPointIndex][1];
 		var endHeight = points[selectPointIndex][2] || 0;
-		var heading = turf.bearing([startLongitude, startLatitude], [endLongitude, endLatitude]);
+		var heading = options.headingVal ?? turf.bearing([startLongitude, startLatitude], [endLongitude, endLatitude]);
 		var headingRadians = Cesium.Math.toRadians(heading);
 		// 修正航向角 - 减去90度以补偿ENU坐标系的影响
 		var correctedHeading = headingRadians - Cesium.Math.toRadians(90);
 
 		var pos = Cesium.Cartesian3.fromDegrees(endLongitude, endLatitude, endHeight);
 		// 直接使用headingPitchRollQuaternion，并指定局部坐标系
-		var orientation = Cesium.Transforms.headingPitchRollQuaternion(pos, new Cesium.HeadingPitchRoll(correctedHeading, 0, 0), Cesium.Ellipsoid.WGS84, Cesium.Transforms.eastNorthUpToFixedFrame);
+		var orientation = Cesium.Transforms.headingPitchRollQuaternion(
+			pos,
+			new Cesium.HeadingPitchRoll(correctedHeading, Cesium.Math.toRadians(options.pitchVal ?? 0), 0),
+			Cesium.Ellipsoid.WGS84,
+			Cesium.Transforms.eastNorthUpToFixedFrame
+		);
 		// var height = cartographic.height;
 		// 创建Wedge实体，中心点在终点坐标
 		var wedgeEntity = window.viewer.entities.getById('wayline_wedge');
@@ -140,7 +158,7 @@ export function drawSelectPointWedge() {
 				orientation: orientation,
 				// orientation:Cesium.Transforms.headingPitchRollQuaternion(pos, new Cesium.HeadingPitchRoll(headingRadians, 0, 0), Cesium.Ellipsoid.WGS84, Cesium.Transforms.eastNorthUpToFixedFrame),
 				ellipsoid: {
-					radii: new Cesium.Cartesian3(200.0, 200.0, 200.0), // 缩小半径，避免过大
+					radii: new Cesium.Cartesian3(100.0, 100.0, 100.0), // 减小半径
 					innerRadii: new Cesium.Cartesian3(1.0, 1.0, 1.0), // 内半径
 					minimumClock: Cesium.Math.toRadians(-15.0), // 水平角度范围
 					maximumClock: Cesium.Math.toRadians(15.0),

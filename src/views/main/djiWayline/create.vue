@@ -18,9 +18,9 @@
 				</el-dropdown>
 			</div>
 			<div class="c-white">
-				<el-button size="large" type="success" text @click="waylineCreateVisible = true">航点航线创建</el-button>
+				<el-button size="large" type="success" text @click="waylineCreateDialog = true">航点航线创建</el-button>
 				<el-divider direction="vertical" />
-				<el-button size="large" style="margin-left: 0px" text @click="waylineCreateVisible = false">Matrice 4D</el-button>
+				<el-button size="large" style="margin-left: 0px" text @click="waylineCreateDialog = false">Matrice 4D</el-button>
 			</div>
 			<div>
 				<el-button text size="large" :icon="Setting"></el-button>
@@ -30,26 +30,27 @@
 			<div class="w-16.5% text-white">
 				<WaylinePointSetting></WaylinePointSetting>
 			</div>
-			<div class="flex-1">
-				<CesiumMap :options="{ inited: mapInited }"></CesiumMap>
+			<div class="flex-1 relative">
+				<WaylinePointSettingTop v-if="curPoint"></WaylinePointSettingTop>
+				<CesiumMap v-if="!waylineCreateDialog" :options="{ inited: mapInited }"></CesiumMap>
 			</div>
-			<div class="w-16.5% text-white">
-				<WaylinePointActionSetting></WaylinePointActionSetting>
+			<div class="w-16.5% text-white" style="background: color-mix(in srgb, var(--el-color-primary), black 30%)">
+				<WaylinePointActionSetting v-if="curAction" :key="curAction.actionId" :cur-action="curAction"></WaylinePointActionSetting>
 			</div>
 		</div>
 		<!-- 航线创建弹框 -->
-		<el-dialog v-model="waylineCreateVisible" title="航线创建" :show-close="false" :close-on-press-escape="false" :close-on-click-modal="false" style="width: 60%">
-			<WaylineCreate @update:value="(val) => (waylineCreateVisible = val)"></WaylineCreate>
+		<el-dialog v-model="waylineCreateDialog" title="航线创建" :show-close="false" :close-on-press-escape="false" :close-on-click-modal="false" style="width: 60%">
+			<WaylineCreate @update:value="(val) => (waylineCreateDialog = val)"></WaylineCreate>
 		</el-dialog>
 		<!-- 航点动作编辑    -->
-		<div class="absolute left-16.5% bottom-5% text-white">
+		<div class="absolute left-17% bottom-5% text-white">
 			<WaylinePointActions></WaylinePointActions>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import CesiumMap from '/@/views/component/cesiumMap.vue';
 import { NextLoading } from '/@/utils/loading';
 
@@ -67,12 +68,16 @@ import { useRouter } from 'vue-router';
 import { drawWayline } from '/@/utils/cesium/waylineUtil';
 import WaylinePointActions from './component/waylinePointActions.vue';
 import WaylinePointActionSetting from './component/waylinePointActionSetting.vue';
+import WaylinePointSettingTop from './component/waylinePointSettingTop.vue';
 
 const waylineSettingVisible = ref(false);
-const waylineCreateVisible = ref(false);
 const waylineSettingRef = ref<DropdownInstance>();
 const waylineStore = useWaylineStore();
+const waylineCreateDialog = ref(!(waylineStore.$state.curCreateWayline.waylineName.length > 0 && waylineStore.$state.curCreateWayline.domainTypeSubType.length > 0));
 const router = useRouter();
+
+const curAction = computed(() => waylineStore.curAction);
+const curPoint = computed(() => waylineStore.curPoint);
 onMounted(() => {
 	NextLoading.done();
 });

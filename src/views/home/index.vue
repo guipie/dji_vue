@@ -6,8 +6,8 @@
 					<div class="flex-margin flex w100" :class="` home-one-animation${k}`">
 						<div class="flex-auto">
 							<span class="font30">{{ v.num1 }}</span>
-							<span class="ml5 font16" :style="{ color: v.color1 }">{{ v.num2 }}%</span>
-							<div class="mt10">{{ v.num3 }}</div>
+							<span class="ml5 font16" v-if="v.num2" :style="{ color: v.color1 }">{{ v.num2 }}%</span>
+							<div class="mt10" v-if="v.num3">{{ v.num3 }}</div>
 						</div>
 						<div class="home-card-item-icon flex" :style="{ background: `var(${v.color2})` }">
 							<i class="flex-margin font32" :class="v.num4" :style="{ color: `var(${v.color3})` }"></i>
@@ -81,9 +81,9 @@ const state = reactive({
 	homeOne: [
 		{
 			num1: '125,12',
-			num2: '-12.32',
-			num3: '今日打卡人数',
-			num4: 'fa fa-meetup',
+			// num2: '-12.32',
+			num3: '今日飞行次数',
+			num4: 'i-material-symbols:flight-takeoff',
 			color1: '#FF6462',
 			color2: '--next-color-primary-lighter',
 			color3: '--el-color-primary',
@@ -91,8 +91,8 @@ const state = reactive({
 		{
 			num1: '653,33',
 			num2: '+42.32',
-			num3: '本月打卡人数',
-			num4: 'iconfont icon-ditu',
+			num3: '本月飞行次数',
+			num4: 'i-material-symbols:flight-takeoff',
 			color1: '#6690F9',
 			color2: '--next-color-success-lighter',
 			color3: '--el-color-success',
@@ -100,8 +100,8 @@ const state = reactive({
 		{
 			num1: '125,65',
 			num2: '+17.32',
-			num3: '年度打卡人数',
-			num4: 'iconfont icon-zaosheng',
+			num3: '待飞任务数',
+			num4: 'i-ic:baseline-pending-actions',
 			color1: '#6690F9',
 			color2: '--next-color-warning-lighter',
 			color3: '--el-color-warning',
@@ -109,8 +109,8 @@ const state = reactive({
 		{
 			num1: '520,43',
 			num2: '-10.01',
-			num3: '访问统计信息',
-			num4: 'fa fa-github-alt',
+			num3: '机场/无人机总数',
+			num4: 'i-ic:round-connecting-airports',
 			color1: '#FF6462',
 			color2: '--next-color-danger-lighter',
 			color3: '--el-color-danger',
@@ -119,57 +119,27 @@ const state = reactive({
 	homeThree: [
 		{
 			icon: 'iconfont icon-yangan',
-			label: '浅粉红',
-			value: '2.1%OBS/M',
+			label: '空间用户',
+			value: '222',
 			iconColor: '#F72B3F',
 		},
 		{
 			icon: 'iconfont icon-wendu',
-			label: '深红(猩红)',
-			value: '30℃',
+			label: '航线',
+			value: '36',
 			iconColor: '#91BFF8',
 		},
 		{
 			icon: 'iconfont icon-shidu',
-			label: '淡紫红',
-			value: '57%RH',
+			label: '任务',
+			value: '58',
 			iconColor: '#88D565',
 		},
 		{
 			icon: 'iconfont icon-shidu',
-			label: '弱紫罗兰红',
-			value: '107w',
+			label: '飞行中',
+			value: '2架',
 			iconColor: '#88D565',
-		},
-		{
-			icon: 'iconfont icon-zaosheng',
-			label: '中紫罗兰红',
-			value: '57DB',
-			iconColor: '#FBD4A0',
-		},
-		{
-			icon: 'iconfont icon-zaosheng',
-			label: '紫罗兰',
-			value: '57PV',
-			iconColor: '#FBD4A0',
-		},
-		{
-			icon: 'iconfont icon-zaosheng',
-			label: '暗紫罗兰',
-			value: '517Cpd',
-			iconColor: '#FBD4A0',
-		},
-		{
-			icon: 'iconfont icon-zaosheng',
-			label: '幽灵白',
-			value: '12kg',
-			iconColor: '#FBD4A0',
-		},
-		{
-			icon: 'iconfont icon-zaosheng',
-			label: '海军蓝',
-			value: '64fm',
-			iconColor: '#FBD4A0',
 		},
 	],
 	myCharts: [] as EmptyArrayType,
@@ -187,26 +157,26 @@ const initLineChart = () => {
 	const option = {
 		backgroundColor: state.charts.bgColor,
 		title: {
-			text: '打卡统计',
+			text: '飞行统计',
 			x: 'left',
 			textStyle: { fontSize: '15', color: state.charts.color },
 		},
 		grid: { top: 70, right: 20, bottom: 30, left: 30 },
 		tooltip: { trigger: 'axis' },
-		legend: { data: ['打卡率', '合格率'], right: 0 },
+		legend: { data: ['飞行次数', '失败数'], right: 0 },
 		xAxis: {
 			data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
 		},
 		yAxis: [
 			{
 				type: 'value',
-				name: '%百分比',
+				name: '次数',
 				splitLine: { show: true, lineStyle: { type: 'dashed', color: '#f5f5f5' } },
 			},
 		],
 		series: [
 			{
-				name: '打卡率',
+				name: '失败数',
 				type: 'line',
 				symbolSize: 6,
 				symbol: 'circle',
@@ -222,12 +192,12 @@ const initLineChart = () => {
 				},
 			},
 			{
-				name: '合格率',
+				name: '飞行次数',
 				type: 'line',
 				symbolSize: 6,
 				symbol: 'circle',
 				smooth: true,
-				data: [0, 24.1, 7.2, 15.5, 42.4, 42.4, 42.4, 24.1, 7.2, 15.5, 42.4, 0],
+				data: [10, 224.1, 117.2, 115.5, 142.4, 142.4, 142.4, 124.1, 170.2, 115.5, 142.4, 120],
 				lineStyle: { color: '#9E87FF' },
 				itemStyle: { color: '#9E87FF', borderColor: '#9E87FF' },
 				areaStyle: {
@@ -266,7 +236,7 @@ const initLineChart = () => {
 const initPieChart = () => {
 	if (!state.global.dispose.some((b: any) => b === state.global.homeChartTwo)) state.global.homeChartTwo.dispose();
 	state.global.homeChartTwo = markRaw(echarts.init(homePieRef.value, state.charts.theme));
-	var getname = ['广西', '湖南', '湖北', '广东', '河北'];
+	var getname = ['广西空间', '湖南空间', '湖北空间', '广东空间', '河北空间'];
 	var getvalue = [34.2, 38.87, 17.88, 9.05, 2.05];
 	var data = [];
 	for (var i = 0; i < getname.length; i++) {
@@ -276,7 +246,7 @@ const initPieChart = () => {
 	const option = {
 		backgroundColor: state.charts.bgColor,
 		title: {
-			text: '各地打卡统计',
+			text: '各空间无人机数量统计',
 			x: 'left',
 			textStyle: { fontSize: '15', color: state.charts.color },
 		},
@@ -354,24 +324,24 @@ const initBarChart = () => {
 	const option = {
 		backgroundColor: state.charts.bgColor,
 		title: {
-			text: '地热开发利用',
+			text: '设备统计',
 			x: 'left',
 			textStyle: { fontSize: '15', color: state.charts.color },
 		},
 		tooltip: { trigger: 'axis' },
-		legend: { data: ['供温', '回温', '压力值(Mpa)'], right: 0 },
+		legend: { data: ['离线', '作业中', '数量'], right: 0 },
 		grid: { top: 70, right: 80, bottom: 30, left: 80 },
 		xAxis: [
 			{
 				type: 'category',
-				data: ['1km', '2km', '3km', '4km', '5km', '6km'],
+				data: ['机场', '无人机', 'pilot', '中继站'],
 				boundaryGap: true,
 				axisTick: { show: false },
 			},
 		],
 		yAxis: [
 			{
-				name: '供回温度(℃）',
+				name: '离线',
 				nameLocation: 'middle',
 				nameTextStyle: { padding: [3, 4, 50, 6] },
 				splitLine: { show: true, lineStyle: { type: 'dashed', color: '#f5f5f5' } },
@@ -380,7 +350,7 @@ const initBarChart = () => {
 				axisLabel: { color: state.charts.color, formatter: '{value} ' },
 			},
 			{
-				name: '压力值(Mpa)',
+				name: '数量',
 				nameLocation: 'middle',
 				nameTextStyle: { padding: [50, 4, 5, 6] },
 				splitLine: { show: false },
@@ -391,7 +361,7 @@ const initBarChart = () => {
 		],
 		series: [
 			{
-				name: '供温',
+				name: '离线',
 				type: 'line',
 				smooth: true,
 				showSymbol: true,
@@ -411,15 +381,13 @@ const initBarChart = () => {
 				// data中可以使用对象，value代表相应的值，另外可加入自定义的属性
 				data: [
 					{ value: 1, stationName: 's1' },
-					{ value: 3, stationName: 's2' },
-					{ value: 4, stationName: 's3' },
-					{ value: 9, stationName: 's4' },
-					{ value: 3, stationName: 's5' },
-					{ value: 2, stationName: 's6' },
+					{ value: 2, stationName: 's2' },
+					{ value: 3, stationName: 's3' },
+					{ value: 4, stationName: 's4' },
 				],
 			},
 			{
-				name: '回温',
+				name: '作业中',
 				type: 'line',
 				smooth: true,
 				showSymbol: true,
@@ -443,22 +411,20 @@ const initBarChart = () => {
 					color: '#3bbc86',
 				},
 				data: [
-					{ value: 31, stationName: 's1' },
-					{ value: 36, stationName: 's2' },
-					{ value: 54, stationName: 's3' },
-					{ value: 24, stationName: 's4' },
-					{ value: 73, stationName: 's5' },
-					{ value: 22, stationName: 's6' },
+					{ value: 11, stationName: 's1' },
+					{ value: 32, stationName: 's2' },
+					{ value: 51, stationName: 's3' },
+					{ value: 31, stationName: 's4' },
 				],
 			},
 			{
-				name: '压力值(Mpa)',
+				name: '数量',
 				type: 'bar',
 				barWidth: 30,
 				yAxisIndex: 1,
 				itemStyle: {
 					color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-						{ offset: 0, color: 'rgba(108,80,243,0.3)' },
+						{ offset: 0, color: 'rgba(208,380,243,0.3)' },
 						{ offset: 1, color: 'rgba(108,80,243,0)' },
 					]),
 					//柱状图圆角
@@ -469,8 +435,6 @@ const initBarChart = () => {
 					{ value: 34, stationName: 's2' },
 					{ value: 54, stationName: 's3' },
 					{ value: 39, stationName: 's4' },
-					{ value: 63, stationName: 's5' },
-					{ value: 24, stationName: 's6' },
 				],
 			},
 		],

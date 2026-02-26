@@ -18,6 +18,7 @@
     "animate.css": "^4.1.1",
     "axios": "^1.13.1",
     "cesium": "1.136.0",
+    "cesium-navigation-es6": "^3.0.9",
     "countup.js": "^2.9.0",
     "cropperjs": "^2.1.0",
     "crypto-js": "^4.2.0",

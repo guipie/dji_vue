@@ -7,6 +7,7 @@ export function initWaylineState(): WaylineState {
 		curCreateWayline: {
 			waylineName: '创建航线',
 			droneModel: '',
+			domainTypeSubType: '',
 			acc: '',
 			templateType: TemplateTypeEnum.waypoint,
 			templateStr: '航点航线',

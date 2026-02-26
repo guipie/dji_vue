@@ -17,7 +17,19 @@ onMounted(() => {
 	initCesium(props.options);
 });
 </script>
-
+<style>
+#navigationDiv .compass {
+	top: 10px;
+}
+#navigationDiv .navigation-controls {
+	top: 110px;
+}
+#distanceLegendDiv .distance-legend {
+	right: 0px;
+	bottom: 1px;
+	width: auto;
+}
+</style>
 <style scoped>
 * {
 	margin: 0;
@@ -32,13 +44,13 @@ body {
 }
 /* 加载中动画容器 - 全屏遮罩，居中显示 */
 #loadingOverlay {
-	position: fixed;
-	top: 50px;
-	left: 16%;
-	width: 84%;
+	min-height: 500px;
+	position: relative;
+	width: 100%;
+	/* height: 100%; */
 	height: 100vh;
 	/**透明背景色 */
-	background-color: rgba(255, 255, 255, 0.5);
+	/* background-color: rgba(255, 255, 255, 0.5); */
 	opacity: 0.6;
 	display: flex;
 	flex-direction: column;

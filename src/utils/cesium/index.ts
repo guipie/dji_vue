@@ -1,6 +1,8 @@
 // cesium地图初始化
 import * as Cesium from 'cesium';
 import { mouseClickHandle } from './mouseClickHandle';
+import CesiumNavigation, { NavigationOptions } from 'cesium-navigation-es6';
+
 export async function initCesium(options?: any) {
 	function hideLoadingOverlay() {
 		const loadingOverlay = document.getElementById('loadingOverlay')!;
@@ -38,7 +40,6 @@ export async function initCesium(options?: any) {
 		// 其他选项
 		shouldAnimate: true, // 自动动画
 		skyAtmosphere: false, // 关闭大气效果
-
 		// fog: false, // 关闭雾效
 		orderIndependentTranslucency: false,
 		contextOptions: {
@@ -48,6 +49,20 @@ export async function initCesium(options?: any) {
 			},
 		},
 	});
+	var navOptions: NavigationOptions = {}; // 重命名变量以避免冲突
+	// 用于在使用重置导航重置地图视图时设置默认视图控制。接受的值是Cesium.Cartographic 和 Cesium.Rectangle.
+	navOptions.defaultResetView = Cesium.Rectangle.fromDegrees(80, 22, 130, 50);
+	// 用于启用或禁用罗盘。true是启用罗盘，false是禁用罗盘。默认值为true。如果将选项设置为false，则罗盘将不会添加到地图中。
+	navOptions.enableCompass = true;
+	// 用于启用或禁用缩放控件。true是启用，false是禁用。默认值为true。如果将选项设置为false，则缩放控件将不会添加到地图中。
+	navOptions.enableZoomControls = true;
+	// 用于启用或禁用距离图例。true是启用，false是禁用。默认值为true。如果将选项设置为false，距离图例将不会添加到地图中。
+	navOptions.enableDistanceLegend = true;
+	// 用于启用或禁用指南针外环。true是启用，false是禁用。默认值为true。如果将选项设置为false，则该环将可见但无效。
+	navOptions.enableCompassOuterRing = true;
+	console.log('CesiumNavigation:', CesiumNavigation);
+	new CesiumNavigation(window.viewer, navOptions);
+
 	// 添加自定义影像图层
 	const imageryProvider = new Cesium.UrlTemplateImageryProvider({
 		url: 'https://webst02.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}',
@@ -81,7 +96,7 @@ export async function initCesium(options?: any) {
 	// const gl = canvas!.getContext('webgl2'); // 强制使用WebGL 2.0
 	const context = canvas.getContext('2d', { willReadFrequently: true });
 	// 1. 启用调试图层
-	window.viewer.scene.debugShowFramesPerSecond = true;
+	// window.viewer.scene.debugShowFramesPerSecond = true;
 
 	// 2. 监听错误事件
 	window.viewer.scene.renderError.addEventListener(function (error) {
@@ -94,11 +109,11 @@ export async function initCesium(options?: any) {
 	}
 	// 4. 检查地形和影像加载状态
 	window.viewer.scene.globe.tileLoadProgressEvent.addEventListener(function (remaining) {
-		console.log('剩余加载瓦片:', remaining);
+		// console.log('剩余加载瓦片:', remaining);
 	});
 	// 5. 监听相机变化事件
 	window.viewer.scene.camera.changed.addEventListener(function () {
-		console.log('相机位置:', window.viewer.scene.camera.positionCartographic);
+		// console.log('相机位置:', window.viewer.scene.camera.positionCartographic);
 	});
 	if (options.inited) {
 		options.inited();
@@ -111,7 +126,10 @@ export async function initCesium(options?: any) {
 			});
 		},
 		function (e) {
-			throw e.message;
+			console.log('定位失败:', e);
+			window.viewer.camera.setView({
+				destination: Cesium.Cartesian3.fromDegrees(116.405285, 39.904989, 2000),
+			});
 		}
 	);
 	// 6. 监听鼠标事件

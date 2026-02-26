@@ -9,6 +9,7 @@ export interface WaylineCreateParams {
 	templateType: TemplateTypeEnum;
 	templateStr: string;
 	droneModel: string;
+	domainTypeSubType: string;
 	acc?: string;
 	missionConfig: MissionConfig;
 	folder: Folder;
@@ -46,20 +47,40 @@ export interface Folder {
 
 export interface PointPlacemark {
 	// num: number;
-	point: String; //[0,1]0.123456,34.123456,100
+	guid?: string;
+	point: string; //[0,1]0.123456,34.123456,100
 	executeHeight: number;
+	useGlobalTurnParam: boolean; //	是否使用全局航点类型（全局航点转弯模式）
+	waypointTurnParam?: {
+		waypointTurnMode?: 'coordinateTurn' | 'toPointAndStopWithDiscontinuityCurvature' | 'toPointAndStopWithContinuityCurvature' | 'toPointAndPassWithContinuityCurvature';
+		waypointTurnDampingDist?: number; //航点转弯截距，单位m米，范围[0,, 航段最大长度]
+	};
+	useGlobalHeadingParam: boolean; //是否使用全局偏航角模式参数
+	waypointHeadingParam?: {
+		waypointHeadingMode: 'followWayline' | 'manually' | 'fixed' | 'smoothTransition';
+		waypointHeadingAngle?: number; // 给定某航点的目标偏航角 当“wpml:waypointHeadingMode”为“smoothTransition”时必需
+		waypointHeadingPathMode: 'clockwise' | 'counterClockwise' | 'followBadArc';
+	};
+	flyToPointSpeed?: number; //[1,15]
 	actionsGroup?: ActionGroup[];
 }
-
+export interface ActionDataType {
+	label: string;
+	// value: string;
+	// actionTriggerType: 'reachPoint' | 'betweenAdjacentPoints' | 'multipleTiming' | 'multipleDistance';
+	actionFuncParam?: ActionGroup;
+	svg: (options: { color?: string; size?: number }) => string;
+}
 export interface ActionGroup {
 	// actionGroupId: number;
 	// actionGroupStartIndex: number;
 	// actionGroupEndIndex: number;
 	// actionGroupMode: string;
-	actionTrigger: ActionTrigger;
+	actionTrigger?: ActionTrigger;
 	actionId: number;
 	actionActuatorFunc: string;
-	actionActuatorFuncParam: any;
+	actionValue: string;
+	actionActuatorFuncParam?: any;
 }
 export interface ActionTrigger {
 	//   reachPoint：到达航点时执行

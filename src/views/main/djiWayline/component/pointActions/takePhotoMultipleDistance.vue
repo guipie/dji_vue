@@ -1,27 +1,8 @@
 <template>
 	<div class="mt-2 p-2 flex flex-col gap-4">
-		<div class="flex justify-between gap-2">
-			<div class="break-all line-clamp-2">DJI_YYYYMMDDhhmm_XXX_{{ params.actionActuatorFuncParam.fileSuffix }}</div>
-			<div v-if="!isEdit" class="i-material-symbols:edit cursor-pointer" @click="isEdit = true"></div>
-		</div>
-		<div v-if="isEdit" class="flex justify-between">
-			<div class="flex-1">
-				<el-input placeholder="请输入拍摄照片的后缀" v-model="params.actionActuatorFuncParam.fileSuffix"> </el-input>
-			</div>
-			<div class="flex items-center gap-2 ml-2">
-				<el-icon class="cursor-pointer c-green hover:op-70" @click="isEdit = false">
-					<Check></Check>
-				</el-icon>
-				<el-icon
-					class="cursor-pointer c-rose hover:op-70"
-					@click="
-						params.actionActuatorFuncParam.fileSuffix = '';
-						isEdit = false;
-					"
-				>
-					<Close></Close>
-				</el-icon>
-			</div>
+		<div>
+			<span>间隔距离(m): </span>
+			<el-input-number placeholder="间隔距离" :max="3000" :min="1" v-model="params.actionTrigger!.actionTriggerParam"> </el-input-number>
 		</div>
 		<div class="flex justify-between">
 			<div>
@@ -40,16 +21,14 @@
 	</div>
 </template>
 <script lang="ts" setup>
-import { Check, Close } from '@element-plus/icons-vue';
 import { reactive, ref, watchEffect } from 'vue';
 import { useWaylineStore } from '/@/stores/useWaylineStore';
 import { ActionGroup } from '/@/types/wayline/waylineCreate';
 const props = defineProps<{
 	value: ActionGroup;
 }>();
-console.log('拍照：', props.value);
-const isEdit = ref(false);
-var photoTypes = ref(props.value.actionActuatorFuncParam.payloadLensIndex.split(','));
+console.log('定时拍照：', props.value);
+var photoTypes = ref(props.value.actionActuatorFuncParam?.payloadLensIndex?.split(',') ?? []);
 const params = reactive(props.value);
 watchEffect(() => {
 	params.actionActuatorFuncParam.payloadLensIndex = photoTypes.value.toString();

@@ -1,6 +1,6 @@
 ﻿import request from '/@/utils/request';
 enum Api {
-	GetDjiDeviceEnums = '/api/djiDeviceEnum/droneModels',
+	GetDjiDeviceEnums = '/api/djiDeviceEnum/droneDeviceEnums',
 	AddDjiDeviceEnum = '/api/djiDeviceEnum/add',
 	DeleteDjiDeviceEnum = '/api/djiDeviceEnum/delete',
 	UpdateDjiDeviceEnum = '/api/djiDeviceEnum/update',

@@ -13,15 +13,20 @@ export function formatDate(date: Date, format: string): string {
 	let we = date.getDay(); // 星期
 	let z = getWeek(date); // 周
 	let qut = Math.floor((date.getMonth() + 3) / 3).toString(); // 季度
+
 	const opt: { [key: string]: string } = {
 		'Y+': date.getFullYear().toString(), // 年
+		'y+': date.getFullYear().toString(), // 年 (小写)
 		'm+': (date.getMonth() + 1).toString(), // 月(月份从0开始，要+1)
 		'd+': date.getDate().toString(), // 日
 		'H+': date.getHours().toString(), // 时
+		'h+': date.getHours().toString(), // 时 (小写)
 		'M+': date.getMinutes().toString(), // 分
+		's+': date.getSeconds().toString(), // 秒
 		'S+': date.getSeconds().toString(), // 秒
 		'q+': qut, // 季度
 	};
+
 	// 中文数字 (星期)
 	const week: { [key: string]: string } = {
 		'0': '日',
@@ -32,6 +37,7 @@ export function formatDate(date: Date, format: string): string {
 		'5': '五',
 		'6': '六',
 	};
+
 	// 中文数字（季度）
 	const quarter: { [key: string]: string } = {
 		'1': '一',
@@ -39,15 +45,41 @@ export function formatDate(date: Date, format: string): string {
 		'3': '三',
 		'4': '四',
 	};
-	if (/(W+)/.test(format))
-		format = format.replace(RegExp.$1, RegExp.$1.length > 1 ? (RegExp.$1.length > 2 ? '星期' + week[we] : '周' + week[we]) : week[we]);
-	if (/(Q+)/.test(format)) format = format.replace(RegExp.$1, RegExp.$1.length == 4 ? '第' + quarter[qut] + '季度' : quarter[qut]);
-	if (/(Z+)/.test(format)) format = format.replace(RegExp.$1, RegExp.$1.length == 3 ? '第' + z + '周' : z + '');
-	for (let k in opt) {
-		let r = new RegExp('(' + k + ')').exec(format);
-		// 若输入的长度不为1，则前面补零
-		if (r) format = format.replace(r[1], RegExp.$1.length == 1 ? opt[k] : opt[k].padStart(RegExp.$1.length, '0'));
+
+	// 使用 match 方法替代 RegExp.$1
+	const weekMatch = format.match(/(W+)/);
+	if (weekMatch) {
+		const matchedStr = weekMatch[1];
+		format = format.replace(matchedStr, matchedStr.length > 1 ? (matchedStr.length > 2 ? '星期' + week[we] : '周' + week[we]) : week[we]);
 	}
+
+	const quarterMatch = format.match(/(Q+)/);
+	if (quarterMatch) {
+		const matchedStr = quarterMatch[1];
+		format = format.replace(matchedStr, matchedStr.length == 4 ? '第' + quarter[qut] + '季度' : quarter[qut]);
+	}
+
+	const weekNumMatch = format.match(/(Z+)/);
+	if (weekNumMatch) {
+		const matchedStr = weekNumMatch[1];
+		format = format.replace(matchedStr, matchedStr.length == 3 ? '第' + z + '周' : z + '');
+	}
+
+	for (let k in opt) {
+		const regex = new RegExp('(' + k + ')', 'g'); // 添加全局标志
+		const matches = format.match(regex);
+		if (matches) {
+			matches.forEach((match) => {
+				const matchedStr = match;
+				const key = Object.keys(opt).find((k) => new RegExp('(' + k + ')').test(match));
+				if (key) {
+					const value = opt[key];
+					format = format.replace(new RegExp('(' + key + ')', 'g'), matchedStr.length == 1 ? value : value.padStart(matchedStr.length, '0'));
+				}
+			});
+		}
+	}
+
 	return format;
 }
 

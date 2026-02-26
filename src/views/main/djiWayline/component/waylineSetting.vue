@@ -61,7 +61,7 @@
 					<div>
 						<img style="width: 100%; height: 100%" src="/@/assets/wayline/爬升setting.svg" />
 					</div>
-					<div class="flex flex-col justify-center w-50px">
+					<div class="flex flex-col justify-center w-65px">
 						<el-button type="primary" size="small" @click="takeOffSecurityHeightSet(100)">+100</el-button>
 						<el-button style="margin-left: 0px" type="primary" size="small" @click="takeOffSecurityHeightSet(10)">+10</el-button>
 						<el-input v-model="waylineCreateRequest.missionConfig.takeOffSecurityHeight">
@@ -93,7 +93,7 @@
 						<div>
 							<img style="width: 100%; height: 90%" :src="imageMap[ext.waylinePointHeightMode]" />
 						</div>
-						<div class="flex flex-col justify-center w-50px">
+						<div class="flex flex-col justify-center w-65px">
 							<el-button type="primary" size="small" @click="takeOffRefPointAGLHeightSet(100)">+100</el-button>
 							<el-button style="margin-left: 0px" type="primary" size="small" @click="takeOffRefPointAGLHeightSet(10)">+10</el-button>
 							<el-input v-model="waylineCreateRequest.missionConfig.takeOffRefPointAGLHeight">
@@ -229,7 +229,7 @@
 
 <script setup lang="ts">
 import { QuestionFilled, ArrowDownBold, ArrowUpBold } from '@element-plus/icons-vue';
-import { computed, ref } from 'vue';
+import { watch, ref } from 'vue';
 import { useWaylineStore } from '/@/stores/useWaylineStore';
 import hbImage from '/@/assets/wayline/航点高度模式hb.svg';
 import xdqfdImage from '/@/assets/wayline/航点高度模式xdqfd.svg';
@@ -250,13 +250,53 @@ const waylineStore = useWaylineStore();
 const waylineCreateRequest = ref(waylineStore.$state.curCreateWayline);
 const ext = ref(waylineStore.$state.curCreateWaylineExt);
 function takeOffSecurityHeightSet(val: number) {
+	//安全起飞高度
 	waylineCreateRequest.value.missionConfig.takeOffSecurityHeight += val;
-	drawWayline();
 }
 function takeOffRefPointAGLHeightSet(val: number) {
+	//航点高度
 	waylineCreateRequest.value.missionConfig.takeOffRefPointAGLHeight += val;
-	drawWayline();
+	var height = waylineCreateRequest.value.missionConfig.takeOffRefPointAGLHeight;
+	for (let index = 0; index < (waylineCreateRequest.value.folder.placemarks ?? []).length; index++) {
+		const element = waylineCreateRequest.value.folder.placemarks![index];
+		element.executeHeight = height;
+		var point = element.point.split(',');
+		element.point = point[0] + ',' + point[1] + ',' + height;
+	}
 }
+watch(
+	() => waylineCreateRequest.value.missionConfig.takeOffSecurityHeight,
+	(newVal, oldVal) => {
+		console.log('takeOffSecurityHeight changed:', newVal, oldVal);
+		//判断newVal是否数字，是否大于500小于20；
+		if (isNaN(newVal) || newVal < 20) {
+			waylineCreateRequest.value.missionConfig.takeOffSecurityHeight = 20;
+		} else if (newVal > 500) {
+			waylineCreateRequest.value.missionConfig.takeOffSecurityHeight = 500;
+		}
+		drawWayline();
+	}
+);
+watch(
+	() => waylineCreateRequest.value.missionConfig.takeOffRefPointAGLHeight,
+	(newVal, oldVal) => {
+		console.log('takeOffRefPointAGLHeight changed:', newVal, oldVal);
+		//判断newVal是否数字，是否大于500小于20；
+		if (isNaN(newVal) || newVal < 20) {
+			waylineCreateRequest.value.missionConfig.takeOffRefPointAGLHeight = 20;
+		} else if (newVal > 500) {
+			waylineCreateRequest.value.missionConfig.takeOffRefPointAGLHeight = 500;
+		}
+		drawWayline();
+	}
+);
+watch(
+	() => waylineCreateRequest.value.missionConfig.flyToWaylineMode,
+	(newVal, oldVal) => {
+		console.log('flyToWaylineMode changed:', newVal, oldVal);
+		drawWayline();
+	}
+);
 </script>
 <style>
 .hdmode-popper .el-select-dropdown__item {

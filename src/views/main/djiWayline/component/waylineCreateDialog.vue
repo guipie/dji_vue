@@ -52,7 +52,10 @@
 					v-for="drone in droneModels.keys()"
 					:key="drone"
 					:type="waylineCreateRequest.droneModel == drone ? 'primary' : ''"
-					@click="waylineCreateRequest.droneModel = drone.toString()"
+					@click="
+						waylineCreateRequest.droneModel = drone;
+						waylineCreateRequest.domainTypeSubType = droneModels.get(drone)!;
+					"
 					size="large"
 					style="margin-left: 0px"
 				>
@@ -88,7 +91,7 @@
 		</div>
 		<!-- 操作按钮 -->
 		<div class="flex justify-end gap-4">
-			<el-button @click="emits('update:value', false)">关闭</el-button>
+			<!-- <el-button @click="emits('update:value', false)">关闭</el-button> -->
 			<el-button type="primary" @click="confirm">确定</el-button>
 		</div>
 	</div>
@@ -127,6 +130,7 @@ function selectWaylineType(selectItem: any) {
 	waylineCreateRequest.value.templateStr = selectItem.description;
 }
 const confirm = () => {
-	console.log({});
+	console.log(waylineCreateRequest.value);
+	emits('update:value', false);
 };
 </script>
