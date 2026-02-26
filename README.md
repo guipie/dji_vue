@@ -22,36 +22,27 @@
 
 #### 🌈 介绍
 
-目前对于 大疆-DJI 无人机接入第三方云平台官方只管亲儿子司空又闭源，开源的DJI Cloud API Demo 又终止维护了，所以对于我们开发者来说，对着官方文档也只能摸着过河，也有很多坑要踩，相信从事大疆上云的开发者应该有感概；
+目前对于大疆(Dji)上云接入，官方只管亲儿子司空又闭源，开源的DJI Cloud API Demo 又终止维护了；所以对于我们开发者来说，对着官方文档也只能摸着过河，也有很多坑要踩，相信从事大疆上云的开发者应该都有感概；
 
-鉴于自己一直从事大疆机场1,2,3和pilot的上云开发，所以就开发了此项目；大家踩过的坑，以及解决方法，欢迎提issue，欢迎提pr，欢迎star，欢迎fork。
+鉴于自己一直从事大疆机场1,2,3和pilot的上云开发，已经在生产环境持续运行了一年多了，所以就重新开发了此项目；大家踩过的坑，以及解决方法，欢迎提issue，欢迎提pr，欢迎star，欢迎fork。
 
 ## 🍎效果截图
 
 <table>
     <tr>
-        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/1.png"/></td>
-        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/2.png"/></td>
-        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/3.png"/></td>
-        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/4.png"/></td>
+        <td><img src="https://raw.githubusercontent.com/guipie/dji_vue/refs/heads/main/public/github/login.png" /></td>
+        <td><img src="https://raw.githubusercontent.com/guipie/dji_vue/refs/heads/main/public/github/mianban.png" /></td>
+        <td><img src="https://raw.githubusercontent.com/guipie/dji_vue/refs/heads/main/public/github/dock-online.png" /></td>
     </tr>
     <tr>
-        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/5.png"/></td>
-        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/6.png"/></td>
-        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/7.png"/></td>
-        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/8.png"/></td>
+        <td><img src="https://raw.githubusercontent.com/guipie/dji_vue/refs/heads/main/public/github/wayline-dialog.png" /></td>
+        <td><img src="https://raw.githubusercontent.com/guipie/dji_vue/refs/heads/main/public/github/wayline-create1.png" /></td>
+        <td><img src="https://raw.githubusercontent.com/guipie/dji_vue/refs/heads/main/public/github/wayline-create2.png" /></td>
     </tr>
     <tr>
-        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/9.png"/></td>
-        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/10.png"/></td>
-        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/11.png"/></td>
-        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/12.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/13.png"/></td>
-        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/14.png"/></td>
-        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/15.png"/></td>
-        <td><img src="https://gitee.com/zuohuaijun/Admin.NET/raw/next/doc/img/16.png"/></td>
+        <td><img src="https://raw.githubusercontent.com/guipie/dji_vue/refs/heads/main/public/github/device.png" /></td>
+        <td><img src="https://raw.githubusercontent.com/guipie/dji_vue/refs/heads/main/public/github/workspace.png" /></td>
+        <td><img src="https://raw.githubusercontent.com/guipie/dji_vue/refs/heads/main/public/github/dock.png" /></td>
     </tr>
 </table>
 
@@ -62,7 +53,7 @@
 #### 💒 代码仓库
 
 - 接口及云服务：<a href="https://github.com/guipie/dji_server" target="_blank">https://github.com/guipie/dji_server</a>
-- 后台运维管理： <a href="https://github.com/guipie/dji.vue" target="_blank">https://github.com/guipie/dji.vue</a>
+- 后台运维管理： <a href="https://github.com/guipie/dji_vue" target="_blank">https://github.com/guipie/dji.vue</a>
 - 前端： 开发中...
 
 #### 🚧 安装 cnpm、yarn
