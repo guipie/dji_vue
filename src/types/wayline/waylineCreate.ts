@@ -4,7 +4,13 @@ export interface WaylineCreateExt {
 	orientedPhotoMode: 'normalPhoto' | 'lowLightSmartShooting';
 	homeCoordinate?: { longitude: number; latitude: number; height?: number };
 }
+// 确认：Furion 的 ApiDescriptionSettings(string) 重载实为 params string[] groups，
+// 因此后端服务 DjiWaylineService 的路由前缀就是类名去掉 Service 后的小驼峰 → /api/djiWayline
 export interface WaylineCreateParams {
+	/** 航线主键Id（有值=编辑已有航线） */
+	id?: number;
+	/** 所属空间Id，为空时后端取当前用户的默认空间 */
+	workspaceId?: string;
 	waylineName: string;
 	templateType: TemplateTypeEnum;
 	templateStr: string;
@@ -13,6 +19,59 @@ export interface WaylineCreateParams {
 	acc?: string;
 	missionConfig: MissionConfig;
 	folder: Folder;
+}
+
+/** 提交给后端的完整载荷：编辑器数据 + 扩展参数 */
+export interface WaylineSubmitParams extends WaylineCreateParams {
+	ext: WaylineCreateExt;
+}
+
+/** 列表行 */
+export interface WaylineListItem {
+	id: number;
+	waylineName: string;
+	waylineType: number;
+	templateType: string;
+	templateStr: string;
+	drone: string;
+	droneModel: string;
+	acc?: string;
+	workspaceId?: string;
+	workspaceNickName?: string;
+	pointCount: number;
+	distance: number;
+	duration: number;
+	autoFlightSpeed: number;
+	executeHeightMode?: string;
+	takeOffSecurityHeight: number;
+	globalRTHHeight: number;
+	finishAction?: string;
+	kmzFileName?: string;
+	kmzFileUrl?: string;
+	createTime?: string;
+	createUserName?: string;
+	updateTime?: string;
+}
+
+/** 详情 */
+export interface WaylineDetail extends WaylineListItem {
+	domainTypeSubType?: string;
+	kmzFileId?: number;
+	kmzFilePath?: string;
+	/** 完整航线参数，用于回填编辑器 */
+	param: WaylineCreateParams;
+}
+
+/** 创建弹框中的航线类型卡片 */
+export interface WaylineTypeItem {
+	/** 卡片标题，同时也是落库的模板中文名称 */
+	templateStr: string;
+	/** 对应的 WPML 模板类型 */
+	templateType: TemplateTypeEnum;
+	icon: string;
+	cardStyle: string;
+	/** 是否已完成该类型的参数编辑与 KMZ 生成 */
+	supported: boolean;
 }
 
 export interface MissionConfig {

@@ -230,6 +230,7 @@
 <script setup lang="ts">
 import { QuestionFilled, ArrowDownBold, ArrowUpBold } from '@element-plus/icons-vue';
 import { watch, ref } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useWaylineStore } from '/@/stores/useWaylineStore';
 import hbImage from '/@/assets/wayline/航点高度模式hb.svg';
 import xdqfdImage from '/@/assets/wayline/航点高度模式xdqfd.svg';
@@ -247,8 +248,8 @@ const homeSvg = getHomeSvg('#F7FCFC');
 
 const advancedActive = ref(['0']);
 const waylineStore = useWaylineStore();
-const waylineCreateRequest = ref(waylineStore.$state.curCreateWayline);
-const ext = ref(waylineStore.$state.curCreateWaylineExt);
+// 用 storeToRefs 取值：详情回填会整体替换 curCreateWayline / curCreateWaylineExt，普通引用会指向旧对象
+const { curCreateWayline: waylineCreateRequest, curCreateWaylineExt: ext } = storeToRefs(waylineStore);
 function takeOffSecurityHeightSet(val: number) {
 	//安全起飞高度
 	waylineCreateRequest.value.missionConfig.takeOffSecurityHeight += val;

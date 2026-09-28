@@ -1,5 +1,5 @@
 <template>
-	<div style="display: block">
+	<div style="display: block" v-loading="loading">
 		<el-empty description="暂无在线机场." v-if="!allDockOsds || allDockOsds.length == 0" />
 		<!-- 第一个设备 -->
 		<el-card class="device-card" shadow="never" v-for="(item, index) in allDockOsds" :key="index">
@@ -80,16 +80,44 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useDeviceStore } from '../../../stores/useDeviceStore';
 import { render01Tag, renderAirConditionerStateTag, renderFlighttaskStepCodeTag, renderModeCodeTag, renderRainfallTag, renderRtkSourceTypeTag } from '/@/types/mqtt/osd/dockOsdMapping';
 import { DockOsd } from '/@/types/mqtt/osd/dockOsd';
+import { getDockOnlineSnapshots } from '/@/api/mainCloud/cloudDevice';
 import dockImg from '/@/assets/dock.png';
-var deviceStore = useDeviceStore();
+
+const deviceStore = useDeviceStore();
+const loading = ref(false);
+
 const allDockOsds = computed((): DockOsd[] => {
 	return Array.from(deviceStore.$state.dockOsds.values());
 });
-// 可以添加数据逻辑，比如从接口获取设备状态
+
+/**
+ * 拉取在线快照完成首屏渲染。
+ *
+ * 列表数据源是 SignalR 实时推送 + 内存 Map，若只依赖实时推送，
+ * 页面刷新、断线重连、后端重启期间都会一片空白，因此挂载时先补齐一次快照，
+ * 之后由 SignalR 增量覆盖（store 内部的 addDockOsd 是合并写入，不会互相冲掉）。
+ */
+const loadSnapshot = async () => {
+	loading.value = true;
+	try {
+		const res = await getDockOnlineSnapshots();
+		const list = res.data?.result ?? [];
+		list.forEach((item: any) => {
+			if (!item?.osd) return;
+			deviceStore.addDockOsd(item.sn, { ...item.osd, nick: item.nick ?? item.osd.nick });
+		});
+	} finally {
+		loading.value = false;
+	}
+};
+
+onMounted(() => {
+	loadSnapshot();
+});
 </script>
 
 <style scoped>

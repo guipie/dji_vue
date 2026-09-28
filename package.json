@@ -26,6 +26,8 @@
     "echarts-gl": "^2.0.9",
     "echarts-wordcloud": "^2.1.0",
     "element-plus": "^2.11.5",
+    "flv.js": "^1.6.2",
+    "hls.js": "^1.7.3",
     "js-cookie": "^3.0.5",
     "js-table2excel": "^1.1.2",
     "jsplumb": "^2.15.6",

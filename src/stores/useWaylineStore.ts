@@ -4,7 +4,7 @@ import { TemplateTypeEnum } from '../types/wayline/waylineEnus';
 import { initWaylineState } from './shard/waylineSard';
 import { drawWayline } from '../utils/cesium/waylineUtil';
 import { ElMessageBox } from 'element-plus';
-import { ActionGroup } from '../types/wayline/waylineCreate';
+import { ActionGroup, WaylineDetail, WaylineSubmitParams } from '../types/wayline/waylineCreate';
 import { flyTo } from '../utils/cesium/index';
 
 export const useWaylineStore = defineStore('waylines', {
@@ -42,6 +42,35 @@ export const useWaylineStore = defineStore('waylines', {
 		// defSpace: (state) => state.mySpaces.findLast((x: any) => x.isDefault) ?? null,
 	},
 	actions: {
+		/** 重置为初始状态（新建航线前调用，避免沿用上一条航线的残留数据） */
+		resetWayline() {
+			const state = initWaylineState();
+			this.curCreateWayline = state.curCreateWayline;
+			this.curCreateWaylineExt = state.curCreateWaylineExt;
+			this.setHome = state.setHome;
+			this.selectedPointIndex = null;
+			this.selectedActionIndex = null;
+		},
+		/** 用后端返回的航线详情回填编辑器 */
+		loadWaylineDetail(detail: WaylineDetail) {
+			const base = initWaylineState();
+			const { ext, ...param } = (detail.param ?? {}) as Partial<WaylineSubmitParams>;
+			this.curCreateWayline = {
+				...base.curCreateWayline,
+				...param,
+				id: detail.id,
+				waylineName: param.waylineName || detail.waylineName,
+				droneModel: param.droneModel || detail.droneModel,
+				domainTypeSubType: param.domainTypeSubType || detail.domainTypeSubType || '',
+				workspaceId: param.workspaceId || detail.workspaceId || '',
+				templateStr: param.templateStr || detail.templateStr,
+				missionConfig: { ...base.curCreateWayline.missionConfig, ...(param.missionConfig ?? {}) },
+				folder: { ...base.curCreateWayline.folder, ...(param.folder ?? {}) },
+			};
+			if (ext) this.curCreateWaylineExt = { ...base.curCreateWaylineExt, ...ext };
+			this.selectedPointIndex = null;
+			this.selectedActionIndex = null;
+		},
 		setHomeAction(val: boolean, coordinate?: { longitude: number; latitude: number; height: number }) {
 			this.setHome = val;
 			if (!val && coordinate) {

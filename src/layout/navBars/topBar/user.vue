@@ -103,6 +103,7 @@ import { signalR } from '/@/views/system/onlineUser/signalR';
 import { useWorkspaceStore } from '../../../stores/useWorkspaceStore';
 import { setDjiWorkspaceDefault } from '/@/api/main/djiWorkspaceUser';
 import { DockOsdHandler } from '/@/types/mqtt/osd/dockOsd';
+import { DroneOsdHandler } from '/@/types/mqtt/osd/droneOsd';
 import { MessageDispatcher } from '/@/types/mqtt/msgDispatcher';
 import { Message } from '/@/types/mqtt/message';
 
@@ -251,6 +252,8 @@ onMounted(async () => {
 
 	// 注册所有处理器（可自动扫描或集中管理）
 	dispatcher.register('dockOsd', new DockOsdHandler());
+	// 原实现漏注册 droneOsd，导致飞行器 OSD 全部被静默丢弃
+	dispatcher.register('droneOsd', new DroneOsdHandler());
 	signalR.on('publicclientmessage', (data) => {
 		if (data.tid && data.bid) dispatcher.dispatch(data);
 		else console.log(data);

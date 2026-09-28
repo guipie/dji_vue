@@ -4,7 +4,12 @@ import { useDeviceStore } from '../../../stores/useDeviceStore';
 
 export class DockOsdHandler implements MessageHandler<DockOsd, 'dockOsd'> {
 	handle(message: Message<DockOsd, 'dockOsd'>): void {
-		if (message.topic.includes(message.gateway)) useDeviceStore().addDockOsd(message.gateway, { ...message.data, ...{ nick: message.ext } });
+		// 机场 OSD 的主题形如 thing/product/{dockSn}/osd，设备段即网关 SN。
+		// 原实现用 topic.includes(gateway) 判定：网关为空时 includes('') 恒为真，会写入一条 SN 为空的脏数据。
+		const sn = message.gateway || message.data?.sn;
+		if (!sn || !message.topic.includes(`/${sn}/`)) return;
+
+		useDeviceStore().addDockOsd(sn, { ...message.data, nick: message.ext || message.data?.nick });
 	}
 }
 /**

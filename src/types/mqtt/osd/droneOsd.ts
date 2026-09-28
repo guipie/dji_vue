@@ -4,7 +4,12 @@ import { useDeviceStore } from '../../../stores/useDeviceStore';
 
 export class DroneOsdHandler implements MessageHandler<DroneOsd, 'droneOsd'> {
 	handle(message: Message<DroneOsd, 'droneOsd'>): void {
-		useDeviceStore().addDroneOsd(message.gateway, message.data);
+		// 必须以飞行器 SN 作为存储键：原实现用的是 message.gateway（即所属机场 SN），
+		// 同一机场下多台飞行器会互相覆盖，且永远无法按飞行器查询。
+		const sn = message.droneSn || message.data?.sn;
+		if (!sn) return;
+
+		useDeviceStore().addDroneOsd(sn, message.data);
 	}
 }
 

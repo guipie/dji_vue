@@ -43,6 +43,40 @@ export default defineConfig({
 		],
 	],
 	shortcuts: {
+		// ------------------------------------------------------------------
+		// 颜色简写：沿用项目页面里一直在用的 c-* 写法。
+		//
+		// 这些类名源自 vue-next-admin 的旧 ex-theme，但本项目用的是 UnoCSS，
+		// 而 UnoCSS 并不认识 c-gray / c-danger —— 结果是页面上这些地方的颜色
+		// 全部静默失效（既不报错、也不生效），排查时极难发现。
+		// 这里把缺失的定义补齐，取值一律指向 Element Plus 的主题变量，
+		// 因此在明暗主题切换下都能取到正确颜色，不需要再写自定义 CSS。
+		// ------------------------------------------------------------------
+		'c-gray': 'text-[var(--el-text-color-secondary)]',
+		'c-danger': 'text-[var(--el-color-danger)]',
+		'c-warning': 'text-[var(--el-color-warning)]',
+		'c-success': 'text-[var(--el-color-success)]',
+		'c-primary': 'text-[var(--el-color-primary)]',
+		'c-info': 'text-[var(--el-color-info)]',
+		'c-white': 'text-white',
+
+		// ------------------------------------------------------------------
+		// 间距简写：mb10 的心智模型是「10px」，但在 Tailwind 语义下 mb10 = 2.5rem。
+		//
+		// 项目里 95 处 *10 类都按「10 像素」在用（跟着旧 ex-theme 的习惯），
+		// 直接套 Tailwind 语义会得到 40px 的巨大间距。这里显式钉成 10px，
+		// 既符合作者意图，也让页面上同类元素的间距保持一致。
+		// ------------------------------------------------------------------
+		'mt10': 'mt-[10px]',
+		'mb10': 'mb-[10px]',
+		'ml10': 'ml-[10px]',
+		'mr10': 'mr-[10px]',
+		'p10': 'p-[10px]',
+		'pt10': 'pt-[10px]',
+		'pb10': 'pb-[10px]',
+		'pl10': 'pl-[10px]',
+		'pr10': 'pr-[10px]',
+
 		'btn-green': 'text-white bg-green-500 hover:bg-green-700',
 		// 将规则改为快捷方式
 		'option-selected': 'color-white bg-[var(--el-color-primary)] border-[var(--el-color-primary)] shadow-sm transition-all duration-300 option-md text-center',

@@ -119,7 +119,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import { useWaylineStore } from '/@/stores/useWaylineStore';
 import { waylineSvgPointData } from '/@/utils/data/waylineSvgSetting';
 import { globalWaypointTurnModeOptions, waypointHeadingModeOptions } from '/@/types/wayline/waylineCreateOptions';
@@ -129,7 +129,8 @@ import Compass from '/@/components/map/compass.vue';
 const turnParamDivShow = ref(false);
 const headingParamDivShow = ref(false);
 const waylineStore = useWaylineStore();
-const curPlacemark = ref(waylineStore.curCreateWayline.folder.placemarks![waylineStore.selectedPointIndex!]);
+// 用 computed 动态解析：详情回填会整体替换 curCreateWayline，ref 快照会指向已废弃的旧航点对象
+const curPlacemark = computed(() => waylineStore.curCreateWayline.folder.placemarks![waylineStore.selectedPointIndex!]);
 const isFllowHeight = ref(true);
 function setCurPointHeight() {
 	// var curPoint = waylineStore.curCreateWayline.folder.placemarks![waylineStore.selectedPointIndex!];

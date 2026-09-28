@@ -9,6 +9,7 @@ export function initWaylineState(): WaylineState {
 			droneModel: '',
 			domainTypeSubType: '',
 			acc: '',
+			workspaceId: '',
 			templateType: TemplateTypeEnum.waypoint,
 			templateStr: '航点航线',
 			missionConfig: {
