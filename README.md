@@ -4,7 +4,8 @@
 
 **大疆机场上云平台 · 后台运维管理端**
 
-面向大疆机场 / 无人机的 Web 管理后台：设备台账、航线管理、飞行区绘制、直播  
+面向大疆机场 / 无人机的 Web 管理后台：设备台账、航线管理、飞行区绘制、直播
+  
 、告警与台账维护。通常与 [dji\_server](../dji_server) 后端配套使用。
 
 <p>
@@ -40,7 +41,8 @@
 - 地图操作（飞行区 / 作业区绘制）走 **Cesium 三维**
 - 实时性要求不高的场景（看当前状态、回放进度）走 HTTP 轮询 + SignalR 补充
 
-> 如果你要的是**实时态势看板 / DRC 指令飞行 / 直播墙**，请看>   
+> 如果你要的是**实时态势看板 / DRC 指令飞行 / 直播墙**，请看
+> 
 > [dji-cloud-console](../dji-cloud-console)（Tauri 桌面 + 高德 + WebRTC）。
 
 ---
@@ -67,7 +69,8 @@
 
 ## 亮点：飞行区域绘制
 
-`views/main/djiFlightArea` 是最能体现本项目价值的部分 —— **在 Cesium 三维地球上直接画出作业区与禁飞区**，  
+`views/main/djiFlightArea` 是最能体现本项目价值的部分 —— **在 Cesium 三维地球上直接画出作业区与禁飞区**，
+  
 并导出成 DJI 设备可以识别的格式。
 
 | 能力     | 说明                                              |
@@ -79,11 +82,14 @@
 | 导入导出   | 导出 DJI 标准 `FeatureCollection`（GeoJSON），可直接进上云流程 |
 | 后端校验   | 半径 ≥ 10m、顶点数、是否闭合、坐标范围 —— 违规逐条给出中文原因            |
 
-相关实现：`src/utils/cesium/flyZone.ts`、`src/utils/cesium/index.ts`、后端  
+相关实现：`src/utils/cesium/flyZone.ts`、`src/utils/cesium/index.ts`、后端
+  
 `DjiFlyZoneService`（提供 `exportDji` 接口生成设备侧格式）。
 
-> **多内核切换注意**：Cesium 的 `viewer` 在全局复用。从其他 Cesium 页面跳到飞行区时，>   
-> 若复用了绑定在已销毁容器上的旧 viewer，会得到一张空白地图。>   
+> **多内核切换注意**：Cesium 的 `viewer` 在全局复用。从其他 Cesium 页面跳到飞行区时，
+> 
+> 若复用了绑定在已销毁容器上的旧 viewer，会得到一张空白地图。
+> 
 > 当前实现按 `viewer.container === 当前容器元素` 判定，不一致就先销毁再重建。
 
 ---
@@ -174,8 +180,10 @@ VITE_SM2_PUBLIC_KEY = 04xxxxxxxx...(130 位十六进制)
 
 取值来自后端 `Dji.Application/Configuration/App.json → Cryptogram.PublicKey`。
 
-> ⚠️ **错配最难查的症状**：登录恒失败，服务端只报「账号或密码错误」，>   
-> 没有任何线索指向密钥不匹配。如果换了部署环境，第一时间核对这一项。>   
+> ⚠️ **错配最难查的症状**：登录恒失败，服务端只报「账号或密码错误」，
+> 
+> 没有任何线索指向密钥不匹配。如果换了部署环境，第一时间核对这一项。
+> 
 > 生成方法见 [dji\_server README 的安全须知](../dji_server/README.md#安全须知部署前必读)。
 
 ---
@@ -191,7 +199,8 @@ VITE_SM2_PUBLIC_KEY = 04xxxxxxxx...(130 位十六进制)
 | `VITE_PUBLIC_PATH`    | 打包后的资源前缀            | 空                       |
 | `VITE_OPEN_CDN`       | 打包是否改用 CDN 外链资源     | `false`                 |
 
-> `.env` / `.env.development` / `.env.production` **有意纳入版本管理**（便于开箱即用），>   
+> `.env` / `.env.development` / `.env.production` **有意纳入版本管理**（便于开箱即用），
+> 
 > 但**不要在里面填真实密钥** —— 私密值请放 `.env.local`（已被 `.gitignore` 忽略）。
 
 ---
@@ -236,22 +245,22 @@ connection.on('publicclientmessage', (raw) => {
 
 ## 效果截图
 
-<table>  
-    <tr>  
-        <td><img src="./demos/login.png" alt="登录" /></td>  
-        <td><img src="./demos/mianban.png" alt="看板" /></td>  
-        <td><img src="./demos/dock-online.png" alt="机场在线" /></td>  
-    </tr>  
-    <tr>  
-        <td><img src="./demos/wayline-dialog.png" alt="航线" /></td>  
-        <td><img src="./demos/wayline-create1.png" alt="航线创建" /></td>  
-        <td><img src="./demos/wayline-create2.png" alt="航线创建" /></td>  
-    </tr>  
-    <tr>  
-        <td><img src="./demos/device.png" alt="设备" /></td>  
-        <td><img src="./demos/workspace.png" alt="工作空间" /></td>  
-        <td><img src="./demos/dock.png" alt="机场" /></td>  
-    </tr>  
+<table>
+    <tr>
+        <td><img src="./demos/login.png" alt="登录" /></td>
+        <td><img src="./demos/mianban.png" alt="看板" /></td>
+        <td><img src="./demos/dock-online.png" alt="机场在线" /></td>
+    </tr>
+    <tr>
+        <td><img src="./demos/wayline-dialog.png" alt="航线" /></td>
+        <td><img src="./demos/wayline-create1.png" alt="航线创建" /></td>
+        <td><img src="./demos/wayline-create2.png" alt="航线创建" /></td>  
+    </tr>
+    <tr>  
+        <td><img src="./demos/device.png" alt="设备" /></td>  
+        <td><img src="./demos/workspace.png" alt="工作空间" /></td>  
+        <td><img src="./demos/dock.png" alt="机场" /></td>  
+    </tr>
 </table>
 
 ---
@@ -276,7 +285,8 @@ connection.on('publicclientmessage', (raw) => {
 - **Element Plus** / **Vue** / **Vite** / **Cesium** / **ECharts** 等生态项目
 - 特别感谢 **Admin.NET** 提供的鉴权与管理体系设计思路
 
-> 原仓库历史保留了对 @guipie 版 `dji_vue` 的引用。派生自 MIT 协议代码的部分遵循原协议，>   
+> 原仓库历史保留了对 @guipie 版 `dji_vue` 的引用。派生自 MIT 协议代码的部分遵循原协议，
+> 
 > 本项目整体按 GPL-3.0 发布。
 
 ---
@@ -285,5 +295,6 @@ connection.on('publicclientmessage', (raw) => {
 
 本项目使用 [GPL-3.0](./LICENSE) 协议。
 
-> 本项目涉及无人机飞行作业。**请务必遵守中国民用航空局及当地关于无人机运行的法律法规**，>   
+> 本项目涉及无人机飞行作业。**请务必遵守中国民用航空局及当地关于无人机运行的法律法规**，
+> 
 > 取得必要资质与空域许可。本仓库仅为学习与研究用途的参考实现，作者不对任何飞行安全事件负责。
