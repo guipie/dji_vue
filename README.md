@@ -6,7 +6,7 @@
 
 面向大疆机场 / 无人机的 Web 管理后台：设备台账、航线管理、飞行区绘制、直播
   
-、告警与台账维护。通常与 [dji\_server](../dji_server) 后端配套使用。
+、告警与台账维护。通常与 [dji\_server](https://github.com/guipie/dji_server) 后端配套使用。
 
 <p>
 
@@ -30,7 +30,7 @@
 - **云司空 2** 闭源，无法二次开发
 - 官方开源的 `Cloud-API-Demo` 已于 2025-04-10 停止维护，且只是协议演示、不落库、不上生产
 
-`dji_vue` 是配套 [dji\_server](../dji_server) 的**后台运维管理端**，定位偏「管理」而非「实时指挥」：
+`dji_vue` 是配套 [dji_server](https://github.com/guipie/dji_server) 的**后台运维管理端**，定位偏「管理」而非「实时指挥」：
 
 - 偏**低频、重数据**：设备台账、文件台账、航线任务、告警记录、媒体文件
 - 地图操作（飞行区 / 作业区绘制）走 **Cesium 三维**
@@ -179,7 +179,7 @@ VITE_SM2_PUBLIC_KEY = 04xxxxxxxx...(130 位十六进制)
 >
 > 没有任何线索指向密钥不匹配。如果换了部署环境，第一时间核对这一项。
 >
-> 生成方法见 [dji\_server README 的安全须知](../dji_server/README.md#安全须知部署前必读)。
+> 生成方法见 [dji\_server README 的安全须知](https://github.com/guipie/dji_server/README.md#安全须知部署前必读)。
 
 ---
 
