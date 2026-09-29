@@ -1,9 +1,11 @@
+import { useUserInfoStore } from '/@/stores/useUserInfoStore';
+import { useWorkspaceStore } from '/@/stores/useWorkspaceStore';
 import request from '/@/utils/request';
 enum Api {
 	BindWorkspace = '/api/cloud/bindWorkspace/{gateway}/{sn}',
 	OnlineSnapshots = '/api/cloud/onlineSnapshots',
 }
-
+const spaceStore = useWorkspaceStore();
 // 绑定设备
 export const bindWorkspace = (dockSn: string, sn: string) =>
 	request({
@@ -21,5 +23,5 @@ export const getDockOnlineSnapshots = (workspaceId?: string) =>
 	request({
 		url: Api.OnlineSnapshots,
 		method: 'post',
-		data: { workspaceId },
+		data: { workspaceId: workspaceId || spaceStore.defSpace.workspaceId },
 	});

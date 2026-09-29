@@ -285,6 +285,7 @@ import { formatDate } from '/@/utils/formatTime';
 import workspaceSelect from '/@/views/component/workspaceSelect.vue';
 import {
 	cameraChangeDjiLive,
+	detailDjiLive,
 	dockOptionsDjiLive,
 	dockStateDjiLive,
 	lensChangeDjiLive,
@@ -434,7 +435,12 @@ async function loadDockState(silent = false) {
  */
 function syncFromState() {
 	const channels = dockState.value?.channels ?? [];
-	activeVideoId.value = dockState.value?.liveCount > 0 ? channels.find((m: any) => m.isLive)?.videoId ?? '' : '';
+	const selected = channels.find((m: any) => m.videoId === activeVideoId.value);
+
+	// 用户点选过的通道只要还在通道列表里就保留高亮；否则自动跟随第一路在播通道
+	if (!selected) {
+		activeVideoId.value = channels.find((m: any) => m.isLive)?.videoId ?? '';
+	}
 
 	if (!activeSession.value) return;
 
@@ -449,12 +455,58 @@ function syncFromState() {
 	}
 }
 
+/**
+ * 把某一路通道 / 会话载入播放器。
+ *
+ * 传入的两类对象结构不同：
+ * - 通道列表给的是「能力」对象（`LiveChannelOutput`），只有 `sessionId`，没有播放地址；
+ * - 历史列表给的是会话对象（`LiveSessionOutput`），已自带 `playUrl` / `hlsUrl`。
+ * 这里统一补齐地址后再交给播放器，避免用通道对象直接播放时报「没有可用的播放地址」。
+ */
 async function previewChannel(row: any) {
 	activeVideoId.value = row.videoId;
-	activeSession.value = row;
 	controlQuality.value = row.videoQuality ?? 0;
 	controlLens.value = row.videoType ?? '';
+
+	let session = row;
+	if (!row.playUrl && !row.hlsUrl) {
+		const sessionId = row.sessionId ?? row.id;
+		if (!sessionId) {
+			activeSession.value = null;
+			playerError.value = '该通道没有关联的直播会话，无法获取播放地址';
+			return;
+		}
+		try {
+			const res = await detailDjiLive(sessionId);
+			session = res.data.result ?? row;
+		} catch {
+			// 请求拦截器已提示错误
+			playerError.value = '获取直播会话详情失败，无法播放';
+			return;
+		}
+	}
+
+	activeSession.value = session;
 	await restartPlayer();
+}
+
+/**
+ * 点击左侧通道卡片：选中该路通道，在播时直接载入播放器。
+ *
+ * 空闲通道没有播放地址，只做高亮 + 提示，不去动正在播放的画面。
+ */
+async function selectChannel(channel: any) {
+	activeVideoId.value = channel.videoId;
+
+	if (!channel.isLive) {
+		ElMessage.info('该通道当前未在播，点「开播」后即可观看');
+		return;
+	}
+
+	// 已经在播同一路，避免无谓地重建播放器造成闪断
+	if (activeSession.value?.videoId === channel.videoId) return;
+
+	await previewChannel(channel);
 }
 
 /* ------------------------------ 开播 / 停播 ------------------------------ */

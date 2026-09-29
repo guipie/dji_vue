@@ -82,15 +82,17 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { useDeviceStore } from '../../../stores/useDeviceStore';
-import { render01Tag, renderAirConditionerStateTag, renderFlighttaskStepCodeTag, renderModeCodeTag, renderRainfallTag, renderRtkSourceTypeTag } from '/@/types/mqtt/osd/dockOsdMapping';
-import { DockOsd } from '/@/types/mqtt/osd/dockOsd';
 import { getDockOnlineSnapshots } from '/@/api/mainCloud/cloudDevice';
 import dockImg from '/@/assets/dock.png';
+import { DockOsd } from '/@/types/mqtt/osd/dockOsd';
+import { render01Tag, renderAirConditionerStateTag, renderFlighttaskStepCodeTag, renderModeCodeTag, renderRainfallTag } from '/@/types/mqtt/osd/dockOsdMapping';
 
 const deviceStore = useDeviceStore();
 const loading = ref(false);
 
 const allDockOsds = computed((): DockOsd[] => {
+	console.log(deviceStore.$state.dockOsds);
+
 	return Array.from(deviceStore.$state.dockOsds.values());
 });
 

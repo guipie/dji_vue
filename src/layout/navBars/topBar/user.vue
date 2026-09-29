@@ -256,6 +256,7 @@ onMounted(async () => {
 	// 原实现漏注册 droneOsd，导致飞行器 OSD 全部被静默丢弃
 	dispatcher.register('droneOsd', new DroneOsdHandler());
 	signalR.on('publicclientmessage', (data) => {
+		console.log(data);
 		if (data.tid && data.bid) dispatcher.dispatch(data);
 		else console.log(data);
 	});

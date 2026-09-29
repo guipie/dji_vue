@@ -60,7 +60,7 @@
 				</el-table-column>
 				<el-table-column prop="domain" label="领域" width="140" show-overflow-tooltip="">
 					<template #default="scope">
-						<el-tag v-if="scope.row.domain">{{ getEnumDesc(scope.row.domain, getEnumDomainData_Index) }}</el-tag>
+						<el-tag>{{ getEnumDesc(scope.row.domain, getEnumDomainData_Index) }}</el-tag>
 					</template>
 				</el-table-column>
 				<el-table-column prop="type" label="主类型" width="140" show-overflow-tooltip="" />
@@ -116,25 +116,21 @@
 </template>
 
 <script lang="ts" setup="" name="djiDevice">
+import { ElMessage, ElMessageBox } from 'element-plus';
 import { ref } from 'vue';
-import { ElMessageBox, ElMessage } from 'element-plus';
 import { auth } from '/@/utils/authFunction';
-import { getDictDataItem as di, getDictDataList as dl } from '/@/utils/dict-utils';
-import { formatDate } from '/@/utils/formatTime';
 
-import printDialog from '/@/views/system/print/component/hiprint/preview.vue';
+import { deleteDjiDevice, getDjiDeviceParentSnDropdown, getDjiWorkspaceWorkspaceIdDropdown, pageDjiDevice } from '/@/api/main/djiDevice';
 import editDialog from '/@/views/main/djiDevice/component/editDialog.vue';
-import { pageDjiDevice, deleteDjiDevice } from '/@/api/main/djiDevice';
-import { getDjiWorkspaceWorkspaceIdDropdown } from '/@/api/main/djiDevice';
-import { getDjiDeviceParentSnDropdown } from '/@/api/main/djiDevice';
+import printDialog from '/@/views/system/print/component/hiprint/preview.vue';
 
-import commonFunction from '/@/utils/commonFunction';
-import { getAPI } from '/@/utils/axios-utils';
-import { SysEnumApi } from '/@/api-services';
 import { ArrowDownBold } from '@element-plus/icons-vue'; // 正确的导入
+import DockPropertySet from './component/dockPropertySet.vue';
+import { SysEnumApi } from '/@/api-services';
 import { bindWorkspace } from '/@/api/mainCloud/cloudDevice';
 import { DomainEnum } from '/@/common/enums/deviceEnums';
-import DockPropertySet from './component/dockPropertySet.vue';
+import { getAPI } from '/@/utils/axios-utils';
+import commonFunction from '/@/utils/commonFunction';
 
 const { getEnumDesc } = commonFunction();
 const getEnumDomainData_Index = ref<any>([]);

@@ -12,7 +12,7 @@ export const useWorkspaceStore = defineStore('workspace', {
 		// 	this.constList = res.data.result ?? [];
 		// 	return this.constList;
 		// },
-		defSpace: (state) => state.mySpaces.findLast((x: any) => x.isDefault) ?? null,
+		defSpace: (state) => state.mySpaces.findLast((x: any) => x.isDefault) ?? state.mySpaces[0],
 	},
 	actions: {
 		// 获取字典列表

@@ -5,7 +5,7 @@ import { DeviceState } from '../types/pinia';
 import { getDjiDeviceEnums } from '../api/main/djiDeviceEnum';
 
 export const useDeviceStore = defineStore('device', {
-	state: (): DeviceState => ({ dockOsds: new Map<String, DockOsd>(), droneOsds: new Map<String, DroneOsd>(), droneModels: new Map<String, string>() }),
+	state: (): DeviceState => ({ dockOsds: new Map<string, DockOsd>(), droneOsds: new Map<string, DroneOsd>(), droneModels: new Map<string, string>() }),
 
 	actions: {
 		getDroneModels() {
