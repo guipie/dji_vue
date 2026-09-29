@@ -11,15 +11,10 @@
 <p>
 
 ![Vue](https://img.shields.io/badge/vue-3.5-42b883?logo=vue.js)
-
 ![Vite](https://img.shields.io/badge/vite-7-646cff?logo=vite)
-
 ![TypeScript](https://img.shields.io/badge/typescript-5.9-3178c6?logo=typescript)
-
 ![Element Plus](https://img.shields.io/badge/ui-Element%20Plus%202.11-409eff)
-
 ![Cesium](https://img.shields.io/badge/3D-Cesium%201.136-a2b6c9)
-
 ![License](https://img.shields.io/badge/license-GPL--3.0-blue)
 
 </p>
@@ -42,7 +37,7 @@
 - 实时性要求不高的场景（看当前状态、回放进度）走 HTTP 轮询 + SignalR 补充
 
 > 如果你要的是**实时态势看板 / DRC 指令飞行 / 直播墙**，请看
-> 
+>
 > [dji-cloud-console](../dji-cloud-console)（Tauri 桌面 + 高德 + WebRTC）。
 
 ---
@@ -87,9 +82,9 @@
 `DjiFlyZoneService`（提供 `exportDji` 接口生成设备侧格式）。
 
 > **多内核切换注意**：Cesium 的 `viewer` 在全局复用。从其他 Cesium 页面跳到飞行区时，
-> 
+>
 > 若复用了绑定在已销毁容器上的旧 viewer，会得到一张空白地图。
-> 
+>
 > 当前实现按 `viewer.container === 当前容器元素` 判定，不一致就先销毁再重建。
 
 ---
@@ -181,9 +176,9 @@ VITE_SM2_PUBLIC_KEY = 04xxxxxxxx...(130 位十六进制)
 取值来自后端 `Dji.Application/Configuration/App.json → Cryptogram.PublicKey`。
 
 > ⚠️ **错配最难查的症状**：登录恒失败，服务端只报「账号或密码错误」，
-> 
+>
 > 没有任何线索指向密钥不匹配。如果换了部署环境，第一时间核对这一项。
-> 
+>
 > 生成方法见 [dji\_server README 的安全须知](../dji_server/README.md#安全须知部署前必读)。
 
 ---
@@ -200,7 +195,7 @@ VITE_SM2_PUBLIC_KEY = 04xxxxxxxx...(130 位十六进制)
 | `VITE_OPEN_CDN`       | 打包是否改用 CDN 外链资源     | `false`                 |
 
 > `.env` / `.env.development` / `.env.production` **有意纳入版本管理**（便于开箱即用），
-> 
+>
 > 但**不要在里面填真实密钥** —— 私密值请放 `.env.local`（已被 `.gitignore` 忽略）。
 
 ---
@@ -286,7 +281,7 @@ connection.on('publicclientmessage', (raw) => {
 - 特别感谢 **Admin.NET** 提供的鉴权与管理体系设计思路
 
 > 原仓库历史保留了对 @guipie 版 `dji_vue` 的引用。派生自 MIT 协议代码的部分遵循原协议，
-> 
+>
 > 本项目整体按 GPL-3.0 发布。
 
 ---
@@ -296,5 +291,5 @@ connection.on('publicclientmessage', (raw) => {
 本项目使用 [GPL-3.0](./LICENSE) 协议。
 
 > 本项目涉及无人机飞行作业。**请务必遵守中国民用航空局及当地关于无人机运行的法律法规**，
-> 
+>
 > 取得必要资质与空域许可。本仓库仅为学习与研究用途的参考实现，作者不对任何飞行安全事件负责。
