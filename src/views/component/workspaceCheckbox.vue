@@ -1,6 +1,6 @@
 <template>
 	<el-checkbox-group v-model="dataVal" @change="selectChange">
-		<el-checkbox :label="item.nickName" :value="item" v-for="item in data" />
+		<el-checkbox :label="item.workspaceNickName" :value="item" v-for="item in data" />
 	</el-checkbox-group>
 </template>
 

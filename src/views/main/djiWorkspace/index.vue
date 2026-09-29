@@ -15,7 +15,7 @@
 					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="4" class="mb10" v-if="showAdvanceQueryUI">
 						<el-form-item label="空间昵称">
-							<el-input v-model="queryParams.nickName" clearable="" placeholder="请输入空间昵称" />
+							<el-input v-model="queryParams.workspaceNickName" clearable="" placeholder="请输入空间昵称" />
 						</el-form-item>
 					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="4" class="mb10" v-if="showAdvanceQueryUI">
@@ -44,7 +44,7 @@
 			<el-table :data="tableData" style="width: 100%" v-loading="loading" tooltip-effect="light" row-key="id" @sort-change="sortChange" border="">
 				<el-table-column type="index" label="序号" width="55" align="center" />
 				<el-table-column prop="workspaceId" label="空间ID" width="300" show-overflow-tooltip="" />
-				<el-table-column prop="nickName" label="空间昵称" width="140" show-overflow-tooltip="" />
+				<el-table-column prop="workspaceNickName" label="空间昵称" width="140" show-overflow-tooltip="" />
 				<el-table-column prop="workspaceName" label="空间名称" width="140" show-overflow-tooltip="" />
 				<el-table-column prop="workspaceBindCode" label="绑定码" width="140" show-overflow-tooltip="" />
 				<el-table-column prop="workspaceDesc" label="描述" width="140" show-overflow-tooltip="" />
@@ -73,15 +73,13 @@
 </template>
 
 <script lang="ts" setup="" name="djiWorkspace">
+import { ElMessage, ElMessageBox } from 'element-plus';
 import { ref } from 'vue';
-import { ElMessageBox, ElMessage } from 'element-plus';
 import { auth } from '/@/utils/authFunction';
-import { getDictDataItem as di, getDictDataList as dl } from '/@/utils/dict-utils';
-import { formatDate } from '/@/utils/formatTime';
 
-import printDialog from '/@/views/system/print/component/hiprint/preview.vue';
+import { deleteDjiWorkspace, pageDjiWorkspace } from '/@/api/main/djiWorkspace';
 import editDialog from '/@/views/main/djiWorkspace/component/editDialog.vue';
-import { pageDjiWorkspace, deleteDjiWorkspace } from '/@/api/main/djiWorkspace';
+import printDialog from '/@/views/system/print/component/hiprint/preview.vue';
 
 const showAdvanceQueryUI = ref(false);
 const printDialogRef = ref();

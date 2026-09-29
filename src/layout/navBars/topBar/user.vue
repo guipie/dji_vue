@@ -2,11 +2,13 @@
 	<div class="layout-navbars-breadcrumb-user pr15" :style="{ flex: layoutUserFlexNum }">
 		<el-dropdown @command="onSpaceChange">
 			<div class="layout-navbars-breadcrumb-user-icon">
-				{{ spaceStore.defSpace?.workspaceNickName }}
+				<span style="font-size: 14px; color: var(--el-color-primary)">{{ spaceStore.defSpace?.workspaceNickName }}</span>
 			</div>
 			<template #dropdown>
 				<el-dropdown-menu>
-					<el-dropdown-item :command="s.workspaceId" v-for="s in spaces">{{ s.workspaceNickName }}</el-dropdown-item>
+					<el-dropdown-item :disabled="s.workspaceId === spaceStore.defSpace?.workspaceId" :command="s.workspaceId" v-for="s in spaces">
+						{{ s.workspaceNickName }}
+					</el-dropdown-item>
 				</el-dropdown-menu>
 			</template>
 		</el-dropdown>
@@ -84,28 +86,27 @@
 </template>
 
 <script setup lang="ts" name="layoutBreadcrumbUser">
-import { defineAsyncComponent, ref, computed, reactive, onMounted, onUnmounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { ElMessageBox, ElMessage, ElNotification, ElDialog, ElLoading } from 'element-plus';
-import screenfull from 'screenfull';
-import { useI18n } from 'vue-i18n';
+import { ElLoading, ElMessage, ElMessageBox, ElNotification } from 'element-plus';
 import { storeToRefs } from 'pinia';
-import { useUserInfoStore } from '../../../stores/useUserInfoStore';
+import screenfull from 'screenfull';
+import { computed, defineAsyncComponent, onMounted, reactive, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 import { useThemeConfigStore } from '../../../stores/useThemeConfigStore';
-import other from '/@/utils/other';
+import { useUserInfoStore } from '../../../stores/useUserInfoStore';
 import mittBus from '/@/utils/mitt';
+import other from '/@/utils/other';
 import { Local } from '/@/utils/storage';
 
-import { clearAccessTokens, getAPI } from '/@/utils/axios-utils';
 import { SysAuthApi, SysNoticeApi } from '/@/api-services/api';
+import { clearAccessTokens, getAPI } from '/@/utils/axios-utils';
 
-import { signalR } from '/@/views/system/onlineUser/signalR';
 import { useWorkspaceStore } from '../../../stores/useWorkspaceStore';
 import { setDjiWorkspaceDefault } from '/@/api/main/djiWorkspaceUser';
+import { MessageDispatcher } from '/@/types/mqtt/msgDispatcher';
 import { DockOsdHandler } from '/@/types/mqtt/osd/dockOsd';
 import { DroneOsdHandler } from '/@/types/mqtt/osd/droneOsd';
-import { MessageDispatcher } from '/@/types/mqtt/msgDispatcher';
-import { Message } from '/@/types/mqtt/message';
+import { signalR } from '/@/views/system/onlineUser/signalR';
 
 // 引入组件
 const UserNews = defineAsyncComponent(() => import('/@/layout/navBars/topBar/userNews.vue'));
@@ -302,7 +303,6 @@ const receiveNotice = (msg: any) => {
 			border-radius: 100%;
 		}
 	}
-
 	&-icon {
 		padding: 0 10px;
 		cursor: pointer;

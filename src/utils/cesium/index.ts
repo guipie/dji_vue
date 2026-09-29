@@ -5,7 +5,10 @@ import CesiumNavigation, { NavigationOptions } from 'cesium-navigation-es6';
 
 export async function initCesium(options?: any) {
 	function hideLoadingOverlay() {
-		const loadingOverlay = document.getElementById('loadingOverlay')!;
+		// 只有 cesiumMap.vue 这类页面才带 #loadingOverlay，其余页面没有该节点，必须判空，
+		// 否则 null.style 会在渲染回调里抛错，直接把 Cesium 渲染循环打断（Rendering has stopped）
+		const loadingOverlay = document.getElementById('loadingOverlay');
+		if (!loadingOverlay) return;
 		// 先设置透明度为0，实现平滑过渡，再移除元素
 		loadingOverlay.style.opacity = '0';
 		setTimeout(() => {
@@ -22,7 +25,8 @@ export async function initCesium(options?: any) {
 	Cesium.Ion.defaultAccessToken =
 		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZjA0Mjc1OC02N2YwLTQzODAtYjY3Mi05ZThlN2YzNDY1NTEiLCJpZCI6MzYwODUxLCJpYXQiOjE3NjMyOTg4ODZ9.AKRDep447XQx5mJdGGNVr5SPeAUqQ16mioHdi1mw_YI';
 
-	window.viewer = new Cesium.Viewer('cesiumContainer', {
+	const container = options?.container ?? 'cesiumContainer';
+	window.viewer = new Cesium.Viewer(container, {
 		// 地形提供者
 		terrainProvider: await Cesium.createWorldTerrainAsync(),
 		// 控制UI组件显示
@@ -86,7 +90,7 @@ export async function initCesium(options?: any) {
 	// // 使用原生 getContext 并手动传递 willReadFrequently
 	// const context = canvas.getContext('2d', { willReadFrequently: true });
 	document.body.style.backgroundColor = 'transparent';
-	document.getElementsByClassName('cesium-viewer-bottom')[0].remove();
+	document.getElementsByClassName('cesium-viewer-bottom')[0]?.remove();
 	//Enable lighting based on the sun position
 	window.viewer.scene.globe.enableLighting = true;
 
@@ -115,8 +119,8 @@ export async function initCesium(options?: any) {
 	window.viewer.scene.camera.changed.addEventListener(function () {
 		// console.log('相机位置:', window.viewer.scene.camera.positionCartographic);
 	});
-	if (options.inited) {
-		options.inited();
+	if (options?.inited) {
+		options.inited(window.viewer);
 	}
 	navigator.geolocation.getCurrentPosition(
 		function (position) {
@@ -133,7 +137,9 @@ export async function initCesium(options?: any) {
 		}
 	);
 	// 6. 监听鼠标事件
-	window.viewer.screenSpaceEventHandler.setInputAction(function (movement: Cesium.ScreenSpaceEventHandler.PositionedEvent) {
+	// 航线编辑页依赖这个默认左键行为；绘制类页面应传 bindDefaultClick:false 关掉，
+	// 否则点天空时会弹「未能获取到地面坐标」、并与自身的拾取逻辑抢事件。
+	const defaultClickAction = function (movement: Cesium.ScreenSpaceEventHandler.PositionedEvent) {
 		//鼠标点击entity获取entity信息
 		const pickedObject = window.viewer.scene.pick(movement.position);
 		if (Cesium.defined(pickedObject) && Cesium.defined(pickedObject.id)) {
@@ -158,13 +164,14 @@ export async function initCesium(options?: any) {
 				mouseClickHandle({ longitude, latitude, height, entity: null });
 			} else {
 				console.log('未能获取到地面坐标');
-				alert('未能获取到地面坐标');
 			}
 		} else {
 			console.log('未能获取到地面坐标');
-			alert('未能获取到地面坐标');
 		}
-	}, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+	};
+	if (options?.bindDefaultClick !== false) {
+		window.viewer.screenSpaceEventHandler.setInputAction(defaultClickAction, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+	}
 	// window.viewer.screenSpaceEventHandler.setInputAction(function (movement: any) {
 	// 	console.log('鼠标点击:', movement.position);
 	// }, Cesium.ScreenSpaceEventType.LEFT_CLICK);

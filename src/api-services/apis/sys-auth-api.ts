@@ -153,8 +153,7 @@ export const SysAuthApiAxiosParamCreator = function (configuration?: Configurati
 			return { url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash, options: localVarRequestOptions };
 		},
 		/**
-		 * 用户名/密码：superadmin/123456
-		 * @summary 账号密码登录
+			 * @summary 账号密码登录
 		 * @param {LoginInput} body
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
@@ -495,8 +494,7 @@ export const SysAuthApiFp = function (configuration?: Configuration) {
 			};
 		},
 		/**
-		 * 用户名/密码：superadmin/123456
-		 * @summary 账号密码登录
+			 * @summary 账号密码登录
 		 * @param {LoginInput} body
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
@@ -633,8 +631,7 @@ export const SysAuthApiFactory = function (configuration?: Configuration, basePa
 				.then((request) => request(axios, basePath));
 		},
 		/**
-		 * 用户名/密码：superadmin/123456
-		 * @summary 账号密码登录
+			 * @summary 账号密码登录
 		 * @param {LoginInput} body
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
@@ -761,7 +758,6 @@ export class SysAuthApi extends BaseAPI {
 			.then((request) => request(this.axios, this.basePath));
 	}
 	/**
-	 * 用户名/密码：superadmin/123456
 	 * @summary 账号密码登录
 	 * @param {LoginInput} body
 	 * @param {*} [options] Override http request option.
@@ -769,9 +765,12 @@ export class SysAuthApi extends BaseAPI {
 	 * @memberof SysAuthApi
 	 */
 	public async apiSysAuthLoginPost(body: LoginInput, options?: AxiosRequestConfig): Promise<AxiosResponse<AdminResultLoginOutput>> {
-		const publicKey = `04F6E0C3345AE42B51E06BF50B98834988D54EBC7460FE135A48171BC0629EAE205EEDE253A530608178A98F1E19BB737302813BA39ED3FA3C51639D7A20C7391A`;
+		// SM2 公钥不再硬编码：必须与后端 App.json → Cryptogram.PublicKey 成对。
+		// 未配置时透传明文，便于对接未启用国密的后端（会由服务端直接拒绝，错误信息明确）。
+		// 说明：本文件由 swagger-codegen 生成但已被二开改动，重新生成代码时需同步此逻辑。
+		const publicKey = (import.meta.env.VITE_SM2_PUBLIC_KEY || '') as string;
 		return SysAuthApiFp(this.configuration)
-			.apiSysAuthLoginPost({ ...body, password: sm2.doEncrypt(body.password, publicKey, 1) }, options)
+			.apiSysAuthLoginPost({ ...body, password: publicKey ? sm2.doEncrypt(body.password, publicKey, 1) : body.password }, options)
 			.then((request) => request(this.axios, this.basePath));
 	}
 	/**
