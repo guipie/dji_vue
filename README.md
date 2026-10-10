@@ -23,6 +23,27 @@
 
 ---
 
+## 效果截图
+
+<table>
+    <tr>
+        <td><img src="./demos/login.png" alt="登录" /></td>
+        <td><img src="./demos/mianban.png" alt="看板" /></td>
+        <td><img src="./demos/dock-online.png" alt="机场在线" /></td>
+    </tr>
+    <tr>
+        <td><img src="./demos/wayline-dialog.png" alt="航线" /></td>
+        <td><img src="./demos/wayline-create1.png" alt="航线创建" /></td>
+        <td><img src="./demos/wayline-create2.png" alt="航线创建" /></td>  
+    </tr>
+    <tr>  
+        <td><img src="./demos/device.png" alt="设备" /></td>  
+        <td><img src="./demos/workspace.png" alt="工作空间" /></td>  
+        <td><img src="./demos/dock.png" alt="机场" /></td>  
+    </tr>
+</table>
+
+---
 ## 这是什么
 
 大疆官方提供了上云 API，但服务端需要自己实现：
@@ -62,7 +83,7 @@
 
 ---
 
-## 亮点：飞行区域绘制
+## 示例-飞行区域绘制
 
 `views/main/djiFlightArea` 是最能体现本项目价值的部分 —— **在 Cesium 三维地球上直接画出作业区与禁飞区**，
   
@@ -238,27 +259,6 @@ connection.on('publicclientmessage', (raw) => {
 
 ---
 
-## 效果截图
-
-<table>
-    <tr>
-        <td><img src="./demos/login.png" alt="登录" /></td>
-        <td><img src="./demos/mianban.png" alt="看板" /></td>
-        <td><img src="./demos/dock-online.png" alt="机场在线" /></td>
-    </tr>
-    <tr>
-        <td><img src="./demos/wayline-dialog.png" alt="航线" /></td>
-        <td><img src="./demos/wayline-create1.png" alt="航线创建" /></td>
-        <td><img src="./demos/wayline-create2.png" alt="航线创建" /></td>  
-    </tr>
-    <tr>  
-        <td><img src="./demos/device.png" alt="设备" /></td>  
-        <td><img src="./demos/workspace.png" alt="工作空间" /></td>  
-        <td><img src="./demos/dock.png" alt="机场" /></td>  
-    </tr>
-</table>
-
----
 
 ## 常见问题
 
