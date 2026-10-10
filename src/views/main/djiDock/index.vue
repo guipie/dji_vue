@@ -88,7 +88,7 @@
 							<el-descriptions-item label="充电">{{ osd?.droneChargeState?.state === 1 ? '充电中' : osd?.droneChargeState?.state === 0 ? '空闲' : '-' }}</el-descriptions-item>
 							<el-descriptions-item label="空调">
 								{{ osd?.airConditioner ? AirConditionerStateNameMap[osd.airConditioner.airConditionerState] || '-' : '-' }}
-								<span v-if="(osd?.airConditioner?.switchTime ?? 0) > 0" class="text-xs c-warning">（切换中 {{ osd.airConditioner.switchTime }}s）</span>
+								<span v-if="(osd?.airConditioner?.switchTime ?? 0) > 0" class="text-xs c-warning">（切换中 {{ osd?.airConditioner?.switchTime }}s）</span>
 							</el-descriptions-item>
 							<el-descriptions-item label="补光灯">{{ osd?.supplementLightState === 1 ? '开启' : osd?.supplementLightState === 0 ? '关闭' : '-' }}</el-descriptions-item>
 							<el-descriptions-item label="声光报警">{{ osd?.alarmState === 1 ? '开启' : osd?.alarmState === 0 ? '关闭' : '-' }}</el-descriptions-item>
@@ -128,9 +128,7 @@
 							<div class="flex items-center">
 								<span class="font-bold">远程控制</span>
 								<span class="text-xs c-gray ml-2">开关跟随机场实时状态回显，切换即下发</span>
-								<el-button class="ml-auto" size="small" type="danger" plain :disabled="(state?.runningCommands?.length ?? 0) === 0" @click="handleClearRunning">
-									清除所有指令
-								</el-button>
+								<el-button class="ml-auto" size="small" type="danger" plain :disabled="(state?.runningCommands?.length ?? 0) === 0" @click="handleClearRunning"> 清除所有指令 </el-button>
 							</div>
 						</template>
 
@@ -337,9 +335,9 @@
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { computed, onMounted, ref } from 'vue';
 import { actionsDjiDock, clearRunningDjiDock, dockOptionsDjiDock, executeDjiDock, recentDjiDock, rtkCalibrationDjiDock, stateDjiDock } from '/@/api/main/djiDock';
-import { formatDate } from '/@/utils/formatTime';
 import { useDeviceStore } from '/@/stores/useDeviceStore';
 import { DockOsd, ModeCodeEnum } from '/@/types/mqtt/osd/dockOsd';
+import { formatDate } from '/@/utils/formatTime';
 
 const deviceStore = useDeviceStore();
 
@@ -416,12 +414,32 @@ const DroneInDockNameMap: Record<number, string> = { 0: '舱外', 1: '舱内' };
 const BatteryStoreModeNameMap: Record<number, string> = { 1: '计划模式', 2: '待命模式' };
 const SdrLinkWorkmodeNameMap: Record<number, string> = { 0: '仅 SDR', 1: '4G 增强' };
 const AirConditionerStateNameMap: Record<number, string> = {
-	0: '空闲', 1: '制冷中', 2: '制热中', 3: '除湿中', 4: '退出制冷', 5: '退出制热', 6: '退出除湿',
-	7: '准备制冷', 8: '准备制热', 9: '准备除湿', 10: '准备送风制冷', 11: '送风制冷中', 12: '退出送风制冷',
-	13: '准备除霜', 14: '除霜中', 15: '退出除霜',
+	0: '空闲',
+	1: '制冷中',
+	2: '制热中',
+	3: '除湿中',
+	4: '退出制冷',
+	5: '退出制热',
+	6: '退出除湿',
+	7: '准备制冷',
+	8: '准备制热',
+	9: '准备除湿',
+	10: '准备送风制冷',
+	11: '送风制冷中',
+	12: '退出送风制冷',
+	13: '准备除霜',
+	14: '除霜中',
+	15: '退出除霜',
 };
 const FlighttaskStepNameMap: Record<number, string> = {
-	0: '准备中', 1: '飞行中', 2: '回收中', 3: '自定义区域更新中', 4: '地形障碍物更新中', 5: '空闲', 255: '飞行器异常', 256: '未知',
+	0: '准备中',
+	1: '飞行中',
+	2: '回收中',
+	3: '自定义区域更新中',
+	4: '地形障碍物更新中',
+	5: '空闲',
+	255: '飞行器异常',
+	256: '未知',
 };
 
 const osdModeCode = computed(() => osd.value?.modeCode);
