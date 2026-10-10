@@ -11,6 +11,7 @@ enum Api {
 	ModeOptions = '/api/djiDock/modeOptions',
 	Execute = '/api/djiDock/execute',
 	RtkCalibration = '/api/djiDock/rtkCalibration',
+	ClearRunning = '/api/djiDock/clearRunning',
 }
 
 /**
@@ -118,4 +119,15 @@ export const rtkCalibrationDjiDock = (params: {
 		url: Api.RtkCalibration,
 		method: 'post',
 		data: params,
+	});
+
+/**
+ * 清除某机场所有在途指令（收口为「取消」）
+ * @description 用于解除「该指令正在执行中」的按钮互斥 —— 指令回包成功但设备迟迟不推进度时会卡死
+ */
+export const clearRunningDjiDock = (dockSn: string) =>
+	request({
+		url: Api.ClearRunning,
+		method: 'post',
+		data: { dockSn },
 	});

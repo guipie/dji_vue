@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useWorkspaceStore } from '../../stores/useWorkspaceStore';
 
 const props = defineProps({
@@ -24,11 +24,11 @@ const props = defineProps({
 });
 const emit = defineEmits(['update:id', 'update:name']);
 const useWorkspace = useWorkspaceStore();
-const data = computed(() => useWorkspace.spaces);
+const data = computed(() => useWorkspace.mySpaces);
 const dataVal = ref<any>({});
-onMounted(() => {
-	useWorkspace.getSpaces();
-});
+// onMounted(() => {
+// 	useWorkspace.getSpaces();
+// });
 
 /**
  * 同步外部传入的 value
@@ -38,7 +38,7 @@ onMounted(() => {
 watch(
 	() => [props.value, data.value.length] as const,
 	() => {
-		const matched = props.value ? data.value.find((item: TypeWorkspace) => item.workspaceId.toString() === props.value) : undefined;
+		const matched = props.value ? data.value.find((item: TypeWorkspace) => item.workspaceId.toString() === props.value) : useWorkspace.defSpace;
 		if ((matched?.workspaceId ?? '') !== (dataVal.value?.workspaceId ?? '')) dataVal.value = matched ?? {};
 	},
 	{ immediate: true }

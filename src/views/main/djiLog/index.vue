@@ -35,8 +35,10 @@
 			<el-col :xs="12" :sm="12" :md="4" :lg="4" :xl="4">
 				<el-card shadow="hover" :body-style="{ padding: '12px 16px' }">
 					<div class="text-xs c-gray">已上传体积</div>
-					<div class="text-2xl font-bold mt-1" style="font-size: 18px">{{ formatSize(stats.uploadedSize) }}</div>
-					<div class="text-xs c-gray">共 {{ formatSize(stats.totalSize) }}</div>
+					<div class="text-2xl font-bold mt-1" style="font-size: 18px">
+						{{ formatSize(stats.uploadedSize) }}
+						<sapn class="text-xs c-gray">共 {{ formatSize(stats.totalSize) }}</sapn>
+					</div>
 				</el-card>
 			</el-col>
 		</el-row>
@@ -111,21 +113,16 @@
 				</el-select>
 
 				<el-button class="ml-2" icon="ele-Refresh" :loading="listing" @click="handleList"> 列举日志 </el-button>
-				<el-button type="primary" icon="ele-Upload" :disabled="selection.length === 0" :loading="starting" @click="handleStart">
-					上传（{{ selection.length }}）
-				</el-button>
+				<el-button type="primary" icon="ele-Upload" :disabled="selection.length === 0" :loading="starting" @click="handleStart"> 上传（{{ selection.length }}） </el-button>
 				<el-button type="warning" icon="ele-Close" @click="handleCancel"> 取消上传 </el-button>
-				<el-button type="danger" icon="ele-Delete" :disabled="selection.length === 0" @click="handleBatchDelete">
-					删除记录（{{ selection.length }}）
-				</el-button>
+				<el-button type="danger" icon="ele-Delete" :disabled="selection.length === 0" @click="handleBatchDelete"> 删除记录（{{ selection.length }}） </el-button>
 			</div>
 
 			<el-alert type="info" :closable="false" show-icon class="mb10">
 				<template #title>
 					<span class="text-xs">
 						分两步：<b>先列举</b>让设备把可上传的日志索引报上来（<span class="font-mono">fileupload_progress</span> 里没有 boot_index，
-						必须靠这一步才能把进度对回具体文件），<b>再上传</b>；设备会直传对象存储。
-						受协议所限，<b>一次只能上传一个模块</b>，且<b>取消是按模块的</b>、无法针对单个文件。
+						必须靠这一步才能把进度对回具体文件），<b>再上传</b>；设备会直传对象存储。 受协议所限，<b>一次只能上传一个模块</b>，且<b>取消是按模块的</b>、无法针对单个文件。
 					</span>
 				</template>
 			</el-alert>
@@ -179,16 +176,7 @@
 				</el-table-column>
 				<el-table-column label="操作" width="90" align="center" fixed="right">
 					<template #default="scope">
-						<el-button
-							v-if="scope.row.status === 2 && scope.row.url"
-							icon="ele-Download"
-							size="small"
-							text
-							type="primary"
-							@click="download(scope.row)"
-						>
-							下载
-						</el-button>
+						<el-button v-if="scope.row.status === 2 && scope.row.url" icon="ele-Download" size="small" text type="primary" @click="download(scope.row)"> 下载 </el-button>
 						<span v-else class="text-xs c-gray">-</span>
 					</template>
 				</el-table-column>
@@ -259,20 +247,11 @@
 </template>
 
 <script setup lang="ts" name="djiLog">
-import { onMounted, ref } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
+import { onMounted, ref } from 'vue';
+import { cancelDjiLog, deleteDjiLog, listDjiLog, moduleOptionsDjiLog, pageDjiLog, startDjiLog, statsDjiLog, statusOptionsDjiLog } from '/@/api/main/djiLog';
 import { formatDate } from '/@/utils/formatTime';
 import workspaceSelect from '/@/views/component/workspaceSelect.vue';
-import {
-	cancelDjiLog,
-	deleteDjiLog,
-	listDjiLog,
-	moduleOptionsDjiLog,
-	pageDjiLog,
-	startDjiLog,
-	statsDjiLog,
-	statusOptionsDjiLog,
-} from '/@/api/main/djiLog';
 // 本模块没有自己的机场下拉：复用控制面板那份，它额外带在线状态与是否在途指令
 import { dockOptionsDjiDock } from '/@/api/main/djiDock';
 
@@ -479,11 +458,11 @@ async function submitCancel() {
 
 async function handleBatchDelete() {
 	if (selection.value.length === 0) return;
-	await ElMessageBox.confirm(
-		`确定要删除选中的 ${selection.value.length} 条日志记录吗？只删记录、不删对象存储里的文件。`,
-		'删除确认',
-		{ type: 'warning', confirmButtonText: '确定删除', cancelButtonText: '取消' }
-	);
+	await ElMessageBox.confirm(`确定要删除选中的 ${selection.value.length} 条日志记录吗？只删记录、不删对象存储里的文件。`, '删除确认', {
+		type: 'warning',
+		confirmButtonText: '确定删除',
+		cancelButtonText: '取消',
+	});
 	try {
 		await deleteDjiLog(selection.value.map((m) => m.id));
 		ElMessage.success('删除成功');

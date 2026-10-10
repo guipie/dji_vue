@@ -40,12 +40,10 @@
 }
 </style>
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
-import { getDictDataItem as di, getDictDataList as dl } from '/@/utils/dict-utils';
-import { ElMessage } from 'element-plus';
 import type { FormRules } from 'element-plus';
-import { addDjiWorkspaceUser, updateDjiWorkspaceUser, detailDjiWorkspaceUser, setDjiWorkspaceUser } from '/@/api/main/djiWorkspaceUser';
-import { getSysUserUserIdDropdown } from '/@/api/main/djiWorkspaceUser';
+import { ElMessage } from 'element-plus';
+import { onMounted, ref } from 'vue';
+import { getSysUserUserIdDropdown, setDjiWorkspaceUser } from '/@/api/main/djiWorkspaceUser';
 import UserSelectPage from '/@/views/component/userSelectPage.vue';
 import WorkspaceCheckbox from '/@/views/component/workspaceCheckbox.vue';
 

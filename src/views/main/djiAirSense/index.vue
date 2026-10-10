@@ -3,26 +3,26 @@
 		<!-- 统计 -->
 		<el-row :gutter="8" class="mb10">
 			<el-col :xs="12" :sm="12" :md="4" :lg="4" :xl="4">
-				<el-card shadow="hover" :body-style="{ padding: '12px 16px' }">
+				<el-card shadow="hover" style="height: 100%" :body-style="{ padding: '12px 16px' }">
 					<div class="text-xs c-gray">告警记录总数</div>
 					<div class="text-2xl font-bold mt-1">{{ stats.total }}</div>
 				</el-card>
 			</el-col>
 			<el-col :xs="12" :sm="12" :md="4" :lg="4" :xl="4">
-				<el-card shadow="hover" :body-style="{ padding: '12px 16px' }">
+				<el-card shadow="hover" style="height: 100%" :body-style="{ padding: '12px 16px' }">
 					<div class="text-xs c-gray">需避让（≥3 级）</div>
 					<div class="text-2xl font-bold mt-1" :class="{ 'c-danger': stats.alertCount > 0 }">{{ stats.alertCount }}</div>
 				</el-card>
 			</el-col>
 			<el-col :xs="12" :sm="12" :md="4" :lg="4" :xl="4">
-				<el-card shadow="hover" :body-style="{ padding: '12px 16px' }">
+				<el-card shadow="hover" style="height: 100%" :body-style="{ padding: '12px 16px' }">
 					<div class="text-xs c-gray">涉及目标数</div>
 					<div class="text-2xl font-bold mt-1">{{ stats.targetCount }}</div>
 					<div class="text-xs c-gray">按 ICAO 地址去重</div>
 				</el-card>
 			</el-col>
 			<el-col :xs="12" :sm="12" :md="4" :lg="4" :xl="4">
-				<el-card shadow="hover" :body-style="{ padding: '12px 16px' }">
+				<el-card shadow="hover" style="height: 100%" :body-style="{ padding: '12px 16px' }">
 					<div class="text-xs c-gray">最近一次告警</div>
 					<div class="mt-1 font-bold" style="font-size: 15px">{{ formatDateTime(stats.lastTime) }}</div>
 				</el-card>
@@ -33,14 +33,7 @@
 		<el-card v-if="stats.byLevel?.length" shadow="hover" class="mb10" :body-style="{ padding: '10px 16px' }">
 			<div class="flex items-center flex-wrap">
 				<span class="text-xs c-gray mr-2">等级分布：</span>
-				<el-tag
-					v-for="item in stats.byLevel"
-					:key="item.level"
-					class="mr-2 mb-1 cursor-pointer"
-					:type="levelTagType(item.level)"
-					effect="plain"
-					@click="filterByLevel(item.level)"
-				>
+				<el-tag v-for="item in stats.byLevel" :key="item.level" class="mr-2 mb-1 cursor-pointer" :type="levelTagType(item.level)" effect="plain" @click="filterByLevel(item.level)">
 					{{ item.levelName }} · {{ item.count }}
 				</el-tag>
 			</div>
@@ -108,12 +101,8 @@
 
 		<el-card class="full-table" shadow="hover" style="margin-top: 8px">
 			<div class="mb10">
-				<el-button type="danger" icon="ele-Delete" :disabled="selection.length === 0" @click="handleBatchDelete">
-					删除记录（{{ selection.length }}）
-				</el-button>
-				<span class="ml-4 text-xs c-gray">
-					这是<b>流水表</b>：设备每推一次报文就展开成多行，事后无法从任何快照反推 —— 删除前请确认已导出留档。
-				</span>
+				<el-button type="danger" icon="ele-Delete" :disabled="selection.length === 0" @click="handleBatchDelete"> 删除记录（{{ selection.length }}） </el-button>
+				<span class="ml-4 text-xs c-gray"> 这是<b>流水表</b>：设备每推一次报文就展开成多行，事后无法从任何快照反推 —— 删除前请确认已导出留档。 </span>
 			</div>
 
 			<el-table :data="tableData" style="width: 100%" v-loading="loading" size="small" border row-key="id" @selection-change="handleSelectionChange">
@@ -124,7 +113,9 @@
 					</template>
 				</el-table-column>
 				<el-table-column label="ICAO" width="130">
-					<template #default="scope"><span class="font-mono text-xs">{{ scope.row.icao || '-' }}</span></template>
+					<template #default="scope"
+						><span class="font-mono text-xs">{{ scope.row.icao || '-' }}</span></template
+					>
 				</el-table-column>
 				<el-table-column label="水平距离" width="110" align="right">
 					<template #default="scope">
@@ -241,17 +232,11 @@
 </template>
 
 <script setup lang="ts" name="djiAirSense">
-import { computed, onMounted, ref } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
+import { computed, onMounted, ref } from 'vue';
+import { deleteDjiAirSense, dockOptionsDjiAirSense, levelOptionsDjiAirSense, pageDjiAirSense, statsDjiAirSense } from '/@/api/main/djiAirSense';
 import { formatDate } from '/@/utils/formatTime';
 import workspaceSelect from '/@/views/component/workspaceSelect.vue';
-import {
-	deleteDjiAirSense,
-	dockOptionsDjiAirSense,
-	levelOptionsDjiAirSense,
-	pageDjiAirSense,
-	statsDjiAirSense,
-} from '/@/api/main/djiAirSense';
 
 const loading = ref(false);
 const tableData = ref<any[]>([]);
@@ -421,11 +406,11 @@ const targetY = computed(() => {
 
 async function handleBatchDelete() {
 	if (selection.value.length === 0) return;
-	await ElMessageBox.confirm(
-		`确定要删除选中的 ${selection.value.length} 条 AirSense 记录吗？这些是安全事件证据，删除后无法恢复。`,
-		'删除确认',
-		{ type: 'warning', confirmButtonText: '确定删除', cancelButtonText: '取消' }
-	);
+	await ElMessageBox.confirm(`确定要删除选中的 ${selection.value.length} 条 AirSense 记录吗？这些是安全事件证据，删除后无法恢复。`, '删除确认', {
+		type: 'warning',
+		confirmButtonText: '确定删除',
+		cancelButtonText: '取消',
+	});
 	try {
 		await deleteDjiAirSense(selection.value.map((m) => m.id));
 		ElMessage.success('删除成功');
